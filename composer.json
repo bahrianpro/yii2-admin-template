@@ -1,0 +1,18 @@
+{
+    "name": "skoro/yii2-admin-template",
+    "description": "Yii 2 project template for backends",
+    "keywords": ["yii2", "framework", "project template", "admin"],
+    "type": "project",
+    "require": {
+        "php": ">=5.4.0",
+        "yiisoft/yii2": "^2.0",
+        "yiisoft/yii2-bootstrap": "*",
+        "dmstr/yii2-adminlte-asset": "2.*"
+    },
+    "extra": {
+        "asset-installer-paths": {
+            "npm-asset-library": "vendor/npm",
+            "bower-asset-library": "vendor/bower"
+        }
+    }
+}
