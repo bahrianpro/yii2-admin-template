@@ -13,7 +13,9 @@ if (!defined('WEBROOT_DIR')) die();
 return [
     'components' => [
         'request' => [
-            'cookieValidationKey' => 'Q-DSoa6Fzl4w9A8A4wRrqtHiQywCeGDy',
+            // !!! insert a secret key in the following (if it is empty) - 
+            // this is required by cookie validation
+            'cookieValidationKey' => '',
         ],
         // Database configuration.
         'db' => [
