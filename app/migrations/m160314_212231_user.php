@@ -21,7 +21,7 @@ class m160314_212231_user extends Migration
             'activate_token' => $this->string()->notNull()->defaultValue(''),
             'status' => $this->smallInteger()->defaultValue(0),
             'created_at' => $this->integer(),
-            'updated_at' => $this->integer(),
+            'logged_at' => $this->integer(),
         ]);
         
         $this->createIndex('idx_user_reset_token', $this->table, 'reset_token');
