@@ -60,10 +60,14 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function init()
     {
-        // Update logged_at field after user login.
-        Yii::$app->user->on(\yii\web\User::EVENT_AFTER_LOGIN, function ($event) {
-            $event->identity->touch('logged_at');
-        });
+        // User model can be created from command line app where no
+        // user property exists.
+        if (isset(Yii::$app->user)) {
+            // Update logged_at field after user login.
+            Yii::$app->user->on(\yii\web\User::EVENT_AFTER_LOGIN, function ($event) {
+                $event->identity->touch('logged_at');
+            });
+        }
     }
     
     /**
