@@ -13,9 +13,11 @@ DIRECTORY STRUCTURE
     bin/   contains command line utilities
     app/   contains your application 
           assets/         contains assets definition
+          base/           contains base classes
           commands/       contains console commands (controllers)
           config/         contains application configurations
           controllers/    contains Web controller classes
+          forms/          contains web forms
           mail/           contains view files for e-mails
           models/         contains model classes
           tests/          contains various tests for the basic application
