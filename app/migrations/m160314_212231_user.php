@@ -6,7 +6,7 @@ class m160314_212231_user extends Migration
 {
     
     /**
-     * @var string
+     * @var string schema table name.
      */
     public $table = '{{%user}}';
     
@@ -14,15 +14,18 @@ class m160314_212231_user extends Migration
     {
         $this->createTable($this->table, [
             'id' => $this->primaryKey(),
-            'first_name' => $this->string()->notNull(),
-            'last_name' => $this->string()->notNull(),
-            'email' => $this->string()->unique(),
+            'name' => $this->string(64)->notNull(),
+            'email' => $this->string(64)->unique(),
             'password_hash' => $this->string()->notNull(),
-            'reset_token' => $this->string()->notNull(),
+            'reset_token' => $this->string()->notNull()->defaultValue(''),
+            'activate_token' => $this->string()->notNull()->defaultValue(''),
             'status' => $this->smallInteger()->defaultValue(0),
             'created_at' => $this->integer(),
             'updated_at' => $this->integer(),
         ]);
+        
+        $this->createIndex('idx_user_reset_token', $this->table, 'reset_token');
+        $this->createIndex('idx_user_activate_token', $this->table, 'activate_token');
     }
 
     public function down()
