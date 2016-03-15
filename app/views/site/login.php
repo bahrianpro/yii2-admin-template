@@ -6,7 +6,7 @@ use yii\bootstrap\ActiveForm;
 /* @var $form yii\bootstrap\ActiveForm */
 /* @var $model \common\models\LoginForm */
 
-$this->title = 'Sign In';
+$this->title = Yii::t('app', 'Sign In');
 
 $fieldOptions1 = [
     'options' => ['class' => 'form-group has-feedback'],
@@ -21,11 +21,11 @@ $fieldOptions2 = [
 
 <div class="login-box">
     <div class="login-logo">
-        <a href="#"><b>Admin</b>LTE</a>
+        <a href="#"><b><?= Yii::$app->name ?></b></a>
     </div>
     <!-- /.login-logo -->
     <div class="login-box-body">
-        <p class="login-box-msg">Sign in to start your session</p>
+        <p class="login-box-msg"><?= Yii::t('app', 'Sign in to start your session') ?></p>
 
         <?php $form = ActiveForm::begin(['id' => 'login-form', 'enableClientValidation' => false]); ?>
 
@@ -62,8 +62,8 @@ $fieldOptions2 = [
         </div>
         <!-- /.social-auth-links -->
 
-        <a href="#">I forgot my password</a><br>
-        <a href="register.html" class="text-center">Register a new membership</a>
+        <a href="#"><?= Yii::t('app', 'I forgot my password') ?></a><br>
+        <a href="register.html" class="text-center"><?= Yii::t('app', 'Register a new membership') ?></a>
 
     </div>
     <!-- /.login-box-body -->
