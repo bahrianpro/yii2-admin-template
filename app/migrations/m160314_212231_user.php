@@ -19,6 +19,7 @@ class m160314_212231_user extends Migration
             'password_hash' => $this->string()->notNull(),
             'reset_token' => $this->string()->notNull()->defaultValue(''),
             'activate_token' => $this->string()->notNull()->defaultValue(''),
+            'auth_key' => $this->string()->notNull()->unique(),
             'status' => $this->smallInteger()->defaultValue(0),
             'created_at' => $this->integer(),
             'logged_at' => $this->integer(),

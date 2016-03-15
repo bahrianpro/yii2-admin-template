@@ -79,7 +79,7 @@ class User extends ActiveRecord implements IdentityInterface
             [['name', 'email', 'password_hash'], 'required'],
             [['status', 'created_at', 'logged_at'], 'integer'],
             [['name', 'email'], 'string', 'max' => 64],
-            [['password_hash', 'reset_token', 'activate_token'], 'string', 'max' => 255],
+            [['password_hash', 'reset_token', 'activate_token', 'auth_key'], 'string', 'max' => 255],
             [['email'], 'unique']
         ];
     }
@@ -128,7 +128,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function getAuthKey()
     {
-        throw new \yii\base\Exception('Not implemented');
+        return $this->auth_key;
     }
 
     /**
@@ -193,6 +193,20 @@ class User extends ActiveRecord implements IdentityInterface
             self::STATUS_PENDING => Yii::t('app', 'Pending'),
         ];
         return ($status === null) ? $statuses : isset($statuses[$status]) ? $statuses[$status] : null;
+    }
+    
+    /**
+     * @inheritdoc
+     */
+    public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert)) {
+            if ($this->isNewRecord) {
+                $this->auth_key = Yii::$app->security->generateRandomString();
+            }
+            return true;
+        }
+        return false;
     }
     
 }
