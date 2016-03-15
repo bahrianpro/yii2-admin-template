@@ -9,15 +9,12 @@ use yii\bootstrap\ActiveForm;
 
 $this->title = Yii::t('app', 'Sign In');
 
-$fieldOptions1 = [
-    'options' => ['class' => 'form-group has-feedback'],
-    'inputTemplate' => "{input}<span class='glyphicon glyphicon-envelope form-control-feedback'></span>"
-];
-
-$fieldOptions2 = [
-    'options' => ['class' => 'form-group has-feedback'],
-    'inputTemplate' => "{input}<span class='glyphicon glyphicon-lock form-control-feedback'></span>"
-];
+$fieldOptions = function ($icon) {
+    return [
+        'options' => ['class' => 'form-group has-feedback'],
+        'inputTemplate' => "{input}<span class='glyphicon glyphicon-$icon form-control-feedback'></span>"
+    ];
+};
 ?>
 
 <div class="login-box">
@@ -31,12 +28,12 @@ $fieldOptions2 = [
         <?php $form = ActiveForm::begin(['id' => 'login-form', 'enableClientValidation' => false]); ?>
 
         <?= $form
-            ->field($model, 'email', $fieldOptions1)
+            ->field($model, 'email', $fieldOptions('envelope'))
             ->label(false)
             ->textInput(['placeholder' => $model->getAttributeLabel('email')]) ?>
 
         <?= $form
-            ->field($model, 'password', $fieldOptions2)
+            ->field($model, 'password', $fieldOptions('lock'))
             ->label(false)
             ->passwordInput(['placeholder' => $model->getAttributeLabel('password')]) ?>
 
@@ -50,7 +47,6 @@ $fieldOptions2 = [
             </div>
             <!-- /.col -->
         </div>
-
 
         <?php ActiveForm::end(); ?>
 
