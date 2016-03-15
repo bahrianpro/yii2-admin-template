@@ -80,8 +80,8 @@ Edit the file `config.php` in web root folder with real data, for example:
     'class' => 'yii\db\Connection',
     'dsn' => 'mysql:host=localhost;dbname=yii2basic',
     // Or SQLite3 database (directory data must be already created and must be
-    // writable for webserver).
-    // 'dsn' => 'sqlite:@app/data/db.sq3',
+    // writable by webserver).
+    // 'dsn' => 'sqlite:@runtime/data/db.sq3',
     'username' => 'root',
     'password' => '1234',
     'charset' => 'utf8',
