@@ -64,7 +64,7 @@ $fieldOptions2 = [
         <!-- /.social-auth-links -->
 
         <a href="#"><?= Yii::t('app', 'I forgot my password') ?></a><br>
-        <a href="register.html" class="text-center"><?= Yii::t('app', 'Register a new membership') ?></a>
+        <a href="<?= Url::to(['user/register']) ?>" class="text-center"><?= Yii::t('app', 'Register a new account') ?></a>
 
     </div>
     <!-- /.login-box-body -->
