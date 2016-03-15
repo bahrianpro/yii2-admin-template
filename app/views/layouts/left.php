@@ -1,3 +1,6 @@
+<?php
+use yii\helpers\Html;
+?>
 <aside class="main-sidebar">
 
     <section class="sidebar">
@@ -7,11 +10,13 @@
             <div class="pull-left image">
                 <img src="<?= $directoryAsset ?>/img/user2-160x160.jpg" class="img-circle" alt="User Image"/>
             </div>
+            <?php if (!Yii::$app->user->isGuest): ?>
             <div class="pull-left info">
-                <p>Alexander Pierce</p>
+                <p><?= Html::encode(Yii::$app->user->identity->name) ?></p>
 
                 <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
+            <?php endif ?>
         </div>
 
         <!-- search form -->
@@ -33,7 +38,8 @@
                     ['label' => 'Menu Yii2', 'options' => ['class' => 'header']],
                     ['label' => 'Gii', 'icon' => 'fa fa-file-code-o', 'url' => ['/gii']],
                     ['label' => 'Debug', 'icon' => 'fa fa-dashboard', 'url' => ['/debug']],
-                    ['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],
+                    ['label' => 'Login', 'url' => ['user/login'], 'visible' => Yii::$app->user->isGuest],
+                    ['label' => 'Logout', 'url' => ['user/logout'], 'visible' => !Yii::$app->user->isGuest],
                     [
                         'label' => 'Same tools',
                         'icon' => 'fa fa-share',
