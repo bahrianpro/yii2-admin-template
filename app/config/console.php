@@ -27,6 +27,10 @@ $config = [
             'class' => 'yii\console\controllers\MigrateController',
             'templateFile' => '@app/views/templates/migration.php',
         ],
+        'serve' => [
+            'class' => 'yii\console\controllers\ServeController',
+            'docroot' => WEBROOT_DIR . '/web',
+        ],
 #        'fixture' => [ // Fixture generation command line.
 #            'class' => 'yii\faker\FixtureController',
 #        ],
