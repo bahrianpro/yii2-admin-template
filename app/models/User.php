@@ -80,7 +80,8 @@ class User extends ActiveRecord implements IdentityInterface
             [['status', 'created_at', 'logged_at'], 'integer'],
             [['name', 'email'], 'string', 'max' => 64],
             [['password_hash', 'reset_token', 'activate_token', 'auth_key'], 'string', 'max' => 255],
-            [['email'], 'unique']
+            ['email', 'unique'],
+            ['email', 'email'],
         ];
     }
 
