@@ -9,6 +9,7 @@ namespace app\forms;
 
 use Yii;
 use yii\base\Model;
+use app\models\User;
 
 /**
  * Login is the model behind the login form.
@@ -28,12 +29,22 @@ class Login extends Model
     public function rules()
     {
         return [
-            // username and password are both required
             [['email', 'password'], 'required'],
-            // rememberMe must be a boolean value
+            ['email', 'email'],
             ['rememberMe', 'boolean'],
-            // password is validated by validatePassword()
             ['password', 'validatePassword'],
+        ];
+    }
+    
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'email' => Yii::t('app', 'Email'),
+            'password' => Yii::t('app', 'Password'),
+            'rememberMe' => Yii::t('app', 'Remember Me'),
         ];
     }
 
@@ -62,7 +73,10 @@ class Login extends Model
     public function login()
     {
         if ($this->validate()) {
-            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600*24*30 : 0);
+            $user = $this->getUser();
+            if ($user->status === User::STATUS_ENABLED) {
+                return Yii::$app->user->login($user, $this->rememberMe ? 3600*24*30 : 0);
+            }
         }
         return false;
     }
