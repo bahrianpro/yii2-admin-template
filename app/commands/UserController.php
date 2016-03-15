@@ -9,6 +9,7 @@ namespace app\commands;
 
 use Yii;
 use yii\console\Exception as ConsoleException;
+use yii\helpers\Console;
 use app\base\console\Controller;
 use app\models\User;
 
@@ -46,17 +47,20 @@ class UserController extends Controller
                 break;
         }
         
-        printf("%-32s %-24s %-16s %-8s\n", 'Email address', 'User name', 'Created', 'Status');
-        print str_repeat('-', 80) . PHP_EOL;
-        
-        foreach ($users->all() as $user) {
-            printf("%-32s %-24s %-16s %-8s\n",
-                    $user->email,
-                    $user->name,
-                    date('Y-m-d H:i', $user->created_at),
-                    User::getStatus($user->status)
-            );
-        }
+        $this->userList($users->all());
+    }
+    
+    /**
+     * Finds user by email or user name.
+     * @param string $pattern search pattern.
+     */
+    public function actionFind($pattern)
+    {
+        $users = User::find()
+            ->where(['like', 'email', $pattern])
+            ->where(['like', 'name', $pattern])
+            ->all();
+        $this->userList($users);
     }
     
     /**
@@ -172,6 +176,28 @@ class UserController extends Controller
             throw new ConsoleException(Yii::t('app', 'User not found.'));
         }
         return $user;
+    }
+    
+    /**
+     * @param User[] $users
+     */
+    protected function userList(array $users)
+    {
+        if (empty($users)) {
+            return $this->p('No users found.');
+        }
+    
+        $this->stdout(sprintf("%-32s %-24s %-16s %-8s\n", 'Email address', 'User name', 'Created', 'Status'), Console::BOLD);
+        $this->stdout(str_repeat('-', 80) . PHP_EOL);
+        
+        foreach ($users as $user) {
+            printf("%-32s %-24s %-16s %-8s\n",
+                    $user->email,
+                    $user->name,
+                    date('Y-m-d H:i', $user->created_at),
+                    User::getStatus($user->status)
+            );
+        }
     }
     
 }
