@@ -23,6 +23,11 @@ class UserController extends Controller
     public $layout = '//main-login';
     
     /**
+     * @var boolean enable or disable user registration.
+     */
+    public $enableRegister = true;
+    
+    /**
      * @return inheritdoc
      */
     public function behaviors()
@@ -47,7 +52,7 @@ class UserController extends Controller
      */
     public function actionLogin()
     {
-        if (!\Yii::$app->user->isGuest) {
+        if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
 
@@ -57,6 +62,33 @@ class UserController extends Controller
         }
         
         return $this->render('login', [
+            'model' => $model,
+            'enableRegister' => $this->enableRegister,
+        ]);
+    }
+    
+    /**
+     * user/register
+     */
+    public function actionRegister()
+    {
+        if (!$this->enableRegister) {
+            return $this->goHome();
+        }
+        
+        if (!Yii::$app->user->isGuest) {
+            return $this->goBack();
+        }
+        
+        $model = new forms\Register();
+        if (Yii::$app->request->isPost) {
+            $post = Yii::$app->request->post();
+            if ($model->load($post) && $model->register()) {
+                return $this->goHome();
+            }
+        }
+        
+        return $this->render('register', [
             'model' => $model,
         ]);
     }

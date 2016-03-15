@@ -6,6 +6,7 @@ use yii\bootstrap\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
 /* @var $model app\forms\Login */
+/* @var $enableRegister boolean */
 
 $this->title = Yii::t('app', 'Sign In');
 
@@ -60,7 +61,9 @@ $fieldOptions = function ($icon) {
         <!-- /.social-auth-links -->
 
         <a href="#"><?= Yii::t('app', 'I forgot my password') ?></a><br>
-        <a href="<?= Url::to(['user/register']) ?>" class="text-center"><?= Yii::t('app', 'Register a new account') ?></a>
+        <?php if ($enableRegister): ?>
+            <a href="<?= Url::to(['user/register']) ?>" class="text-center"><?= Yii::t('app', 'Register a new account') ?></a>
+        <?php endif ?>
 
     </div>
     <!-- /.login-box-body -->
