@@ -95,7 +95,7 @@ class UserController extends Controller
     
     /**
      * Delete a user.
-     * @param string $email
+     * @param string $email user email
      */
     public function actionDelete($email)
     {
@@ -113,7 +113,7 @@ class UserController extends Controller
     
     /**
      * Disable user.
-     * @param string $email
+     * @param string $email user email
      */
     public function actionDisable($email)
     {
@@ -129,7 +129,7 @@ class UserController extends Controller
     
     /**
      * Enable user.
-     * @param string $email
+     * @param string $email user email
      */
     public function actionEnable($email)
     {
@@ -145,7 +145,7 @@ class UserController extends Controller
     
     /**
      * Change user password.
-     * @param string $email
+     * @param string $email user email
      * @param string $new_password uncrypted password, if skipped random password will be generated.
      */
     public function actionPassword($email, $new_password = '')
