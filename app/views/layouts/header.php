@@ -14,7 +14,7 @@ use yii\helpers\Html;
         <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
             <span class="sr-only">Toggle navigation</span>
         </a>
-
+            
         <div class="navbar-custom-menu">
 
             <ul class="nav navbar-nav">
@@ -227,10 +227,11 @@ use yii\helpers\Html;
                 </li>
                 <!-- User Account: style can be found in dropdown.less -->
 
+                <?php if (!Yii::$app->user->isGuest): ?>
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <img src="<?= $directoryAsset ?>/img/user2-160x160.jpg" class="user-image" alt="User Image"/>
-                        <span class="hidden-xs">Alexander Pierce</span>
+                        <span class="hidden-xs"><?= Html::encode(Yii::$app->user->identity->name) ?></span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
@@ -239,8 +240,8 @@ use yii\helpers\Html;
                                  alt="User Image"/>
 
                             <p>
-                                Alexander Pierce - Web Developer
-                                <small>Member since Nov. 2012</small>
+                                <?= Html::encode(Yii::$app->user->identity->name) ?>
+                                <small><?= Yii::t('app', 'Member since {date}', ['date' => Yii::$app->formatter->asDate(Yii::$app->user->identity->created_at)]) ?></small>
                             </p>
                         </li>
                         <!-- Menu Body -->
@@ -258,7 +259,7 @@ use yii\helpers\Html;
                         <!-- Menu Footer-->
                         <li class="user-footer">
                             <div class="pull-left">
-                                <a href="#" class="btn btn-default btn-flat">Profile</a>
+                                <a href="#" class="btn btn-default btn-flat"><?= Yii::t('app', 'Profile') ?></a>
                             </div>
                             <div class="pull-right">
                                 <?= Html::a(
@@ -270,6 +271,7 @@ use yii\helpers\Html;
                         </li>
                     </ul>
                 </li>
+                <?php endif ?>
 
                 <!-- User Account: style can be found in dropdown.less -->
                 <li>
