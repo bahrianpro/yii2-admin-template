@@ -8,8 +8,8 @@ use dmstr\web\AdminLteAsset;
 /* @var $content string */
 /* @var $directoryAsset string */
 
-AppAsset::register($this);
 AdminLteAsset::register($this);
+AppAsset::register($this);
 
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@vendor/almasaeed2010/adminlte/dist');
 ?>
