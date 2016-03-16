@@ -36,36 +36,13 @@ use yii\helpers\Html;
                 'options' => ['class' => 'sidebar-menu'],
                 'items' => [
                     ['label' => 'Menu Yii2', 'options' => ['class' => 'header']],
-                    ['label' => 'Gii', 'icon' => 'fa fa-file-code-o', 'url' => ['/gii']],
-                    ['label' => 'Debug', 'icon' => 'fa fa-dashboard', 'url' => ['/debug']],
-                    ['label' => 'Login', 'url' => ['user/login'], 'visible' => Yii::$app->user->isGuest],
-                    ['label' => 'Logout', 'url' => ['user/logout'], 'visible' => !Yii::$app->user->isGuest],
-                    [
-                        'label' => 'Same tools',
-                        'icon' => 'fa fa-share',
-                        'url' => '#',
-                        'items' => [
-                            ['label' => 'Gii', 'icon' => 'fa fa-file-code-o', 'url' => ['/gii'],],
-                            ['label' => 'Debug', 'icon' => 'fa fa-dashboard', 'url' => ['/debug'],],
-                            [
-                                'label' => 'Level One',
-                                'icon' => 'fa fa-circle-o',
-                                'url' => '#',
-                                'items' => [
-                                    ['label' => 'Level Two', 'icon' => 'fa fa-circle-o', 'url' => '#',],
-                                    [
-                                        'label' => 'Level Two',
-                                        'icon' => 'fa fa-circle-o',
-                                        'url' => '#',
-                                        'items' => [
-                                            ['label' => 'Level Three', 'icon' => 'fa fa-circle-o', 'url' => '#',],
-                                            ['label' => 'Level Three', 'icon' => 'fa fa-circle-o', 'url' => '#',],
-                                        ],
-                                    ],
-                                ],
-                            ],
-                        ],
-                    ],
+                    ['label' => 'Development', 'icon' => 'fa fa-building-o', 'url' => '#', 'items' => [
+                        ['label' => 'Gii', 'icon' => 'fa fa-file-code-o', 'url' => ['gii']],
+                        ['label' => 'Debug', 'icon' => 'fa fa-dashboard', 'url' => ['debug']],
+                    ], 'visible' => !Yii::$app->user->isGuest],
+                    ['label' => 'Login', 'url' => ['user/login'], 'icon' => 'fa fa-sign-in', 'visible' => Yii::$app->user->isGuest],
+                    ['label' => 'Register', 'url' => ['user/register'], 'icon' => 'fa fa-user-plus', 'visible' => Yii::$app->user->isGuest],
+                    ['label' => 'Logout', 'url' => ['user/logout'], 'icon' => 'fa fa-sign-out', 'visible' => !Yii::$app->user->isGuest],
                 ],
             ]
         ) ?>
