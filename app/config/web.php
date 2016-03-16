@@ -37,10 +37,24 @@ $config = [
                     'levels' => ['error', 'warning'],
                 ],
             ],
-        ],
+        ], // log
+        // Application menus.
         'menu' => [
             'class' => 'app\components\Menu',
-        ],
+            'title' => ['main-nav' => 'Main navigation'],
+            'items' => [
+                // Navigation menu.
+                'main-nav' => [
+                    ['label' => 'Development', 'icon' => 'fa fa-building-o', 'url' => '#', 'items' => [
+                        ['label' => 'Gii', 'icon' => 'fa fa-file-code-o', 'url' => ['gii/default/index']],
+                        ['label' => 'Debug', 'icon' => 'fa fa-dashboard', 'url' => ['debug/default/index']],
+                    ], 'guest' => false],
+                    ['label' => 'Login', 'url' => ['user/login'], 'icon' => 'fa fa-sign-in', 'guest' => true],
+                    ['label' => 'Register', 'url' => ['user/register'], 'icon' => 'fa fa-user-plus', 'guest' => true],
+                    ['label' => 'Logout', 'url' => ['user/logout'], 'icon' => 'fa fa-sign-out', 'guest' => false],
+                ],
+            ],
+        ], // menu
     ],
 ];
 

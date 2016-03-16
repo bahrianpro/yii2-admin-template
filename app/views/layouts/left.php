@@ -33,7 +33,7 @@ use yii\helpers\Html;
 
         <?= dmstr\widgets\Menu::widget([
             'options' => ['class' => 'sidebar-menu'],
-            'items' => Yii::$app->menu->getItems('main'),
+            'items' => Yii::$app->menu->getItems('main-nav'),
         ]) ?>
 
     </section>
