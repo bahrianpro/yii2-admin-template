@@ -60,7 +60,7 @@ class Menu extends Component
         if ($items && $filter) {
             $items = $this->processMenuItems($items);
         }
-        if ($title = $this->getTitle($menu)) {
+        if ($filter && $title = $this->getTitle($menu)) {
             array_unshift($items, ['label' => $title, 'options' => ['class' => 'header']]);
         }
         return $items;
@@ -124,6 +124,62 @@ class Menu extends Component
     public function getTitle($menu)
     {
         return isset($this->title[$menu]) ? $this->title[$menu] : '';
+    }
+    
+    /**
+     * Insert menu items before specified item.
+     * @param string $menu menu name
+     * @param string $label item label before items will be inserted. To
+     * insert items into submenu use '/' to separate labels. For example,
+     * to insert items into Account submenu use label 'User/Account'.
+     * @param array $items
+     * @return Menu
+     */
+    public function insertBefore($menu, $label, array $items)
+    {
+        $this->items[$menu] = $this->processInsert($this->getItems($menu, false), $items, $label);
+        return $this;
+    }
+    
+    /**
+     * @see Menu::insertBefore()
+     */
+    public function insertAfter($menu, $label, array $items)
+    {
+        $this->items[$menu] = $this->processInsert($this->getItems($menu, false), $items, $label, true);
+        return $this;
+    }
+    
+    /**
+     * Helper function for items insert operation.
+     * @param array $items source menu items
+     * @param array $insertItems menu items to be inserted
+     * @param string $label anchor item label
+     * @param boolean $after insert items after anchor label
+     * @param string $level internal. Current menu level
+     * @return array
+     */
+    protected function processInsert($items, $insertItems, $label, $after = false, $level = '')
+    {
+        foreach ($items as $i => $item) {
+            $lvl = $level . $item['label'];
+            if ($lvl === $label) {
+                if ($after) {
+                    if ($i === count($items) - 1) {
+                        $items = array_merge($items, $insertItems);
+                    } else {
+                        array_splice($items, $i + 1, 0, $insertItems);
+                    }
+                } else {
+                    array_splice($items, $i, 0, $insertItems);
+                }
+                break;
+            }
+            if (isset($item['items'])) {
+                $items[$i]['items'] = $this->processInsert($item['items'], $insertItems, $label, $after, $level . $item['label'] . '/');
+            }
+        }
+        return $items;
     }
     
 }
