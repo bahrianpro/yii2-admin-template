@@ -4,9 +4,9 @@ use yii\helpers\Html;
 use app\assets\AppAsset;
 use dmstr\web\AdminLteAsset;
 
-/** @var $this \yii\web\View */
-/** @var $content string */
-/** @var $directoryAsset string */
+/* @var $this \yii\web\View */
+/* @var $content string */
+/* @var $directoryAsset string */
 
 AppAsset::register($this);
 AdminLteAsset::register($this);
