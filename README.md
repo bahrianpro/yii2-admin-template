@@ -101,3 +101,22 @@ Uncomment following lines in `config.php`:
 define('YII_DEBUG', true);
 define('YII_ENV', 'dev');
 ```
+
+TESTING
+-------
+
+After application has been installed and configured it's time to test it.
+First of all, create user via command `yii` line utility:
+```
+./bin/yii user/create mail@address.com "User name"
+```
+
+Then launch local web server:
+```
+./bin/yii serve
+```
+
+Now you can access the application through the following URL:
+```
+http://localhost:8080
+```
