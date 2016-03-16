@@ -31,21 +31,10 @@ use yii\helpers\Html;
         </form>
         <!-- /.search form -->
 
-        <?= dmstr\widgets\Menu::widget(
-            [
-                'options' => ['class' => 'sidebar-menu'],
-                'items' => [
-                    ['label' => 'Menu Yii2', 'options' => ['class' => 'header']],
-                    ['label' => 'Development', 'icon' => 'fa fa-building-o', 'url' => '#', 'items' => [
-                        ['label' => 'Gii', 'icon' => 'fa fa-file-code-o', 'url' => ['gii']],
-                        ['label' => 'Debug', 'icon' => 'fa fa-dashboard', 'url' => ['debug']],
-                    ], 'visible' => !Yii::$app->user->isGuest],
-                    ['label' => 'Login', 'url' => ['user/login'], 'icon' => 'fa fa-sign-in', 'visible' => Yii::$app->user->isGuest],
-                    ['label' => 'Register', 'url' => ['user/register'], 'icon' => 'fa fa-user-plus', 'visible' => Yii::$app->user->isGuest],
-                    ['label' => 'Logout', 'url' => ['user/logout'], 'icon' => 'fa fa-sign-out', 'visible' => !Yii::$app->user->isGuest],
-                ],
-            ]
-        ) ?>
+        <?= dmstr\widgets\Menu::widget([
+            'options' => ['class' => 'sidebar-menu'],
+            'items' => Yii::$app->menu->getItems('main'),
+        ]) ?>
 
     </section>
 

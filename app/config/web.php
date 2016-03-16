@@ -38,6 +38,9 @@ $config = [
                 ],
             ],
         ],
+        'menu' => [
+            'class' => 'app\components\Menu',
+        ],
     ],
 ];
 
