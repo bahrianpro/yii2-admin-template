@@ -60,7 +60,18 @@ class Menu extends Component
         if ($items && $filter) {
             $items = $this->processMenuItems($items);
         }
-        if ($filter && $title = $this->getTitle($menu)) {
+        return $items;
+    }
+    
+    /**
+     * Get menu items for use in widget.
+     * @param string $menu
+     * @return array
+     */
+    public function getMenu($menu)
+    {
+        $items = $this->getItems($menu);
+        if ($title = $this->getTitle($menu)) {
             array_unshift($items, ['label' => $title, 'options' => ['class' => 'header']]);
         }
         return $items;
