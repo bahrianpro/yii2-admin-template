@@ -19,6 +19,7 @@ use yii\helpers\Html;
 
             <ul class="nav navbar-nav">
 
+                <?php if (!Yii::$app->user->isGuest): ?>
                 <!-- Messages: style can be found in dropdown.less-->
                 <li class="dropdown messages-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -226,7 +227,8 @@ use yii\helpers\Html;
                     </ul>
                 </li>
                 <!-- User Account: style can be found in dropdown.less -->
-
+                <?php endif ?>
+                
                 <?php if (!Yii::$app->user->isGuest): ?>
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -271,13 +273,15 @@ use yii\helpers\Html;
                         </li>
                     </ul>
                 </li>
-                <?php endif ?>
 
                 <!-- User Account: style can be found in dropdown.less -->
                 <li>
                     <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
                 </li>
-            </ul>
+                <?php endif ?>
+                
+            </ul> <!-- /.nav .navbar-nav -->
+            
         </div>
     </nav>
 </header>
