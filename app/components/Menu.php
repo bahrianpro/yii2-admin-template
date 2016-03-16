@@ -57,7 +57,7 @@ class Menu extends Component
     public function getItems($menu, $filter = true)
     {
         $items = isset($this->items[$menu]) ? $this->items[$menu] : [];
-        if ($filter) {
+        if ($items && $filter) {
             $items = $this->processMenuItems($items);
         }
         if ($title = $this->getTitle($menu)) {
