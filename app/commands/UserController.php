@@ -187,11 +187,12 @@ class UserController extends Controller
             return $this->p('No users found.');
         }
     
-        $this->stdout(sprintf("%-32s %-24s %-16s %-8s\n", 'Email address', 'User name', 'Created', 'Status'), Console::BOLD);
-        $this->stdout(str_repeat('-', 80) . PHP_EOL);
+        $this->stdout(sprintf("%4s %-32s %-24s %-16s %-8s\n", 'ID', 'Email address', 'User name', 'Created', 'Status'), Console::BOLD);
+        $this->stdout(str_repeat('-', 86) . PHP_EOL);
         
         foreach ($users as $user) {
-            printf("%-32s %-24s %-16s %-8s\n",
+            printf("%4d %-32s %-24s %-16s %-8s\n",
+                    $user->id,
                     $user->email,
                     $user->name,
                     date('Y-m-d H:i', $user->created_at),
