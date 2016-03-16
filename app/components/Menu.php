@@ -12,6 +12,8 @@ use yii\base\Component;
 
 /**
  * Application menu.
+ * 
+ * @todo Emit events on insert/delete menu items.
  */
 class Menu extends Component
 {
