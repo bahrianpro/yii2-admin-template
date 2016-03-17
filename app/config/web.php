@@ -58,6 +58,7 @@ $config = [
     ], // component
     'params' => [
         'passwordResetTokenExpire' => 3600, // expire for 1 hour
+        'adminEmail' => 'admin@example.com',
     ], // params
 ];
 

@@ -42,7 +42,7 @@ class PasswordRequest extends Model
     
     /**
      * Send password reset instructions.
-     * @return User|false
+     * @return boolean
      */
     public function sendEmail()
     {
@@ -50,7 +50,16 @@ class PasswordRequest extends Model
         if ($user && $user->status === User::STATUS_ENABLED) {
             $user->generatePasswordResetToken();
             if ($user->save()) {
-                
+                return Yii::$app->mailer->compose(
+                            [
+                                'html' => 'passwordRequest-html',
+                                'text' => 'passwordRequest-text'
+                            ],
+                            ['user' => $user])
+                        ->setFrom(Yii::$app->params['adminEmail'])
+                        ->setTo($this->email)
+                        ->setSubject(Yii::t('app', 'Reset password information for {name} at {site}', ['name' => $user->name, 'site' => Yii::$app->name]))
+                        ->send();
             }
         }
         
