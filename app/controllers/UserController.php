@@ -38,6 +38,9 @@ class UserController extends Controller
             'register' => [
                 'class' => 'app\base\actions\user\Register',
             ],
+            'password-request' => [
+                'class' => 'app\base\actions\user\PasswordRequest',
+            ],
         ];
     }
     

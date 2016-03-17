@@ -55,7 +55,10 @@ $config = [
                 ],
             ],
         ], // menu
-    ],
+    ], // component
+    'params' => [
+        'passwordResetTokenExpire' => 3600, // expire for 1 hour
+    ], // params
 ];
 
 if (YII_ENV_DEV) {
