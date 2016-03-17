@@ -57,7 +57,7 @@ class Login extends Action
             return ActiveForm::validate($model);
         }
         
-        $view = empty($this->view) ? $this->id : $this->view;
+        $view = empty($this->view) ? 'login' : $this->view;
         return $this->controller->render($view, [
             'model' => $model,
             'enableRegister' => $this->enableRegister,

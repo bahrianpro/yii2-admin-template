@@ -51,7 +51,7 @@ class Register extends Action
             return ActiveForm::validate($model);
         }
         
-        $view = empty($this->view) ? $this->id : $this->view;
+        $view = empty($this->view) ? 'register' : $this->view;
         return $this->controller->render($view, [
             'model' => $model,
         ]);

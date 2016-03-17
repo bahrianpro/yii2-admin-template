@@ -46,7 +46,7 @@ class PasswordRequest extends Action
             }
         }
         
-        $view = empty($this->view) ? $this->id : $this->view;
+        $view = empty($this->view) ? 'passwordRequest' : $this->view;
         return $this->controller->render($view, [
             'model' => $model,
         ]);
