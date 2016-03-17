@@ -1,6 +1,6 @@
 <?php
 /**
- * @author Skorobogatko Alexei <skorobogatko.alexei@gmail.com>
+ * @author Skorobogatko Oleksii <skorobogatko.oleksii@gmail.com>
  * @copyright 2016
  * @version $Id$
  */
@@ -63,6 +63,9 @@ class Register extends Model
         ];
     }
     
+    /**
+     * @inheritdoc
+     */
     public function attributeLabels()
     {
         return [
@@ -75,11 +78,12 @@ class Register extends Model
 
     /**
      * Register a new user.
+     * @return User|false
      */
     public function register()
     {
         if (!$this->validate()) {
-            return null;
+            return false;
         }
         
         $user = new User();
@@ -92,7 +96,7 @@ class Register extends Model
             return $user;
         }
         
-        return null;
+        return false;
     }
     
 }
