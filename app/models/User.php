@@ -60,7 +60,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function init()
     {
-        // User model can be created from command line app where no
+        // User model can be created from command line app where is no
         // user property exists.
         if (isset(Yii::$app->user)) {
             // Update logged_at field after user login.
