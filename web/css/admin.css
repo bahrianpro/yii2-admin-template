@@ -9,3 +9,8 @@
 .navbar-nav > .user-menu > .dropdown-menu {
     padding: 0 0 0;
 }
+
+.login-box-body .password-request {
+    text-align: left;
+    padding: 0 0 15px 0;
+}
