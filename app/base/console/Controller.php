@@ -15,6 +15,7 @@ use yii\helpers\Console;
  * 
  * Parent for console controllers.
  *
+ * @todo Helper method for output tabular data.
  * @author skoro
  */
 class Controller extends \yii\console\Controller
