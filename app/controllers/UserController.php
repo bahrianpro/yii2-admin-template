@@ -1,6 +1,6 @@
 <?php
 /**
- * @author Skorobogatko Alexei <skorobogatko.alexei@gmail.com>
+ * @author Skorobogatko Oleksii <skorobogatko.oleksii@gmail.com>
  * @copyright 2016
  * @version $Id$
  */
@@ -8,9 +8,7 @@
 namespace app\controllers;
 
 use Yii;
-use yii\filters\AccessControl;
 use app\base\Controller;
-use app\forms;
 
 /**
  * UserController
@@ -20,82 +18,27 @@ use app\forms;
 class UserController extends Controller
 {
     
+    /**
+     * @var string views layout.
+     */
     public $layout = '//main-login';
     
     /**
-     * @var boolean enable or disable user registration.
+     * @inheritdoc
      */
-    public $enableRegister = true;
-    
-    /**
-     * @return inheritdoc
-     */
-    public function behaviors()
+    public function actions()
     {
         return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
-                    [
-                        'actions' => ['logout'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                    [
-                        'actions' => ['login', 'register'],
-                        'allow' => true,
-                        'roles' => ['?'],
-                    ],
-                ],
+            'login' => [
+                'class' => 'app\base\actions\user\Login',
+            ],
+            'logout' => [
+                'class' => 'app\base\actions\user\Logout',
+            ],
+            'register' => [
+                'class' => 'app\base\actions\user\Register',
             ],
         ];
     }
     
-    /**
-     * user/login
-     */
-    public function actionLogin()
-    {
-        $model = new forms\Login();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
-        }
-        
-        return $this->render('login', [
-            'model' => $model,
-            'enableRegister' => $this->enableRegister,
-        ]);
-    }
-    
-    /**
-     * user/register
-     */
-    public function actionRegister()
-    {
-        if (!$this->enableRegister) {
-            return $this->goHome();
-        }
-        
-        $model = new forms\Register();
-        if (Yii::$app->request->isPost) {
-            $post = Yii::$app->request->post();
-            if ($model->load($post) && $model->register()) {
-                return $this->goHome();
-            }
-        }
-        
-        return $this->render('register', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * user/logout
-     */
-    public function actionLogout()
-    {
-        Yii::$app->user->logout();
-        return $this->goHome();
-    }
-
 }

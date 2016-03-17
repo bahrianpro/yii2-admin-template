@@ -62,7 +62,7 @@ $fieldOptions = function ($icon) {
 
         <a href="#"><?= Yii::t('app', 'I forgot my password') ?></a><br>
         <?php if ($enableRegister): ?>
-            <a href="<?= Url::to(['user/register']) ?>" class="text-center"><?= Yii::t('app', 'Register a new account') ?></a>
+        <a href="<?= Url::to(['user/register']) ?>" class="text-center"><?= Yii::t('app', 'Register a new account') ?></a>
         <?php endif ?>
 
     </div>
