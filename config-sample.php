@@ -3,10 +3,10 @@ if (!defined('WEBROOT_DIR')) die();
 
 /**
  * Local site config.
- * Rename this file to config.php and edit.
+ * Copy this file to config.php and edit.
  */
 
-// comment out the following two lines when deployed to production
+// uncomment the following two lines for enable development tool and debug info.
 //define('YII_DEBUG', true);
 //define('YII_ENV', 'dev');
 
