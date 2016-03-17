@@ -19,7 +19,7 @@ class PasswordRequest extends Action
 {
     
     /**
-     * @var string class name for Login form.
+     * @var string class name for Password Request form.
      */
     public $modelClass = 'app\forms\PasswordRequest';
     
