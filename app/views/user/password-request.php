@@ -22,7 +22,7 @@ $fieldOptions = function ($icon) {
     </div>
     <!-- /.login-logo -->
     <div class="login-box-body">
-        <p class="login-box-msg"><?= Yii::t('app', 'Please fill out your email. A link to reset password will be sent there.') ?></p>
+        <p class="login-box-msg"><?= Yii::t('app', 'If you have forgotten your password, you can reset it here. When you fill in your registered email address, you will be sent instructions on how to reset your password.') ?></p>
 
         <?php $form = ActiveForm::begin(['id' => 'login-form', 'enableClientValidation' => false]); ?>
 
@@ -33,7 +33,7 @@ $fieldOptions = function ($icon) {
 
         <div class="row">
             <div class="col-xs-4">
-                <?= Html::submitButton(Yii::t('app', 'Send'), ['class' => 'btn btn-primary btn-block btn-flat', 'name' => 'login-button']) ?>
+                <?= Html::submitButton(Yii::t('app', 'Submit'), ['class' => 'btn btn-primary btn-block btn-flat', 'name' => 'login-button']) ?>
             </div>
             <!-- /.col -->
         </div>
