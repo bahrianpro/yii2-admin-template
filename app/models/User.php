@@ -1,6 +1,6 @@
 <?php
 /**
- * @author Skorobogatko Alexei <skorobogatko.alexei@gmail.com>
+ * @author Skorobogatko Oleksii <skorobogatko.oleksii@gmail.com>
  * @copyright 2016
  * @version $Id$
  */
@@ -208,6 +208,48 @@ class User extends ActiveRecord implements IdentityInterface
             return true;
         }
         return false;
+    }
+    
+    /**
+     * Generate random token for password reset.
+     * @return User
+     */
+    public function generatePasswordResetToken()
+    {
+        $this->reset_token = Yii::$app->security->generateRandomString() . '_' . time();
+        return $this;
+    }
+    
+    /**
+     * Finds user by password reset token.
+     * 
+     * Expire of reset token adjusted by 'passwordResetTokenExpire' 
+     * configuration parameter:
+     * ```php
+     *  'params' => [
+     *      'passwordResetTokenExpire' => 3600, // 1 hour.
+     *  ],
+     * ```
+     * 
+     * @param string $token
+     * @return User|null
+     */
+    public static function findByResetToken($token)
+    {
+        $expire = isset(Yii::$app->params['passwordResetTokenExpire']) ?
+                (int) Yii::$app->params['passwordResetTokenExpire'] : 3600;
+        
+        // Is token expired ?
+        $list = explode('_', $token);
+        $time = (int) end($list);
+        if ($time + $expire < time()) {
+            return null;
+        }
+        
+        return static::findOne([
+            'reset_token' => $token,
+            'status' => self::STATUS_ENABLED,
+        ]);
     }
     
 }
