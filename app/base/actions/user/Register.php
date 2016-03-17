@@ -21,7 +21,7 @@ class Register extends Action
 {
     
     /**
-     * @var string class name for Login form.
+     * @var string class name for Register form.
      */
     public $modelClass = 'app\forms\Register';
     
