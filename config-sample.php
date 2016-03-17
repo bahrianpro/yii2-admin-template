@@ -26,6 +26,15 @@ return [
             'charset' => 'utf8',
         ],
     ],
+    // Configure your modules here:
+    'modules' => [
+    //    'debug' => [
+    //        'allowedIPs' => ['192.168.1.*'],
+    //    ],
+    //    'gii' => [
+    //        'allowedIPs' => ['192.168.1.*'],
+    //    ],
+    ],
     'params' => [
         // Application parameters.
     ],
