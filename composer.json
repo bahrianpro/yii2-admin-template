@@ -7,6 +7,7 @@
         "php": ">=5.4.0",
         "yiisoft/yii2": "^2.0",
         "yiisoft/yii2-bootstrap": "*",
+        "yiisoft/yii2-swiftmailer": "*",
         "dmstr/yii2-adminlte-asset": "2.*"
     },
     "extra": {
