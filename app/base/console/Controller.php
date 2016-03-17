@@ -1,7 +1,7 @@
 <?php
 /**
- * @author Skorobogatko Alexei <a.skorobogatko@soft-industry.com>
- * @copyright 2016 Soft-Industry
+ * @author Skorobogatko Oleksii <skorobogatko.oleksii@gmail.com>
+ * @copyright 2016
  * @version $Id$
  */
 
