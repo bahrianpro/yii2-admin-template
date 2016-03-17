@@ -15,6 +15,7 @@ DIRECTORY STRUCTURE
           assets/         contains assets definition
           base/           contains base classes
           commands/       contains console commands (controllers)
+          components/     contains various components (Menu, etc)
           config/         contains application configurations
           controllers/    contains Web controller classes
           forms/          contains web forms
@@ -102,6 +103,21 @@ define('YII_DEBUG', true);
 define('YII_ENV', 'dev');
 ```
 
+If you are on local network (not 127.0.0.1) make debug modules happy with
+following lines:
+```php
+    'modules' => [
+        'debug' => [
+            'allowedIPs' => ['192.168.1.*'],
+        ],
+        'gii' => [
+            'allowedIPs' => ['192.168.1.*'],
+        ],
+    ],
+```
+These lines enable `debug` and `gii` modules for clients from `192.168.1.*`
+subnetwork.
+
 TESTING
 -------
 
@@ -116,7 +132,7 @@ Then launch local web server:
 ./bin/yii serve
 ```
 
-Now you can access the application through the following URL:
+Now you can access the application through the following URL and try to login:
 ```
 http://localhost:8080
 ```
