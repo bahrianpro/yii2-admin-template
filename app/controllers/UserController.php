@@ -41,6 +41,9 @@ class UserController extends Controller
             'password-request' => [
                 'class' => 'app\base\actions\user\PasswordRequest',
             ],
+            'password-reset' => [
+                'class' => 'app\base\actions\user\PasswordReset',
+            ],
         ];
     }
     
