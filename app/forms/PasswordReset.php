@@ -8,14 +8,14 @@
 namespace app\forms;
 
 use Yii;
-use app\model\User;
+use app\models\User;
 use yii\base\InvalidParamException;
 use yii\base\Model;
 
 /**
  * Password reset form
  */
-class ResetPassword extends Model
+class PasswordReset extends Model
 {
     
     public $password;
