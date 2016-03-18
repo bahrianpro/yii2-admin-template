@@ -6,4 +6,7 @@ Things to be done
 3. User profile page.
 4. Console command for database backup.
 5. Session messages (after logout, register and so on).
+6. Global translation function t() wrapper for Yii::t().
+7. Wrapper for session->setFlash in base Controller.
+
 
