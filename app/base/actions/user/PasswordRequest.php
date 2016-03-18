@@ -41,7 +41,7 @@ class PasswordRequest extends Action
                     Yii::$app->getSession()->setFlash('success', Yii::t('app', 'Check your email for further instructions.'));
                     return $this->controller->redirect(['user/login']);
                 } else {
-                    Yii::$app->getSession()->setFlash('error', Yii::t('app', 'Sorry, we are unable to reset password for email provided.'));
+                    Yii::$app->getSession()->setFlash('error', Yii::t('app', 'Sorry, we are unable to reset password for provided email.'));
                 }
             }
         }
