@@ -57,7 +57,7 @@ class Register extends Model
 
             ['password', 'required'],
             ['password', 'compare'],
-            ['password', 'string', 'min' => 6],
+            ['password', 'string', 'min' => 6, 'max' => 64],
             
             ['password_repeat', 'required'],
         ];
