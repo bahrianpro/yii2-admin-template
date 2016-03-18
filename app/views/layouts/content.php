@@ -21,12 +21,19 @@ use dmstr\widgets\Alert;
             </h1>
         <?php } ?>
 
-        <?=
-        Breadcrumbs::widget(
-            [
-                'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-            ]
-        ) ?>
+        <?php
+        if (isset($this->params['breadcrumbs'])):
+            echo Breadcrumbs::widget(
+                [
+                    'homeLink' => [
+                        'label' => '<i class="fa fa-dashboard"></i>' . Yii::t('app', 'Home'),
+                        'url' => Yii::$app->homeUrl,
+                        'encode' => false,
+                    ],
+                    'links' => $this->params['breadcrumbs'],
+                ]
+            );
+        endif ?>
     </section>
 
     <section class="content">
