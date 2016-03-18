@@ -8,7 +8,7 @@
 namespace app\base\actions\user;
 
 use Yii;
-use yii\base\Action;
+use app\base\Action;
 
 /**
  * User logout action.

@@ -8,7 +8,7 @@
 namespace app\base\actions\user;
 
 use Yii;
-use yii\base\Action;
+use app\base\Action;
 use yii\web\Response;
 use yii\widgets\ActiveForm;
 
@@ -29,7 +29,7 @@ class Login extends Action
     /**
      * @var string
      */
-    public $view;
+    public $view = 'login';
     
     /**
      * @var boolean Enable/disable user register link.
@@ -57,8 +57,7 @@ class Login extends Action
             return ActiveForm::validate($model);
         }
         
-        $view = empty($this->view) ? 'login' : $this->view;
-        return $this->controller->render($view, [
+        return $this->render([
             'model' => $model,
             'enableRegister' => $this->enableRegister,
         ]);

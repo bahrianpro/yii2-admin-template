@@ -8,7 +8,7 @@
 namespace app\base\actions\user;
 
 use Yii;
-use yii\base\Action;
+use app\base\Action;
 use yii\web\Response;
 use yii\widgets\ActiveForm;
 
@@ -28,7 +28,7 @@ class Register extends Action
     /**
      * @var string
      */
-    public $view;
+    public $view = 'register';
     
     /**
      * @inheritdoc
@@ -51,8 +51,7 @@ class Register extends Action
             return ActiveForm::validate($model);
         }
         
-        $view = empty($this->view) ? 'register' : $this->view;
-        return $this->controller->render($view, [
+        return $this->render([
             'model' => $model,
         ]);
     }

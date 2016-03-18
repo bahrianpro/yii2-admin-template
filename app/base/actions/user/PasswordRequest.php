@@ -8,7 +8,7 @@
 namespace app\base\actions\user;
 
 use Yii;
-use yii\base\Action;
+use app\base\Action;
 
 /**
  * Request user password.
@@ -26,7 +26,7 @@ class PasswordRequest extends Action
     /**
      * @var string
      */
-    public $view;
+    public $view = 'passwordRequest';
     
     /**
      * @inheritdoc
@@ -46,8 +46,7 @@ class PasswordRequest extends Action
             }
         }
         
-        $view = empty($this->view) ? 'passwordRequest' : $this->view;
-        return $this->controller->render($view, [
+        return $this->render([
             'model' => $model,
         ]);
     }

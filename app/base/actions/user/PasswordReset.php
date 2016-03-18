@@ -8,7 +8,7 @@
 namespace app\base\actions\user;
 
 use Yii;
-use yii\base\Action;
+use app\base\Action;
 
 /**
  * User password reset.
@@ -25,7 +25,7 @@ class PasswordReset extends Action
     /**
      * @var string
      */
-    public $view;
+    public $view = 'passwordReset';
     
     /**
      * @inheritdoc
@@ -53,8 +53,7 @@ class PasswordReset extends Action
             }
         }
         
-        $view = empty($this->view) ? 'passwordReset' : $this->view;
-        return $this->controller->render($view, [
+        return $this->render([
             'model' => $model,
         ]);
     }
