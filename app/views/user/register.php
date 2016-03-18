@@ -55,6 +55,10 @@ $fieldOptions = function ($icon) {
         </div>
 
         <?php ActiveForm::end(); ?>
+        
+        <div class="account-links">
+            <a href="<?= Url::to(['user/login']) ?>"><?= Yii::t('app', 'I already have an account') ?></a><br>
+        </div>
 
     </div>
     <!-- /.register-box-body -->

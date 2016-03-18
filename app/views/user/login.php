@@ -60,10 +60,12 @@ $fieldOptions = function ($icon) {
         </div>
         <!-- /.social-auth-links -->
 
-        <a href="<?= Url::to(['user/password-request']) ?>"><?= Yii::t('app', 'I forgot my password') ?></a><br>
-        <?php if ($enableRegister): ?>
-        <a href="<?= Url::to(['user/register']) ?>" class="text-center"><?= Yii::t('app', 'Register a new account') ?></a>
-        <?php endif ?>
+        <div class="account-links">
+            <a href="<?= Url::to(['user/password-request']) ?>"><?= Yii::t('app', 'I forgot my password') ?></a><br>
+            <?php if ($enableRegister): ?>
+            <a href="<?= Url::to(['user/register']) ?>" class="text-center"><?= Yii::t('app', 'Register a new account') ?></a>
+            <?php endif ?>
+        </div>
 
     </div>
     <!-- /.login-box-body -->

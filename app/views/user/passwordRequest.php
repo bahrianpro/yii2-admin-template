@@ -39,7 +39,7 @@ $fieldOptions = function ($icon) {
         </div>
 
         <?php ActiveForm::end(); ?>
-
+        
     </div>
     <!-- /.login-box-body -->
 </div><!-- /.login-box -->

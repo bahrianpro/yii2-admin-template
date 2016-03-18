@@ -18,3 +18,7 @@
 .login-page .alert, .register-page .alert {
     margin: 10px;
 }
+
+.register-box .account-links {
+    margin-top: 10px;
+}
