@@ -48,4 +48,16 @@ class Profile extends Model
         ];
     }
     
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'name' => Yii::t('app', 'User name'),
+            'password' => Yii::t('app', 'Password'),
+            'password_repeat' => Yii::t('app', 'Confirm password'),
+        ];
+    }
+    
 }
