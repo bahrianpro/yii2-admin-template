@@ -29,6 +29,10 @@ class UserController extends Controller
     public function actions()
     {
         return [
+            'index' => [
+                'class' => 'app\base\actions\user\Profile',
+                'layout' => '//main',
+            ],
             'login' => [
                 'class' => 'app\base\actions\user\Login',
             ],
