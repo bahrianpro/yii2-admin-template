@@ -261,11 +261,15 @@ use yii\helpers\Html;
                         <!-- Menu Footer-->
                         <li class="user-footer">
                             <div class="pull-left">
-                                <a href="#" class="btn btn-default btn-flat"><?= Yii::t('app', 'Profile') ?></a>
+                                <?= Html::a(
+                                    Yii::t('app', 'Profile'),
+                                    ['user/index'],
+                                    ['class' => 'btn btn-default btn-flat']
+                                ) ?>
                             </div>
                             <div class="pull-right">
                                 <?= Html::a(
-                                    'Sign out',
+                                    Yii::t('app', 'Sign out'),
                                     ['user/logout'],
                                     ['data-method' => 'post', 'class' => 'btn btn-default btn-flat']
                                 ) ?>
