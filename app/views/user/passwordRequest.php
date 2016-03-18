@@ -33,7 +33,7 @@ $fieldOptions = function ($icon) {
 
         <div class="row">
             <div class="col-xs-4">
-                <?= Html::submitButton(Yii::t('app', 'Submit'), ['class' => 'btn btn-primary btn-block btn-flat', 'name' => 'login-button']) ?>
+                <?= Html::submitButton(Yii::t('app', 'Submit'), ['class' => 'btn btn-primary btn-block btn-flat', 'name' => 'submit-button']) ?>
             </div>
             <!-- /.col -->
         </div>
