@@ -39,9 +39,12 @@ class Profile extends Action
             return $this->controller->redirect(['user/login']);
         }
         
-        $model = new $this->modelClass;
+        $model = new $this->modelClass(Yii::$app->user->getIdentity());
         if (Yii::$app->request->isPost) {
-            
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                Yii::$app->getSession()->setFlash('success', Yii::t('app', 'Changes saved.'));
+                $model->reset();
+            }
         }
         
         if (Yii::$app->request->isAjax) {
