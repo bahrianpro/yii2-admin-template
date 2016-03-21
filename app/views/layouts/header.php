@@ -232,7 +232,6 @@ use yii\helpers\Html;
                 <?php if (!Yii::$app->user->isGuest): ?>
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <!--<img src="<?= $directoryAsset ?>/img/user2-160x160.jpg" class="user-image" alt="User Image"/>-->
                         <?= Html::img(Yii::$app->params['noAvatarImage'], ['class' => 'user-image']) ?>
                         <span class="hidden-xs"><?= Html::encode(Yii::$app->user->identity->name) ?></span>
                     </a>
@@ -240,7 +239,6 @@ use yii\helpers\Html;
                         <!-- User image -->
                         <li class="user-header">
                             <?= Html::img(Yii::$app->params['noAvatarImage'], ['class' => 'img-circle']) ?>
-                            <!--<img src="<?= $directoryAsset ?>/img/user2-160x160.jpg" class="img-circle" alt="User Image"/>-->
                             <p>
                                 <?= Html::encode(Yii::$app->user->identity->name) ?>
                                 <small><?= Yii::t('app', 'Member since {date}', ['date' => Yii::$app->formatter->asDate(Yii::$app->user->identity->created_at)]) ?></small>
