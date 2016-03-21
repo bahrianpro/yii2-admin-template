@@ -81,6 +81,15 @@ class Profile extends Model
     }
     
     /**
+     * Read only email property.
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->user->email;
+    }
+    
+    /**
      * Save changes.
      * @return boolean
      */

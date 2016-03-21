@@ -18,6 +18,8 @@ use yii\helpers\Html;
     ],
 ]) ?>
 
+    <?= $form->field($model, 'email')->textInput(['disabled' => 'disabled']) ?>
+
     <?= $form->field($model, 'name') ?>
 
     <?= $form->field($model, 'password')->passwordInput() ?>
