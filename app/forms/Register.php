@@ -9,6 +9,7 @@ namespace app\forms;
 
 use Yii;
 use yii\base\Model;
+use yii\web\UserEvent;
 use app\models\User;
 
 /**
@@ -18,6 +19,8 @@ use app\models\User;
  */
 class Register extends Model
 {
+    
+    const EVENT_REGISTER = 'userRegister';
 
     /**
      * @var string
@@ -92,11 +95,26 @@ class Register extends Model
         $user->status = User::STATUS_ENABLED;
         $user->setPassword($this->password);
         
-        if ($user->save()) {
+        if ($this->userRegisterEvent($user) && $user->save()) {
             return $user;
         }
         
         return false;
+    }
+    
+    /**
+     * This method is called before register a user.
+     * @param User $user
+     * @return boolean
+     */
+    protected function userRegisterEvent(User $user)
+    {
+        $event = new UserEvent([
+            'identity' => $user,
+        ]);
+        $this->trigger(self::EVENT_REGISTER, $event);
+        
+        return $event->isValid;
     }
     
 }
