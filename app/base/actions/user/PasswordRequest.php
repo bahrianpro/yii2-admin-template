@@ -9,6 +9,7 @@ namespace app\base\actions\user;
 
 use Yii;
 use app\base\Action;
+use app\base\Controller;
 
 /**
  * Request user password.
@@ -38,10 +39,10 @@ class PasswordRequest extends Action
         if (Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post()) && $model->validate()) {
                 if ($model->sendEmail()) {
-                    Yii::$app->getSession()->setFlash('success', Yii::t('app', 'Check your email for further instructions.'));
+                    $this->controller->addFlash(Controller::FLASH_INFO, Yii::t('app', 'Check your email for further instructions.'));
                     return $this->controller->redirect(['user/login']);
                 } else {
-                    Yii::$app->getSession()->setFlash('error', Yii::t('app', 'Sorry, we are unable to reset password for provided email.'));
+                    $this->controller->addFlash(Controller::FLASH_ERROR, Yii::t('app', 'Sorry, we are unable to reset password for provided email.'));
                 }
             }
         }

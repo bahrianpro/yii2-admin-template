@@ -9,6 +9,7 @@ namespace app\base\actions\user;
 
 use Yii;
 use app\base\Action;
+use app\base\Controller;
 use yii\web\Response;
 use yii\widgets\ActiveForm;
 
@@ -42,7 +43,7 @@ class Profile extends Action
         $model = new $this->modelClass(Yii::$app->user->getIdentity());
         if (Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                Yii::$app->getSession()->setFlash('success', Yii::t('app', 'Changes saved.'));
+                $this->controller->addFlash(Controller::FLASH_INFO, Yii::t('app', 'Changes saved.'));
                 $model->reset();
             }
         }

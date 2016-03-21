@@ -9,6 +9,7 @@ namespace app\base\actions\user;
 
 use Yii;
 use app\base\Action;
+use app\base\Controller;
 
 /**
  * User password reset.
@@ -32,23 +33,22 @@ class PasswordReset extends Action
      */
     public function run($token)
     {
-        $session = Yii::$app->getSession();
         try {
             $model = new $this->modelClass($token);
         }
         catch(\yii\base\InvalidParamException $e) {
-            $session->setFlash('error', $e->getMessage());
+            $this->controller->addFlash(Controller::FLASH_ERROR, $e->getMessage());
             return $this->controller->goHome();
         }
         
         if (Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post()) && $model->validate()) {
                 if ($model->resetPassword()) {
-                    $session->setFlash('success', Yii::t('app', 'Password has been changed. Now you may login.'));
+                    $this->controller->addFlash(Controller::FLASH_SUCCESS, Yii::t('app', 'Password has been changed. Now you may login.'));
                     return $this->controller->redirect(['user/login']);
                 }
                 else {
-                    $session->setFlash('error', Yii::t('app', 'Unable to change password.'));
+                    $this->controller->addFlash(Controller::FLASH_ERROR, Yii::t('app', 'Unable to change password.'));
                 }
             }
         }
