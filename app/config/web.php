@@ -59,7 +59,7 @@ $config = [
     'params' => [
         'passwordResetTokenExpire' => 3600, // expire for 1 hour
         'adminEmail' => 'admin@example.com',
-        'noAvatarImage' => '@web/images/avatar2.png',
+        'noAvatarImage' => '@web/images/avatars/avatar2.png',
     ], // params
 ];
 
