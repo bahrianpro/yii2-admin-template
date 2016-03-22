@@ -1,18 +1,14 @@
 <?php
 
 use app\base\Migration;
+use app\models\User;
 
 class m160314_212231_user extends Migration
 {
     
-    /**
-     * @var string schema table name.
-     */
-    public $table = '{{%user}}';
-    
     public function up()
     {
-        $this->createTable($this->table, [
+        $this->createTable(User::tableName(), [
             'id' => $this->primaryKey(),
             'name' => $this->string(64)->notNull(),
             'email' => $this->string(64)->unique(),
@@ -20,18 +16,18 @@ class m160314_212231_user extends Migration
             'reset_token' => $this->string()->notNull()->defaultValue(''),
             'activate_token' => $this->string()->notNull()->defaultValue(''),
             'auth_key' => $this->string()->notNull()->unique(),
-            'status' => $this->smallInteger()->defaultValue(0),
-            'created_at' => $this->integer(),
-            'logged_at' => $this->integer(),
+            'status' => $this->smallInteger()->unsigned()->defaultValue(0),
+            'created_at' => $this->integer()->unsigned(),
+            'logged_at' => $this->integer()->unsigned(),
         ]);
         
-        $this->createIndex('idx_user_reset_token', $this->table, 'reset_token');
-        $this->createIndex('idx_user_activate_token', $this->table, 'activate_token');
+        $this->createIndex('idx_user_reset_token', User::tableName(), 'reset_token');
+        $this->createIndex('idx_user_activate_token', User::tableName(), 'activate_token');
     }
 
     public function down()
     {
-        $this->dropTable($this->table);
+        $this->dropTable(User::tableName());
     }
 
 }
