@@ -41,13 +41,6 @@ class Tabs extends \yii\bootstrap\Tabs
     const HEADER_RIGHT = 'pull-right';
 
     /**
-     * @inheritdoc
-     */
-    public $options = [
-        'class' => 'nav-tabs-custom',
-    ];
-    
-    /**
      * @var array tab header. Keys:
      * label - header label
      * side - header side: left or right (by default).
@@ -61,6 +54,7 @@ class Tabs extends \yii\bootstrap\Tabs
     {
         parent::init();
         Html::removeCssClass($this->options, ['nav', $this->navType]);
+        Html::addCssClass($this->options, 'nav-tabs-custom');
     }
     
     /**
