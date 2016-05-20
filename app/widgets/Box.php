@@ -11,6 +11,7 @@ use Yii;
 use yii\bootstrap\Widget;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use yii\helpers\ArrayHelper;
 use app\helpers\Icon;
 
 /**
@@ -37,6 +38,7 @@ use app\helpers\Icon;
  * ```
  *
  * @author skoro
+ * @todo remember box state: collapsed or expanded via cookie.
  */
 class Box extends Widget
 {
@@ -81,9 +83,14 @@ class Box extends Widget
     public $encodeLabel = true;
     
     /**
-     * @var string tool container options.
+     * @var array tool container options.
      */
     public $toolOptions = [];
+    
+    /**
+     * @var array
+     */
+    public $toolButtonOptions = ['class' => 'btn btn-box-tool'];
     
     /**
      * @var boolean initial box state is collapsed.
@@ -122,6 +129,11 @@ class Box extends Widget
      * @var string error message when fetch content failed.
      */
     public $loadingError = 'Couldn\'t load content.';
+    
+    /**
+     * @var array box actions.
+     */
+    public $actions = [];
     
     /**
      * @inheritdoc
@@ -190,31 +202,52 @@ class Box extends Widget
      */
     protected function renderTools()
     {
-        $tools = '';
+        $tools = $this->renderActions();
+        $options = $this->toolButtonOptions;
         if ($this->expandable) {
             Html::addCssClass($this->options, 'collapsed-box');
-            $tools .= Html::button(Icon::icon('fa fa-plus'), [
-                'class' => 'btn btn-box-tool',
-                'data-widget' => 'collapse',
-            ]);
+            $options['data-widget'] = 'collapse';
+            $tools .= Html::button(Icon::icon('fa fa-plus'), $options);
         }
         elseif ($this->collapsable) {
-            $tools .= Html::button(Icon::icon('fa fa-minus'), [
-                'class' => 'btn btn-box-tool',
-                'data-widget' => 'collapse',
-            ]);
+            $options['data-widget'] = 'collapse';
+            $tools .= Html::button(Icon::icon('fa fa-minus'), $options);
         }
         if ($this->removable) {
-            $tools .= Html::button(Icon::icon('fa fa-times'), [
-                'class' => 'btn btn-box-tool',
-                'data-widget' => 'remove',
-            ]);
+            $options['data-widget'] = 'remove';
+            $tools .= Html::button(Icon::icon('fa fa-times'), $options);
         }
         if ($tools) {
             Html::addCssClass($this->toolOptions, ['box-tools', 'pull-right']);
             $tools = Html::tag('div', $tools, $this->toolOptions);
         }
         return $tools;
+    }
+    
+    /**
+     * Render box action buttons.
+     * @return string
+     */
+    protected function renderActions()
+    {
+        $actions = '';
+        foreach ($this->actions as $action) {
+            $options = $this->toolButtonOptions;
+            if (isset($action['label'])) {
+                $options['data-original-title'] = $action['label'];
+                $options['data-toggle'] = 'tooltip';
+            }
+            if (isset($action['options']['class'])) {
+                Html::addCssClass($options, $action['options']['class']);
+                ArrayHelper::remove($action['options'], 'class');
+            }
+            $options = ArrayHelper::merge($options, ArrayHelper::getValue($action, 'options', []));
+            $actions .= Html::button(
+                Icon::icon(ArrayHelper::getValue($action, 'icon', 'fa fa-cog')),
+                $options
+            );
+        }
+        return $actions;
     }
     
     /**
