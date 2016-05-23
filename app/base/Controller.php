@@ -37,7 +37,6 @@ class Controller extends \yii\web\Controller
     public function init()
     {
         parent::init();
-        $this->sidebarState();
     }
     
     /**
@@ -54,19 +53,22 @@ class Controller extends \yii\web\Controller
     public function render($view, $params = [])
     {
         $_view = $this->getView();
-        $_view->params['sidebarCollapsed'] = $this->_sidebarCollapsed;
+        $_view->params['sidebarCollapsed'] = $this->getSidebarState();
         return parent::render($view, $params);
     }
     
     /**
-     * Check whether sidebar collapsed.
+     * Gets sidebar collapsed state.
+     * If sidebar is collapsed it returns collapsed css class.
+     * @return string
      */
-    protected function sidebarState()
+    protected function getSidebarState()
     {
         // Yii loads only crypted cookies on request, so we must use global COOKIE.  
         if (isset($_COOKIE['SidebarPushMenu']) && $_COOKIE['SidebarPushMenu'] === 'collapsed') {
-            $this->_sidebarCollapsed = 'sidebar-collapse';
+            return 'sidebar-collapse';
         }
+        return '';
     }
     
 }
