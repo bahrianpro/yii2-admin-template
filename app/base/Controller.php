@@ -8,6 +8,7 @@
 namespace app\base;
 
 use Yii;
+use yii\web\NotFoundHttpException;
 
 /**
  * Controller
@@ -69,6 +70,23 @@ class Controller extends \yii\web\Controller
             return 'sidebar-collapse';
         }
         return '';
+    }
+    
+    /**
+     * Finds a model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param string $class model class name with namespace.
+     * @param integer $id
+     * @return ActiveRecord
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($class, $id)
+    {
+        $model = call_user_func([$class, 'findOne'], $id);
+        if (!$model) {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+        return $model;
     }
     
 }
