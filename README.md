@@ -4,8 +4,15 @@ Yii 2 Admin Project Template
 Yii 2 Admin Project Template is a skeleton [Yii 2](http://www.yiiframework.com/) application best for rapidly creating admin backends projects.
 
 Features:
+* Application files in its folder.
 * [AdminLTE](https://github.com/almasaeed2010/AdminLTE) theme imported
 * User schema and user login/register forms.
+* AdminLTE specific widgets exposed as Yii2 widgets:
+  * Box (with expanded/collapsed state)
+  * Tabs
+  * Select2
+  * GridView
+   
 
 DIRECTORY STRUCTURE
 -------------------
@@ -19,10 +26,12 @@ DIRECTORY STRUCTURE
           config/         contains application configurations
           controllers/    contains Web controller classes
           forms/          contains web forms
+          helpers/        contains application helpers
           mail/           contains view files for e-mails
           models/         contains model classes
           tests/          contains various tests for the basic application
           views/          contains view files for the Web application
+          widgets/        contains widgets ready to use in views
     vendor/      contains dependent 3rd-party packages
     runtime/     contains files generated during runtime
     web/         contains the entry script and Web resources
