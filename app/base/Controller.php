@@ -27,11 +27,17 @@ class Controller extends \yii\web\Controller
     const FLASH_WARNING = 'warning';
     
     /**
+     * @var string when application sidebar is collapsed this contains collapsed css class.
+     */
+    protected $_sidebarCollapsed;
+    
+    /**
      * @inheritdoc
      */
     public function init()
     {
         parent::init();
+        $this->sidebarState();
     }
     
     /**
@@ -40,6 +46,27 @@ class Controller extends \yii\web\Controller
     public function addFlash($key, $value, $removeAfterAccess = true)
     {
         Yii::$app->getSession()->addFlash($key, $value, $removeAfterAccess);
+    }
+    
+    /**
+     * @inheritdoc
+     */
+    public function render($view, $params = [])
+    {
+        $_view = $this->getView();
+        $_view->params['sidebarCollapsed'] = $this->_sidebarCollapsed;
+        return parent::render($view, $params);
+    }
+    
+    /**
+     * Check whether sidebar collapsed.
+     */
+    protected function sidebarState()
+    {
+        // Yii loads only crypted cookies on request, so we must use global COOKIE.  
+        if (isset($_COOKIE['SidebarPushMenu']) && $_COOKIE['SidebarPushMenu'] === 'collapsed') {
+            $this->_sidebarCollapsed = 'sidebar-collapse';
+        }
     }
     
 }
