@@ -1,5 +1,5 @@
 <?php
-if (!defined('WEBROOT_DIR')) die();
+if (!defined('APPROOT_DIR')) die();
 
 /**
  * Local site config.

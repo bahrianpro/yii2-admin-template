@@ -2,14 +2,17 @@
 
 /**
  * Don't edit this file.
- * Put your modifications to WEBROOT_DIR . '/config.php'
+ * Put your modifications to APPROOT_DIR . '/config.php'
  */
+
+// Should be defined in web/index.php but ensure that is.
+defined('APPROOT_DIR') or define('APPROOT_DIR', dirname(dirname(__DIR__)));
 
 $config = [
     'id' => 'basic',
-    'basePath' => WEBROOT_DIR . '/app',
-    'vendorPath' => WEBROOT_DIR . '/vendor',
-    'runtimePath' => WEBROOT_DIR . '/runtime',
+    'basePath' => APPROOT_DIR . '/app',
+    'vendorPath' => APPROOT_DIR . '/vendor',
+    'runtimePath' => APPROOT_DIR . '/runtime',
     'bootstrap' => ['log'],
     'components' => [
         'cache' => [

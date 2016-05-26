@@ -8,18 +8,18 @@
  * @license http://www.yiiframework.com/license/
  */
 
-define('WEBROOT_DIR', dirname(__DIR__));
+define('APPROOT_DIR', dirname(__DIR__));
 
 $local = [];
-if (file_exists(WEBROOT_DIR . '/config.php')) {
-    $local = require(WEBROOT_DIR . '/config.php');
+if (file_exists(APPROOT_DIR . '/config.php')) {
+    $local = require(APPROOT_DIR . '/config.php');
 }
 
 require(__DIR__ . '/../vendor/autoload.php');
 require(__DIR__ . '/../vendor/yiisoft/yii2/Yii.php');
 
 $config = yii\helpers\ArrayHelper::merge(
-    require(WEBROOT_DIR . '/app/config/console.php'),
+    require(APPROOT_DIR . '/app/config/console.php'),
     // From config.php only DB component needed.
     isset($local['components']['db']) ?
         ['components' => [

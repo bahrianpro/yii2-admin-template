@@ -1,12 +1,14 @@
 <?php
 
-Yii::setAlias('@tests', dirname(__DIR__) . '/tests/codeception');
+defined('APPROOT_DIR') or define('APPROOT_DIR', dirname(dirname(__DIR__)));
+
+Yii::setAlias('@tests', APPROOT_DIR . '/tests');
 
 $config = [
     'id' => 'basic-console',
-    'basePath' => WEBROOT_DIR . '/app',
-    'vendorPath' => WEBROOT_DIR . '/vendor',
-    'runtimePath' => WEBROOT_DIR . '/runtime',
+    'basePath' => APPROOT_DIR . '/app',
+    'vendorPath' => APPROOT_DIR . '/vendor',
+    'runtimePath' => APPROOT_DIR . '/runtime',
     'bootstrap' => ['log'],
     'controllerNamespace' => 'app\commands',
     'components' => [
@@ -29,7 +31,7 @@ $config = [
         ],
         'serve' => [
             'class' => 'yii\console\controllers\ServeController',
-            'docroot' => WEBROOT_DIR . '/web',
+            'docroot' => APPROOT_DIR . '/web',
         ],
 #        'fixture' => [ // Fixture generation command line.
 #            'class' => 'yii\faker\FixtureController',
