@@ -7,8 +7,8 @@ if (!defined('WEBROOT_DIR')) die();
  */
 
 // uncomment the following two lines for enable development tool and debug info.
-//define('YII_DEBUG', true);
-//define('YII_ENV', 'dev');
+//defined('YII_DEBUG') or define('YII_DEBUG', true);
+//defined('YII_ENV') or define('YII_ENV', 'dev');
 
 return [
     'components' => [
