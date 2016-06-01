@@ -13,23 +13,9 @@ $this->params['breadcrumbs'] = [
 
 <div class="row">
     
-    <div class="col-md-9">
-        <div class="nav-tabs-custom">
-            <?= Tabs::widget([
-                'items' => [
-                    [
-                        'label' => 'Account',
-                        'content' => $this->render('_profile_account', ['model' => $model]),
-                        'active' => true,
-                    ],
-                ],
-            ]) ?>
-        </div>
-    </div>
-    
     <div class="col-md-3">
         <!-- Profile image -->
-        <div class="box box-primary">
+        <div class="box box-primary profile-image">
             <div class="box-body box-profile">
                 <?= Html::img(Yii::$app->params['noAvatarImage'], ['class' => 'profile-user-img img-responsive img-circle']) ?>
                 <h3 class="profile-username text-center">
@@ -40,6 +26,20 @@ $this->params['breadcrumbs'] = [
                 </p>
             </div> <!-- /.box-body -->
         </div> <!-- /.box -->
+    </div>
+    
+    <div class="col-md-9">
+        <div class="nav-tabs-custom profile-tabs">
+            <?= Tabs::widget([
+                'items' => [
+                    [
+                        'label' => 'Account',
+                        'content' => $this->render('_profile_account', ['model' => $model]),
+                        'active' => true,
+                    ],
+                ],
+            ]) ?>
+        </div>
     </div>
     
 </div>
