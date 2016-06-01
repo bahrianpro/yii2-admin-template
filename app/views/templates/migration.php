@@ -12,6 +12,9 @@ use app\base\Migration;
 
 class <?= $className ?> extends Migration
 {
+
+    public $table = '{{%table}}';
+    
     public function up()
     {
 
