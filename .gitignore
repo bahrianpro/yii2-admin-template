@@ -34,3 +34,6 @@ phpunit.phar
 # local application config
 config.php
 
+
+tests/_output/*
+
