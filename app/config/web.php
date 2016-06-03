@@ -77,6 +77,9 @@ if (YII_ENV_DEV) {
     $config['modules']['gii'] = [
         'class' => 'yii\gii\Module',
     ];
+    
+    // Link assets instead of copy them (useful for development environment).
+    $config['components']['assetManager']['linkAssets'] = true;
 }
 
 return $config;
