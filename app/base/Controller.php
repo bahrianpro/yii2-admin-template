@@ -84,9 +84,18 @@ class Controller extends \yii\web\Controller
     {
         $model = call_user_func([$class, 'findOne'], $id);
         if (!$model) {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            $this->raise404();
         }
         return $model;
     }
     
+    /**
+     * Raise "Page not found" exception.
+     * @param string $message
+     * @throws NotFoundHttpException
+     */
+    protected function raise404($message = 'The requested page does not exist.')
+    {
+        throw new NotFoundHttpException($message);
+    }
 }
