@@ -148,7 +148,7 @@ class GridView extends \yii\grid\GridView
     public function renderCaption()
     {
         if (empty($this->caption)) {
-            return false;
+            return '';
         }
         $caption = Html::tag('h3', $this->caption, $this->captionOptions);
         $caption .= $this->renderToolButtons();

@@ -56,7 +56,7 @@ class Select2 extends InputWidget
     /**
      * @var boolean hides search box.
      */
-    public $hideSearch = false;
+    public $hideSearch = true;
     
     /**
      * @var boolean|string prepend items with empty element.
@@ -97,6 +97,14 @@ class Select2 extends InputWidget
         }
         if ($this->multiple) {
             $this->options['multiple'] = true;
+        }
+        
+        // On empty items ensure that value selected.
+        if (empty($this->items)) {
+            $value = $this->hasModel() ? $this->model->{$this->attribute} : $this->value;
+            if ($value) {
+                $this->items[$value] = $value;
+            }
         }
         
         $this->registerClientScript();
