@@ -76,12 +76,34 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['name', 'email', 'password_hash'], 'required'],
-            [['status', 'created_at', 'logged_at'], 'integer'],
-            [['name', 'email'], 'string', 'max' => 64],
-            [['password_hash', 'reset_token', 'activate_token', 'auth_key'], 'string', 'max' => 255],
+            ['name', 'required'],
+            ['name', 'string', 'max' => 64],
+            ['name', 'filter', 'filter' => 'trim'],
+            
+            ['email', 'required'],
+            ['email', 'string', 'max' => 64],
             ['email', 'unique'],
             ['email', 'email'],
+            
+            ['password_hash', 'required'],
+            ['password_hash', 'string', 'max' => 255],
+            
+            ['reset_token', 'default', 'value' => ''],
+            ['reset_token', 'string', 'max' => 255],
+            
+            ['activate_token', 'default', 'value' => ''],
+            ['activate_token', 'string', 'max' => 255],
+            
+            ['auth_key', 'default', 'value' => ''],
+            ['auth_key', 'string', 'max' => 255],
+            
+            ['status', 'required'],
+            ['status', 'integer'],
+            ['status', 'in',
+                'range' => [self::STATUS_DISABLED, self::STATUS_ENABLED, self::STATUS_PENDING],
+            ],
+            
+            [['created_at', 'logged_at'], 'integer'],
         ];
     }
 
@@ -193,7 +215,7 @@ class User extends ActiveRecord implements IdentityInterface
             self::STATUS_ENABLED => Yii::t('app', 'Enabled'),
             self::STATUS_PENDING => Yii::t('app', 'Pending'),
         ];
-        return ($status === null) ? $statuses : isset($statuses[$status]) ? $statuses[$status] : null;
+        return ($status === null) ? $statuses : (isset($statuses[$status]) ? $statuses[$status] : null);
     }
     
     /**
