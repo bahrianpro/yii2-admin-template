@@ -98,4 +98,20 @@ class Controller extends \yii\web\Controller
     {
         throw new NotFoundHttpException($message);
     }
+    
+    /**
+     * Update a model based on POST request.
+     * @param Model $model
+     * @return boolean returns true when model validated and saved.
+     */
+    protected function updateModel($model)
+    {
+        if (Yii::$app->request->isPost) {
+            $post = Yii::$app->request->post();
+            if ($model->load($post) && $model->save()) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
