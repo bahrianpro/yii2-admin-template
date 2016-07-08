@@ -164,8 +164,9 @@ class Box extends Widget
         if ($this->box) {
             Html::addCssClass($this->options, $this->box);
         }
+        $header = $this->renderHeader();
         echo Html::beginTag('div', $this->options);
-        echo $this->renderHeader();
+        echo $header;
         echo Html::beginTag('div', $this->bodyOptions);
     }
     

@@ -34,7 +34,7 @@ class ItemList extends Widget
             Html::addCssClass($options, 'list-group-item');
             $valueOptions = ArrayHelper::getValue($item, 'valueOptions', []);
             Html::addCssClass($valueOptions, 'pull-right');
-            $content = $item['title'] . Html::tag('a', $item['value'], $valueOptions);
+            $content = $item['title'] . Html::tag('span', $item['value'], $valueOptions);
             return Html::tag('li', $content, $options);
         }, $this->items);
         
