@@ -67,14 +67,17 @@ class Tabs extends \yii\bootstrap\Tabs
         $headers = [];
         $panes = [];
 
+        $this->items = array_filter($this->items, function ($item) {
+            return (isset($item['visible']) && $item['visible'] == true);
+        });
+        
         if (!$this->hasActiveTab() && !empty($this->items)) {
-            $this->items[0]['active'] = true;
+            reset($this->items);
+            $i = key($this->items);
+            $this->items[$i]['active'] = true;
         }
 
         foreach ($this->items as $n => $item) {
-            if (!ArrayHelper::remove($item, 'visible', true)) {
-                continue;
-            }
             if (!array_key_exists('label', $item)) {
                 throw new InvalidConfigException("The 'label' option is required.");
             }
