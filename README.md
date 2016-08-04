@@ -82,8 +82,8 @@ Set cookie validation key in `config.php` file to some random secret string:
 CONFIGURATION
 -------------
 
-Your local site configuration reside in `config.php`. You can create `config.php`
-by copy `config-sample.php`.
+Your local site configuration resides in `config.php`. You can create `config.php`
+by copying `config-sample.php`.
 
 ### Database
 
@@ -101,15 +101,15 @@ Edit the file `config.php` in web root folder with real data, for example:
 ];
 ```
 
-Import database migrations:
+Apply database migrations:
 ```
 ./bin/yii migrate
 ```
-This imports user schema to your database.
+This imports user schema into your database.
 
 ### Enable debug mode
 
-Uncomment following lines in `config.php`:
+To enabled debug bar uncomment following lines in `config.php`:
 ```php
 define('YII_DEBUG', true);
 define('YII_ENV', 'dev');
