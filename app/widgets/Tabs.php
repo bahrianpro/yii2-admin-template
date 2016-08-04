@@ -68,7 +68,10 @@ class Tabs extends \yii\bootstrap\Tabs
         $panes = [];
 
         $this->items = array_filter($this->items, function ($item) {
-            return (isset($item['visible']) && $item['visible'] == true);
+            if (isset($item['visible'])) {
+                return $item['visible'] == true;
+            }
+            return true;
         });
         
         if (!$this->hasActiveTab() && !empty($this->items)) {
