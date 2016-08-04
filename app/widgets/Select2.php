@@ -18,7 +18,6 @@ use app\assets\Select2Asset;
 /**
  * Select2 widget.
  *
- * @link https://select2.github.io/examples.html
  * @author skoro
  */
 class Select2 extends InputWidget
@@ -50,6 +49,11 @@ class Select2 extends InputWidget
     public $remote;
     
     /**
+     * @var array
+     */
+    public $remoteOptions = [];
+    
+    /**
      * @var boolean adds 'style=width: 100%' to select element.
      */
     public $fullWidth = true;
@@ -70,15 +74,14 @@ class Select2 extends InputWidget
     public $multiple = false;
     
     /**
-     * @var boolean enable tags mode.
-     */
-    public $tags = false;
-    
-    /**
      * @inheritdoc
      */
     public function init()
     {
+        // Manual setting element ID.
+        if ($this->id) {
+            $this->options['id'] = $this->id;
+        }
         parent::init();
     }
     
@@ -102,19 +105,7 @@ class Select2 extends InputWidget
             $this->clientOptions['minimumResultsForSearch'] = 'Infinity';
         }
         if ($this->multiple) {
-            $this->clientOptions['multiple'] = true;
             $this->options['multiple'] = true;
-        }
-        if ($this->tags) {
-            $this->clientOptions['tags'] = true;
-        }
-        
-        // On empty items ensure that value selected.
-        if (empty($this->items)) {
-            $value = $this->hasModel() ? $this->model->{$this->attribute} : $this->value;
-            if ($value) {
-                $this->items[$value] = $value;
-            }
         }
         
         $this->registerClientScript();
@@ -179,7 +170,8 @@ class Select2 extends InputWidget
                 }'),
                 'cache' => true,
             ];
-            return ['ajax' => $options];
+
+            return ['ajax' => array_merge($options, $this->remoteOptions)];
         }
         return [];
     }
