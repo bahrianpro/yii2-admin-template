@@ -11,16 +11,36 @@
         "yiisoft/yii2-swiftmailer": "*",
         "dmstr/yii2-adminlte-asset": "2.*"
     },
-    "extra": {
-        "asset-installer-paths": {
-            "npm-asset-library": "vendor/npm",
-            "bower-asset-library": "vendor/bower"
-        }
-    },
     "require-dev": {
         "yiisoft/yii2-gii": "^2.0",
         "yiisoft/yii2-debug": "^2.0",
         "yiisoft/yii2-codeception": "*",
         "yiisoft/yii2-faker": "*"
+    },
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "app\\": "app/"
+        }
+    },
+    "scripts": {
+        "post-create-project-cmd": "app\\base\\Composer::postCreateProjectCmd"
+    },
+    "extra": {
+        "asset-installer-paths": {
+            "npm-asset-library": "vendor/npm",
+            "bower-asset-library": "vendor/bower"
+        },
+        "app\\base\\Composer::postCreateProjectCmd": {
+            "createLocalConfig": ["config-sample.php", "config.php"],
+            "generateCookieValidationKey": "config.php",
+            "setPermissions": [
+                {
+                    "runtime": "0777",
+                    "web/assets": "0777"
+                }
+            ],
+            "setDatabaseConfiguration": "config.php"
+        }
     }
 }

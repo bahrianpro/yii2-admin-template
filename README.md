@@ -59,6 +59,17 @@ Get the project and all dependencies:
 php composer.phar create-project skoro/yii2-admin-template --stability=dev yii2-admin
 ~~~
 
+Answer the questions and if you need apply database migrations. And that's all.
+In case if you cannot install project via composer read next chapters.
+
+MANUAL INSTALLATION
+-------------------
+
+Clone project repository:
+```
+git clone https://github.com/skoro/yii2-admin-template.git yii2-admin
+```
+
 Change to project directory and set permissions:
 ~~~
 chmod 777 ./runtime ./web/assets
@@ -74,7 +85,7 @@ Set cookie validation key in `config.php` file to some random secret string:
 ```php
 'request' => [
     // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-    'cookieValidationKey' => '<secret random string goes here>',
+    'cookieValidationKey' => '',
 ],
 ```
 
