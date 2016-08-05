@@ -135,7 +135,7 @@ class Composer
         
         file_put_contents($config, $contents);
         
-        echo "\nDone. Now you can imports database migrate data by execute following command:\n";
+        echo "\nDone. Now you can import database migrate data by execute following command:\n";
         echo "\n\t\t./bin/yii migrate\n\n";
         
         if ($type === 'sqlite') {
