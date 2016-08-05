@@ -48,24 +48,23 @@ The minimum requirement by this project template that your Web server supports P
 INSTALLATION
 ------------
 
-Clone repository:
-~~~
-git clone https://github.com/skoro/yii2-admin-template.git yii2-admin
-~~~
-
-Get composer and install required plugin and project dependencies:
+Install composer if you have not any:
 ~~~
 curl -sS https://getcomposer.org/installer | php
 php composer.phar global require "fxp/composer-asset-plugin"
-php composer.phar install
 ~~~
 
-Set directory permissions:
+Get the project and all dependencies:
+~~~
+php composer.phar create-project skoro/yii2-admin-template --stability=dev yii2-admin
+~~~
+
+Change to project directory and set permissions:
 ~~~
 chmod 777 ./runtime ./web/assets
 ~~~
 
-Edit configuration:
+Create your host configuration by copying sample:
 ~~~
 cp config-sample.php config.php
 ~~~
