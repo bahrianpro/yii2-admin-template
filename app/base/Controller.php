@@ -107,8 +107,7 @@ class Controller extends \yii\web\Controller
     protected function updateModel($model)
     {
         if (Yii::$app->request->isPost) {
-            $post = Yii::$app->request->post();
-            if ($model->load($post) && $model->save()) {
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 return true;
             }
         }
