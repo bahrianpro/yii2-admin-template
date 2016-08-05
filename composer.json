@@ -1,7 +1,8 @@
 {
     "name": "skoro/yii2-admin-template",
-    "description": "Yii 2 project template for backends",
-    "keywords": ["yii2", "framework", "project template", "admin"],
+    "description": "Yii 2 project template for backend projects",
+    "keywords": ["yii2", "framework", "project template", "admin", "backend"],
+    "license": "MIT",
     "type": "project",
     "require": {
         "php": ">=5.4.0",
