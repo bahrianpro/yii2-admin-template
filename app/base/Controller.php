@@ -80,7 +80,7 @@ class Controller extends \yii\web\Controller
      * @return ActiveRecord
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($class, $id)
+    public function findModel($class, $id)
     {
         $model = call_user_func([$class, 'findOne'], $id);
         if (!$model) {
@@ -94,7 +94,7 @@ class Controller extends \yii\web\Controller
      * @param string $message
      * @throws NotFoundHttpException
      */
-    protected function raise404($message = 'The requested page does not exist.')
+    public function raise404($message = 'The requested page does not exist.')
     {
         throw new NotFoundHttpException($message);
     }
@@ -104,7 +104,7 @@ class Controller extends \yii\web\Controller
      * @param Model $model
      * @return boolean returns true when model validated and saved.
      */
-    protected function updateModel($model)
+    public function updateModel($model)
     {
         if (Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
