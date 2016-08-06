@@ -7,7 +7,6 @@
 
 namespace app\controllers;
 
-use Yii;
 use app\base\actions\user;
 use app\base\Controller;
 
