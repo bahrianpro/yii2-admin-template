@@ -6,7 +6,7 @@ Yii 2 Admin Project Template is a skeleton [Yii 2](http://www.yiiframework.com/)
 Features:
 * Application files in its folder.
 * [AdminLTE](https://github.com/almasaeed2010/AdminLTE) theme imported
-* User schema and user login/register forms.
+* User schema and user login/register/profile/passwords forms.
 * AdminLTE specific widgets exposed as Yii2 widgets:
   * Box (with expanded/collapsed state)
   * Tabs
