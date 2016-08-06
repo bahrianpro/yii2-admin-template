@@ -4,7 +4,7 @@ use yii\bootstrap\Tabs;
 use yii\helpers\Html;
 
 /** @var $this yii\web\View */
-/** @var $model app\forms\Profile */
+/** @var $model app\forms\user\Profile */
 
 $this->title = Yii::t('app', 'User Profile');
 $this->params['breadcrumbs'] = [
