@@ -1,11 +1,10 @@
 <?php
 
-use yii\bootstrap\ActiveForm;
-use yii\helpers\Html;
+use app\widgets\ActiveForm;
 
 /** @var $this yii\web\View */
-/** @var $form yii\bootstrap\ActiveForm */
-/** @var $model app\forms\Profile */
+/** @var $form app\widgets\ActiveForm */
+/** @var $model app\forms\user\Profile */
 ?>
 <?php $form = ActiveForm::begin([
     'id' => 'user-profile-form',
@@ -20,17 +19,10 @@ use yii\helpers\Html;
 ]) ?>
 
     <?= $form->field($model, 'email')->textInput(['disabled' => 'disabled']) ?>
-
     <?= $form->field($model, 'name') ?>
-
     <?= $form->field($model, 'password')->passwordInput() ?>
-
     <?= $form->field($model, 'password_repeat')->passwordInput() ?>
 
-    <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-            <?= Html::submitButton(Yii::t('app', 'Submit'), ['class' => 'btn btn-danger btn-flat']) ?>
-        </div>
-    </div>
-
-<?php ActiveForm::end() ?>        
+<?php ActiveForm::endWithActions([
+    'cancel' => false,
+]) ?>        
