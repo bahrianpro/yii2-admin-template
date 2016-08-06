@@ -9,6 +9,7 @@ namespace app\controllers;
 
 use app\base\actions\user;
 use app\base\Controller;
+use yii\filters\AccessControl;
 
 /**
  * UserController
@@ -51,4 +52,28 @@ class UserController extends Controller
         ];
     }
     
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['profile', 'logout'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                    [
+                        'actions' => ['login', 'register', 'password-request',
+                            'password-reset'],
+                        'allow' => true,
+                        'roles' => ['?'],
+                    ],
+                ],
+            ],
+        ];
+    }
 }
