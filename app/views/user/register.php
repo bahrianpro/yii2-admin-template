@@ -6,7 +6,7 @@ use yii\helpers\Url;
 
 /** @var $this yii\web\View */
 /** @var $form yii\bootstrap\ActiveForm */
-/** @var $model app\forms\Register */
+/** @var $model app\forms\user\Register */
 
 $this->title = Yii::t('app', 'User register');
 $fieldOptions = function ($icon) {

@@ -6,7 +6,7 @@ use yii\helpers\Url;
 
 /** @var $this yii\web\View */
 /** @var $form yii\bootstrap\ActiveForm */
-/** @var $model app\forms\Login */
+/** @var $model app\forms\user\Login */
 /** @var $enableRegister boolean */
 
 $this->title = Yii::t('app', 'Sign In');

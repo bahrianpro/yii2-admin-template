@@ -6,7 +6,7 @@ use yii\helpers\Url;
 
 /** @var $this yii\web\View */
 /** @var $form yii\bootstrap\ActiveForm */
-/** @var $model app\forms\PasswordReset */
+/** @var $model app\forms\user\PasswordReset */
 
 $this->title = Yii::t('app', 'Reset password');
 $fieldOptions = function ($icon) {
