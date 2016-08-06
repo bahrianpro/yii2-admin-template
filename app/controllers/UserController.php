@@ -8,6 +8,7 @@
 namespace app\controllers;
 
 use Yii;
+use app\base\actions\user;
 use app\base\Controller;
 
 /**
@@ -30,23 +31,23 @@ class UserController extends Controller
     {
         return [
             'profile' => [
-                'class' => 'app\base\actions\user\Profile',
+                'class' => user\Profile::className(),
                 'layout' => '//main',
             ],
             'login' => [
-                'class' => 'app\base\actions\user\Login',
+                'class' => user\Login::className(),
             ],
             'logout' => [
-                'class' => 'app\base\actions\user\Logout',
+                'class' => user\Logout::className(),
             ],
             'register' => [
-                'class' => 'app\base\actions\user\Register',
+                'class' => user\Register::className(),
             ],
             'password-request' => [
-                'class' => 'app\base\actions\user\PasswordRequest',
+                'class' => user\PasswordRequest::className(),
             ],
             'password-reset' => [
-                'class' => 'app\base\actions\user\PasswordReset',
+                'class' => user\PasswordReset::className(),
             ],
         ];
     }
