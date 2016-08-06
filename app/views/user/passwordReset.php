@@ -1,14 +1,14 @@
 <?php
+
+use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use yii\bootstrap\ActiveForm;
 
-/* @var $this yii\web\View */
-/* @var $form yii\bootstrap\ActiveForm */
-/* @var $model app\forms\PasswordReset */
+/** @var $this yii\web\View */
+/** @var $form yii\bootstrap\ActiveForm */
+/** @var $model app\forms\PasswordReset */
 
 $this->title = Yii::t('app', 'Reset password');
-
 $fieldOptions = function ($icon) {
     return [
         'options' => ['class' => 'form-group has-feedback'],

@@ -1,9 +1,10 @@
 <?php
-use yii\helpers\Html;
-use yii\bootstrap\Tabs;
 
-/* @var $this yii\web\View */
-/* @var $model app\forms\Profile */
+use yii\bootstrap\Tabs;
+use yii\helpers\Html;
+
+/** @var $this yii\web\View */
+/** @var $model app\forms\Profile */
 
 $this->title = Yii::t('app', 'User Profile');
 $this->params['breadcrumbs'] = [

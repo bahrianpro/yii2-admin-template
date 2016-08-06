@@ -1,10 +1,11 @@
 <?php
+
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 
-/* @var $this yii\web\View */
-/* @var $form yii\bootstrap\ActiveForm */
-/* @var $model app\forms\Profile */
+/** @var $this yii\web\View */
+/** @var $form yii\bootstrap\ActiveForm */
+/** @var $model app\forms\Profile */
 ?>
 <?php $form = ActiveForm::begin([
     'id' => 'user-profile-form',
