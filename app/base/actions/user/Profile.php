@@ -24,7 +24,7 @@ class Profile extends Action
     /**
      * @var string class name for Register form.
      */
-    public $modelClass = 'app\forms\Profile';
+    public $modelClass = 'app\forms\user\Profile';
     
     /**
      * @var string

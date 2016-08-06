@@ -5,7 +5,7 @@
  * @version $Id$
  */
 
-namespace app\forms;
+namespace app\forms\user;
 
 use Yii;
 use yii\base\Model;

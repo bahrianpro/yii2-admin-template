@@ -21,7 +21,7 @@ class PasswordReset extends Action
     /**
      * @var string class name for Login form.
      */
-    public $modelClass = 'app\forms\PasswordReset';
+    public $modelClass = 'app\forms\user\PasswordReset';
     
     /**
      * @var string

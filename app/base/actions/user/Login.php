@@ -24,7 +24,7 @@ class Login extends Action
     /**
      * @var string class name for Login form.
      */
-    public $modelClass = 'app\forms\Login';
+    public $modelClass = 'app\forms\user\Login';
     
     /**
      * @var string
