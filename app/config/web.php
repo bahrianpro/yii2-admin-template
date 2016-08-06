@@ -9,7 +9,8 @@
 defined('APPROOT_DIR') or define('APPROOT_DIR', dirname(dirname(__DIR__)));
 
 $config = [
-    'id' => 'basic',
+    'id' => 'admin',
+    'name' => 'Admin Template',
     'basePath' => APPROOT_DIR . '/app',
     'vendorPath' => APPROOT_DIR . '/vendor',
     'runtimePath' => APPROOT_DIR . '/runtime',
@@ -21,6 +22,7 @@ $config = [
         'user' => [
             'identityClass' => 'app\models\User',
             'enableAutoLogin' => true,
+            'loginUrl' => ['user/login'],
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
@@ -41,6 +43,15 @@ $config = [
                 ],
             ],
         ], // log
+        'urlManager' => [
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+            'rules' => [
+                'login' => 'user/login',
+                'register' => 'user/register',
+                'logout' => 'user/logout',
+            ],
+        ], // urlManager
         // Application menus.
         'menu' => [
             'class' => 'app\components\Menu',
