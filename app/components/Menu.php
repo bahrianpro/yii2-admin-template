@@ -98,6 +98,19 @@ class Menu extends Component
                     continue;
                 }
             }
+            if (isset($item['roles'])) {
+                $access = false;
+                foreach ($item['roles'] as $roleName) {
+                    if (Yii::$app->user->can($roleName)) {
+                        $access = true;
+                        break;
+                    }
+                }
+                if (!$access) {
+                    unset($items[$i]);
+                    continue;
+                }
+            }
             if ($this->translateItems) {
                 $item['label'] = Yii::t('app', $item['label']);
             }
