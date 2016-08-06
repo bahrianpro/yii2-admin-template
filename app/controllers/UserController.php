@@ -29,7 +29,7 @@ class UserController extends Controller
     public function actions()
     {
         return [
-            'index' => [
+            'profile' => [
                 'class' => 'app\base\actions\user\Profile',
                 'layout' => '//main',
             ],
