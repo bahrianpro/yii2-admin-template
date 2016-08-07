@@ -9,7 +9,9 @@
         "yiisoft/yii2": "^2.0",
         "yiisoft/yii2-bootstrap": "*",
         "yiisoft/yii2-swiftmailer": "*",
-        "dmstr/yii2-adminlte-asset": "2.*"
+        "dmstr/yii2-adminlte-asset": "2.*",
+        "bower-asset/remarkable-bootstrap-notify": "^3.1",
+        "bower-asset/animate.css": "^3.5"
     },
     "require-dev": {
         "yiisoft/yii2-gii": "^2.0",
