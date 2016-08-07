@@ -20,11 +20,6 @@ class UserController extends Controller
 {
     
     /**
-     * @var string views layout.
-     */
-    public $layout = '//main-login';
-    
-    /**
      * @inheritdoc
      */
     public function actions()
@@ -36,18 +31,22 @@ class UserController extends Controller
             ],
             'login' => [
                 'class' => user\Login::className(),
+                'layout' => '//main-login',
             ],
             'logout' => [
                 'class' => user\Logout::className(),
             ],
             'register' => [
                 'class' => user\Register::className(),
+                'layout' => '//main-login',
             ],
             'password-request' => [
                 'class' => user\PasswordRequest::className(),
+                'layout' => '//main-login',
             ],
             'password-reset' => [
                 'class' => user\PasswordReset::className(),
+                'layout' => '//main-login',
             ],
         ];
     }
