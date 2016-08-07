@@ -7,13 +7,18 @@
 
 namespace app\base\actions\user;
 
-use Yii;
 use app\base\Action;
+use Yii;
+use yii\helpers\ArrayHelper;
+use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use yii\widgets\ActiveForm;
 
 /**
  * User register action.
+ *
+ * To disable user registration, put to the app's config
+ * parameter `disableUserRegister => true`.
  *
  * @author skoro
  */
@@ -35,6 +40,10 @@ class Register extends Action
      */
     public function run()
     {
+        if (ArrayHelper::getValue(Yii::$app->params, 'disableUserRegister', false)) {
+            throw new NotFoundHttpException();
+        }
+        
         if (!Yii::$app->user->isGuest) {
             return $this->controller->goBack();
         }

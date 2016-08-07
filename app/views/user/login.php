@@ -7,7 +7,7 @@ use yii\helpers\Url;
 /** @var $this yii\web\View */
 /** @var $form yii\bootstrap\ActiveForm */
 /** @var $model app\forms\user\Login */
-/** @var $enableRegister boolean */
+/** @var $disableUserRegister boolean */
 
 $this->title = Yii::t('app', 'Sign In');
 
@@ -63,7 +63,7 @@ $fieldOptions = function ($icon) {
 
         <div class="account-links">
             <a href="<?= Url::to(['user/password-request']) ?>"><?= Yii::t('app', 'I forgot my password') ?></a><br>
-            <?php if ($enableRegister): ?>
+            <?php if (!$disableUserRegister): ?>
             <a href="<?= Url::to(['user/register']) ?>" class="text-center"><?= Yii::t('app', 'Register a new account') ?></a>
             <?php endif ?>
         </div>

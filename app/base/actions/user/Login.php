@@ -7,8 +7,9 @@
 
 namespace app\base\actions\user;
 
-use Yii;
 use app\base\Action;
+use Yii;
+use yii\helpers\ArrayHelper;
 use yii\web\Response;
 use yii\widgets\ActiveForm;
 
@@ -32,11 +33,6 @@ class Login extends Action
     public $view = 'login';
     
     /**
-     * @var boolean Enable/disable user register link.
-     */
-    public $enableRegister = true;
-
-    /**
      * @inheritdoc
      */
     public function run()
@@ -59,7 +55,9 @@ class Login extends Action
         
         return $this->render([
             'model' => $model,
-            'enableRegister' => $this->enableRegister,
+            'disableUserRegister' => ArrayHelper::getValue(
+                Yii::$app->params, 'disableUserRegister', false
+            ),
         ]);
     }
     
