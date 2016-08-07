@@ -48,7 +48,7 @@ class Profile extends Action
             }
         }
         
-        if (Yii::$app->request->isAjax) {
+        if (!Yii::$app->request->isPjax && Yii::$app->request->isAjax) {
             Yii::$app->response->format = Response::FORMAT_JSON;
             return ActiveForm::validate($model);
         }
