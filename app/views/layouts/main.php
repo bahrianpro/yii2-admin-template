@@ -1,9 +1,10 @@
 <?php
 
-use yii\helpers\Html;
-use app\assets\AppAsset;
-use dmstr\web\AdminLteAsset;
 use app\assets\AnimateAsset;
+use app\assets\AppAsset;
+use app\widgets\Notify;
+use dmstr\web\AdminLteAsset;
+use yii\helpers\Html;
 
 /** @var $this \yii\web\View */
 /** @var $content string */
@@ -14,7 +15,7 @@ AppAsset::register($this);
 AnimateAsset::register($this);
 
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@vendor/almasaeed2010/adminlte/dist');
-\app\widgets\Notify::widget();
+Notify::widget();
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
