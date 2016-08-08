@@ -5,9 +5,9 @@ use app\assets\AppAsset;
 use dmstr\web\AdminLteAsset;
 use app\assets\AnimateAsset;
 
-/* @var $this \yii\web\View */
-/* @var $content string */
-/* @var $directoryAsset string */
+/** @var $this \yii\web\View */
+/** @var $content string */
+/** @var $directoryAsset string */
 
 AdminLteAsset::register($this);
 AppAsset::register($this);
