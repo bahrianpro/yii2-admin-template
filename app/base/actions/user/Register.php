@@ -10,6 +10,7 @@ namespace app\base\actions\user;
 use app\base\Action;
 use Yii;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Url;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use yii\widgets\ActiveForm;
@@ -51,6 +52,7 @@ class Register extends Action
         $model = new $this->modelClass;
         if (Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post()) && $model->register()) {
+                $this->controller->addFlash('info', Yii::t('app', 'Registration successful. Now you can <a href="{login}">login</a>.', ['login' => Url::to(['user/login'])]));
                 return $this->controller->goHome();
             }
         }
