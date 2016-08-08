@@ -17,12 +17,17 @@ class Pjax extends \yii\widgets\Pjax
 {
     
     /**
+     * @var array
+     */
+    public $notifyOptions = [];
+    
+    /**
      * @inheritdoc
      */
     public function run()
     {
         if ($this->requiresPjax()) {
-            echo Notify::widget();
+            echo Notify::widget($this->notifyOptions);
         }
         parent::run();
     }

@@ -45,6 +45,7 @@ class Notify extends Widget
         $view = $this->getView();
         BootstrapNotifyAsset::register($view);
         if ($this->animate) {
+            // FIXME: in pjax responses animate.css does not included in body.
             AnimateAsset::register($view);
         }
         
