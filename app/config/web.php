@@ -24,6 +24,9 @@ $config = [
             'enableAutoLogin' => true,
             'loginUrl' => ['user/login'],
         ],
+        'formatter' => [
+            'class' => 'app\base\Formatter',
+        ],
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
