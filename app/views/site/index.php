@@ -1,6 +1,7 @@
 <?php
 
 use app\widgets\Box;
+use app\widgets\ItemList;
 use app\widgets\ProgressBar;
 use app\widgets\Select2;
 use app\widgets\Tabs;
@@ -132,6 +133,28 @@ $this->params['breadcrumbs'][] = $this->title;
                     3 => 'Cinema',
                     4 => 'Shop',
                     5 => 'Market',
+                ],
+            ]) ?>
+        <?php Box::end() ?>
+            
+        <?php Box::begin([
+            'label' => 'Item list',
+            'box' => Box::BOX_DANGER,
+        ]) ?>
+            <?= ItemList::widget([
+                'items' => [
+                    [
+                        'title' => 'Created by',
+                        'value' => 'user',
+                    ],
+                    [
+                        'title' => 'Date',
+                        'value' => '2016.08.09',
+                    ],
+                    [
+                        'title' => 'Status',
+                        'value' => 'Enabled',
+                    ],
                 ],
             ]) ?>
         <?php Box::end() ?>
