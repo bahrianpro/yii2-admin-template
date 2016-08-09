@@ -7,6 +7,8 @@
 
 namespace app\widgets;
 
+use yii\base\InvalidConfigException;
+use yii\bootstrap\Dropdown;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 
@@ -16,10 +18,6 @@ use yii\helpers\Html;
  * For example:
  * ```php
  * echo Tabs::widget([
- *     'header' => [
- *         'label' => 'Tabs header',
- *         'side' => Tabs::HEADER_RIGHT,
- *     ],
  *     'items' => [
  *         [
  *             'label' => 'One',
@@ -34,18 +32,6 @@ use yii\helpers\Html;
  */
 class Tabs extends \yii\bootstrap\Tabs
 {
-    /**
-     * Header place side.
-     */
-    const HEADER_LEFT = 'pull-left';
-    const HEADER_RIGHT = 'pull-right';
-
-    /**
-     * @var array tab header. Keys:
-     * label - header label
-     * side - header side: left or right (by default).
-     */
-    public $header = [];
     
     /**
      * Initializes the widget.
@@ -133,21 +119,6 @@ class Tabs extends \yii\bootstrap\Tabs
         
         $itemOptions = ['class' => 'nav ' . $this->navType];
         
-        if ($this->header) {
-            if (!array_key_exists('label', $this->header)) {
-                throw new InvalidConfigException("The 'label' option for header is required.");
-            }
-            $side = ArrayHelper::getValue($this->header, 'side', self::HEADER_RIGHT);
-            $headerOptions = array_merge($this->headerOptions, ArrayHelper::getValue($this->header, 'options', []));
-            Html::addCssClass($headerOptions, 'header');
-            Html::addCssClass($headerOptions, $side == self::HEADER_RIGHT ? self::HEADER_LEFT : self::HEADER_RIGHT);
-            $headers[] = Html::tag('li', $this->header['label'], $headerOptions);
-            if ($side === self::HEADER_RIGHT) {
-                $headers = array_reverse($headers);
-                Html::addCssClass($itemOptions, 'pull-right');
-            }
-        }
-
         $tabContent = ($this->renderTabContent ? "\n" . Html::tag('div', implode("\n", $panes), ['class' => 'tab-content']) : '');
         $items = Html::tag('ul', implode("\n", $headers), $itemOptions);
         
