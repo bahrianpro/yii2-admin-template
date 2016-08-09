@@ -131,7 +131,11 @@ class Box extends Widget
     public $loadingError = 'Couldn\'t load content.';
     
     /**
-     * @var array box actions.
+     * @var array list of box actions. Each action accepts following keys:
+     * - 'label' tooltip label
+     * - 'icon' tool icon
+     * - 'visible' toggle tool visibility
+     * - 'options'
      */
     public $actions = [];
     
@@ -233,6 +237,9 @@ class Box extends Widget
     {
         $actions = '';
         foreach ($this->actions as $action) {
+            if (isset($action['visible']) && !$action['visible']) {
+                continue;
+            }
             $options = $this->toolButtonOptions;
             if (isset($action['label'])) {
                 $options['data-original-title'] = $action['label'];

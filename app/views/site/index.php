@@ -107,6 +107,12 @@ $this->params['breadcrumbs'][] = $this->title;
             'box' => Box::BOX_WARNING,
             'label' => 'Box 2',
             'removable' => true,
+            'actions' => [
+                [
+                    'label' => 'Configure',
+                    'options' => ['class' => 'configure'],
+                ],
+            ],
         ]) ?>
             The body of the box. The body of the box. The body of the box.
         <?php Box::end() ?>
