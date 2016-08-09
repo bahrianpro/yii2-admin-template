@@ -36,6 +36,13 @@ class ProgressBar extends Widget
     const STYLE_WARNING = 'warning';
     
     /**
+     * Progress sizes.
+     */
+    const SIZE_XS = 'progress-xs';
+    const SIZE_XXS = 'progress-xxs';
+    const SIZE_SM = 'progress-sm';
+    
+    /**
      * @var string
      */
     public $label;
@@ -64,6 +71,11 @@ class ProgressBar extends Widget
      * @var array
      */
     public $options = [];
+    
+    /**
+     * @var string progress bar height.
+     */
+    public $size = self::SIZE_SM;
     
     /**
      * @inheritdoc
@@ -124,7 +136,7 @@ class ProgressBar extends Widget
         }
         
         Html::addCssStyle($options, ['width' => $value . '%']);
-        return Html::tag('div', Html::tag('div', '', $options), ['class' => 'progress sm']);
+        return Html::tag('div', Html::tag('div', '', $options), ['class' => 'progress ' . $this->size]);
     }
     
 }
