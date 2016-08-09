@@ -65,7 +65,17 @@ $this->params['breadcrumbs'][] = $this->title;
             'items' => [
                 [
                     'label' => 'Tab 1',
-                    'content' => 'Content 1...',
+                    'content' =>
+                        '<div>' .
+                        \app\widgets\Check::widget([
+                            'name' => 'chk1',
+                            'label' => 'Enable report',
+                        ]) . '</div><div>' .
+                        \app\widgets\Check::widget([
+                            'name' => 'chk2',
+                            'label' => 'Send email',
+                            'checked'  => true,
+                        ]) . '</div>',
                 ],
                 [
                     'label' => 'Tab 2',
