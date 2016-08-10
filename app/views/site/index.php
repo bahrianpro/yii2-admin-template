@@ -13,6 +13,14 @@ use yii\helpers\Html;
 
 $this->title = 'Demo page';
 $this->params['breadcrumbs'][] = $this->title;
+$dataProvider = new ArrayDataProvider([
+    'allModels' => [
+        ['id' => 1, 'task' => 'Update software', 'progress' => 20, 'label' => '55'],
+        ['id' => 2, 'task' => 'Clean database', 'progress' => 40, 'label' => '15'],
+        ['id' => 3, 'task' => 'Cron job running', 'progress' => 80, 'label' => '84'],
+        ['id' => 4, 'task' => 'Fix and squish bugs', 'progress' => 15, 'label' => '18'],
+    ],
+]);
 ?>
 <div class="row demo-page">
     
@@ -22,14 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'label' => 'Table',
         ]) ?>
             <?= GridView::widget([
-                'dataProvider' => new ArrayDataProvider([
-                    'allModels' => [
-                        ['id' => 1, 'task' => 'Update software', 'progress' => 20, 'label' => '55'],
-                        ['id' => 2, 'task' => 'Clean database', 'progress' => 40, 'label' => '15'],
-                        ['id' => 3, 'task' => 'Cron job running', 'progress' => 80, 'label' => '84'],
-                        ['id' => 4, 'task' => 'Fix and squish bugs', 'progress' => 15, 'label' => '18'],
-                    ],
-                ]),
+                'dataProvider' => $dataProvider,
                 'columns' => [
                     'id',
                     'task',
@@ -172,6 +173,16 @@ $this->params['breadcrumbs'][] = $this->title;
                         'value' => 'Enabled',
                     ],
                 ],
+            ]) ?>
+        <?php Box::end() ?>
+    </div>
+    
+    <div class="col-md-12">
+        <?php Box::begin([
+            'label' => 'DataTable demo',
+        ]) ?>
+            <?= \app\widgets\DataTable::widget([
+                'dataProvider' => $dataProvider,
             ]) ?>
         <?php Box::end() ?>
     </div>
