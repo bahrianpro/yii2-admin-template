@@ -1,5 +1,6 @@
 <?php
 
+use app\widgets\Check;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -41,7 +42,7 @@ $fieldOptions = function ($icon) {
 
         <div class="row">
             <div class="col-xs-8">
-                <?= $form->field($model, 'rememberMe')->checkbox() ?>
+                <?= $form->field($model, 'rememberMe')->widget(Check::className())->label(false) ?>
             </div>
             <!-- /.col -->
             <div class="col-xs-4">
