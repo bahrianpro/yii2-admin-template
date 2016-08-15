@@ -56,7 +56,7 @@ php composer.phar global require "fxp/composer-asset-plugin"
 
 Get the project and all dependencies:
 ~~~
-php composer.phar create-project skoro/yii2-admin-template:dev-master yii2-admin
+php composer.phar create-project skoro/yii2-admin-template yii2-admin 0.1
 ~~~
 
 Answer the questions and if you need apply database migrations. And that's all.
