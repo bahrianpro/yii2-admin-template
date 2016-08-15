@@ -86,6 +86,8 @@ class Check extends InputWidget
         
         if (!empty($this->label)) {
             $label = '&nbsp;' . Html::label($this->label, $this->options['id']);
+        } else {
+            $label = '';
         }
         
         return $input . $label;
