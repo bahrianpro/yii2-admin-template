@@ -18,6 +18,14 @@ class Formatter extends \yii\i18n\Formatter
 {
     
     /**
+     * Markdown parsers.
+     * @see Formatter::asMarkdown()
+     */
+    const MARKDOWN_PARSER_TRADITIONAL = '\cebe\markdown\Markdown';
+    const MARKDOWN_PARSER_GITHUB = '\cebe\markdown\GithubMarkdown';
+    const MARKDOWN_PARSER_EXTRA = '\cebe\markdown\MarkdownExtra';
+
+    /**
      * Format value as progress bar widget.
      * @param integer $value progress value
      * @param array $options widget options
@@ -27,5 +35,17 @@ class Formatter extends \yii\i18n\Formatter
     {
         $options['value'] = $value;
         return ProgressBar::widget($options);
+    }
+    
+    /**
+     * Converts Markdown to html.
+     * @param string $text markdown source.
+     * @param string $parserClass markdown parser class.
+     * @return string
+     */
+    public function asMarkdown($text, $parserClass = self::MARKDOWN_PARSER_EXTRA)
+    {
+        $parser = new $parserClass();
+        return $parser->parse($text);
     }
 }
