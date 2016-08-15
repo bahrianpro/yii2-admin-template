@@ -1,8 +1,11 @@
 <?php
 
 use app\widgets\Box;
+use app\widgets\Check;
+use app\widgets\DataTable;
 use app\widgets\ItemList;
 use app\widgets\ProgressBar;
+use app\widgets\ProgressBarGroup;
 use app\widgets\Select2;
 use app\widgets\Tabs;
 use yii\data\ArrayDataProvider;
@@ -68,11 +71,11 @@ $dataProvider = new ArrayDataProvider([
                     'label' => 'Tab 1',
                     'content' =>
                         '<div>' .
-                        \app\widgets\Check::widget([
+                        Check::widget([
                             'name' => 'chk1',
                             'label' => 'Enable report',
                         ]) . '</div><div>' .
-                        \app\widgets\Check::widget([
+                        Check::widget([
                             'name' => 'chk2',
                             'label' => 'Send email',
                             'checked'  => true,
@@ -80,7 +83,21 @@ $dataProvider = new ArrayDataProvider([
                 ],
                 [
                     'label' => 'Tab 2',
-                    'content' => 'Content 2...',
+                    'content' => 
+                        ProgressBar::widget([
+                            'style' => ProgressBar::STYLE_SUCCESS,
+                            'value' => 30,
+                            'vertical' => true,
+                        ]) . 
+                        ProgressBar::widget([
+                            'style' => ProgressBar::STYLE_WARNING,
+                            'value' => 60,
+                            'vertical' => true,
+                        ]) .
+                        ProgressBarGroup::widget([
+                            'value' => 82,
+                            'label' => 'Processing',
+                        ]),
                 ],
                 [
                     'label' => 'Tab 3',
@@ -181,7 +198,7 @@ $dataProvider = new ArrayDataProvider([
         <?php Box::begin([
             'label' => 'DataTable demo',
         ]) ?>
-            <?= \app\widgets\DataTable::widget([
+            <?= DataTable::widget([
                 'dataProvider' => $dataProvider,
             ]) ?>
         <?php Box::end() ?>

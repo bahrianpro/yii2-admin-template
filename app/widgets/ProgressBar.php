@@ -15,7 +15,6 @@ use yii\helpers\Html;
  * 
  * ```php
  * echo ProgressBar::widget([
- *  'label' => 'Processing',
  *  'total' => 1200,
  *  'value' => 250,
  * ]);
@@ -43,16 +42,6 @@ class ProgressBar extends Widget
     const SIZE_SM = 'progress-sm';
     
     /**
-     * @var string
-     */
-    public $label;
-    
-    /**
-     * @var string
-     */
-    public $number;
-    
-    /**
      * @var integer max progress
      */
     public $total = 100;
@@ -75,42 +64,32 @@ class ProgressBar extends Widget
     /**
      * @var string progress bar height.
      */
-    public $size = self::SIZE_SM;
+    public $size = '';
+    
+    /**
+     * @var boolean render a vertical progress bar.
+     */
+    public $vertical = false;
     
     /**
      * @inheritdoc
      */
     public function run()
     {
-        $label = $this->renderLabel();
-        $number = $this->renderNumber();
+        $options = $this->options;
+        Html::addCssClass($options, 'progress');
+        
+        if ($this->size) {
+            Html::addCssClass($options, $this->size);
+        }
+        
+        if ($this->vertical) {
+            Html::addCssClass($options, 'vertical');
+        }
+        
         $bar = $this->renderBar();
-        Html::addCssClass($this->options, 'progress-group');
-        return Html::tag('div', $label . $number . $bar, $this->options);
-    }
-    
-    /**
-     * Renders progress bar label.
-     * @return string
-     */
-    protected function renderLabel()
-    {
-        if ($this->label) {
-            return Html::tag('span', Html::encode($this->label), ['class' => 'progress-text']);
-        }
-        return '';
-    }
-    
-    /**
-     * Renders total number label.
-     * @return string
-     */
-    protected function renderNumber()
-    {
-        if ($this->number) {
-            return Html::tag('span', Html::encode($this->number), ['class' => 'progress-number']);
-        }
-        return '';
+        
+        return Html::tag('div', $bar, $options);
     }
     
     /**
@@ -119,7 +98,13 @@ class ProgressBar extends Widget
      */
     protected function renderBar()
     {
-        $options = ['class' => 'progress-bar'];
+        $options = [
+            'class' => 'progress-bar',
+            'role' => 'progressbar',
+            'aria-valuenow' => $this->value,
+            'aria-valuemin' => 0,
+            'aria-valuemax' => $this->total,
+        ];
         if ($this->style) {
             Html::addCssClass($options, 'progress-bar-' . $this->style);
         }
@@ -135,8 +120,14 @@ class ProgressBar extends Widget
                 ($this->total > 100 ? 100 : $this->total);
         }
         
-        Html::addCssStyle($options, ['width' => $value . '%']);
-        return Html::tag('div', Html::tag('div', '', $options), ['class' => 'progress ' . $this->size]);
+        $percent = $value . '%';
+        if ($this->vertical) {
+            Html::addCssStyle($options, ['height' => $percent]);
+        } else {
+            Html::addCssStyle($options, ['width' => $percent]);
+        }
+        
+        $content = Html::tag('span', $percent, ['class' => 'sr-only']);
+        return Html::tag('div', $content, $options);
     }
-    
 }
