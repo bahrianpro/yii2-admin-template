@@ -39,6 +39,8 @@
             "setPermissions": [
                 {
                     "runtime": "0777",
+                    "runtime/cache": "0777",
+                    "runtime/logs": "0777",
                     "web/assets": "0777"
                 }
             ],
