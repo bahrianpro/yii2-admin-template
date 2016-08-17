@@ -1,8 +1,14 @@
 <?php
 use yii\widgets\Breadcrumbs;
 
+$controller = '';
+$view = '';
+if ($this->context instanceof \yii\base\Controller) {
+    $controller = $this->context->id;
+    $view = $controller . '-' . $this->context->action->id;
+}
 ?>
-<div class="content-wrapper">
+<div class="content-wrapper <?= $controller ?> <?= $view ?>">
     <section class="content-header">
         <?php if (isset($this->blocks['content-header'])) { ?>
             <h1><?= $this->blocks['content-header'] ?></h1>
