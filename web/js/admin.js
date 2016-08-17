@@ -51,7 +51,6 @@
         }
         
     };
-    window.Modal = Modal;
     
     function init() {
         // Keep state of sidebar in cookie.
@@ -67,4 +66,10 @@
     
     $(init);
     
+    // Expose object to Admin namespace.
+    window.Admin = {
+        Cookie: Cookie,
+        Modal: Modal,
+    };
+
 }(jQuery));

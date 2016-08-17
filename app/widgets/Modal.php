@@ -48,7 +48,7 @@ class Modal extends \yii\bootstrap\Modal
         if ($this->remote) {
             $id = $this->options['id'];
             $url = Url::to($this->remote);
-            $this->getView()->registerJs("Modal.remote('#$id', '$url');");
+            $this->getView()->registerJs("Admin.Modal.remote('#$id', '$url');");
         }
     }
 }
