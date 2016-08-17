@@ -12,6 +12,7 @@ Features:
   * Tabs
   * Select2
   * GridView
+  * ProgressBar (vertical/horizontal)
   * ItemList (wrapper for nice AdminLTE lists)
   * TimePicker
   * TypeAhead (bootstrap version from @bower/typeahead.js)
