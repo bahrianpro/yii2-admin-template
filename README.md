@@ -13,6 +13,7 @@ Features:
   * Select2
   * GridView
   * ProgressBar (vertical/horizontal)
+  * Popup notifications.
   * ItemList (wrapper for nice AdminLTE lists)
   * TimePicker
   * TypeAhead (bootstrap version from @bower/typeahead.js)
