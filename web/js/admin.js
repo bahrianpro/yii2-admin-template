@@ -42,6 +42,17 @@
         }
     };
     
+    var Modal = {
+        
+        remote: function (el, url) {
+            $(el).on('show.bs.modal', function (e) {
+                $(this).find('.modal-body').load(url);
+            });
+        }
+        
+    };
+    window.Modal = Modal;
+    
     function init() {
         // Keep state of sidebar in cookie.
         if ($.AdminLTE.options.sidebarPushMenu) {

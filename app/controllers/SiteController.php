@@ -44,4 +44,10 @@ class SiteController extends Controller
     {
         return $this->render('about');
     }
+    
+    public function actionModalRemote()
+    {
+        return '<p class="text-danger">Loaded from remote source!</p>';
+    }
+            
 }

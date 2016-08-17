@@ -129,6 +129,16 @@ $dataProvider = new ArrayDataProvider([
             'solid' => true,
         ]) ?>
             The body of the box. The body of the box. The body of the box.
+            <?php app\widgets\Modal::begin([
+                'toggleButton' => [
+                    'label' => 'Modal with remote content.',
+                    'class' => 'btn btn-flat btn-success',
+                ],
+                'header' => '<b>Remote content</b>',
+                'remote' => ['modal-remote'],
+            ]) ?>
+                <p class="text-center text-capitalize">Loading...</p>
+            <?php app\widgets\Modal::end() ?>
         <?php Box::end() ?>
         
         <?php Box::begin([
