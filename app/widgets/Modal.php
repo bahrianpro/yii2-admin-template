@@ -10,7 +10,24 @@ namespace app\widgets;
 use yii\helpers\Url;
 
 /**
- * 
+ * Modal widget.
+ *
+ * ~~~php
+ * Modal::begin([
+ *     'header' => '<h2>Hello world</h2>',
+ *     'toggleButton' => ['label' => 'click me'],
+ *     'remote' => ['demo'],
+ * ]);
+ *
+ * echo 'Say hello...';
+ *
+ * Modal::end();
+ *
+ * // In controller:
+ * public function actionDemo() {
+ *     return 'Put content to modal.';
+ * }
+ * ~~~
  *
  * @author skoro
  */
@@ -18,7 +35,7 @@ class Modal extends \yii\bootstrap\Modal
 {
     
     /**
-     * @var array|string
+     * @var array|string fetch content from remote source.
      */
     public $remote;
     
