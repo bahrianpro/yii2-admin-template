@@ -1,7 +1,7 @@
 <?php
 /**
- * @author Skorobogatko Alexei <a.skorobogatko@soft-industry.com>
- * @copyright 2016 Soft-Industry
+ * @author Skorobogatko Alexei <skorobogatko.oleksii@gmail.com>
+ * @copyright 2016
  * @version $Id$
  */
 
@@ -136,10 +136,11 @@ class Composer
         file_put_contents($config, $contents);
         
         echo "\nDone. Now you can import database migrate data by execute following command:\n";
+        echo "\n\t\tcd <to-your-project-dir>";
         echo "\n\t\t./bin/yii migrate\n\n";
         
         if ($type === 'sqlite') {
-            echo "\n\nNote for SQLite users: after database will be created set write permissions to file $db\n\n";
+            echo "\n\nNote for SQLite users: after migrating data don't forget to set write permissions to your database file: chmod 777 $db\n\n";
         }
     }
     
