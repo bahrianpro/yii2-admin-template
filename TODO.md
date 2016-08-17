@@ -15,4 +15,5 @@ Features for 0.2 release:
 1. Users management page (related with no.3).
 2. Configuration editor (avoid of manual editing params in config/web.php).
 3. Simple RBAC with "Administrator" and "Registered" roles.
-
+4. Modal with remote content. +++
+5. System log page.
