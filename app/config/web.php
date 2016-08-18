@@ -75,6 +75,7 @@ $config = [
     ], // component
     'params' => [
         'passwordResetTokenExpire' => 3600, // expire for 1 hour
+        'disableUserRegister' => false,
         'adminEmail' => 'admin@example.com',
         'noAvatarImage' => '@web/images/avatars/avatar2.png',
     ], // params
