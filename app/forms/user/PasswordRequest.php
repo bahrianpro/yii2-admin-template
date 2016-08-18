@@ -58,7 +58,7 @@ class PasswordRequest extends Model
                             ['user' => $user])
                         ->setFrom(Yii::$app->params['adminEmail'])
                         ->setTo($this->email)
-                        ->setSubject(Yii::t('app', 'Reset password information for {name} at {site}', ['name' => $user->name, 'site' => Yii::$app->name]))
+                        ->setSubject(t('Reset password information for {name} at {site}', ['name' => $user->name, 'site' => Yii::$app->name]))
                         ->send();
             }
         }

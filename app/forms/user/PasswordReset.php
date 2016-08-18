@@ -64,8 +64,8 @@ class PasswordReset extends Model
     public function attributeLabels()
     {
         return [
-            'password' => Yii::t('app', 'Password'),
-            'password_repeat' => Yii::t('app', 'Confirm password'),
+            'password' => t('Password'),
+            'password_repeat' => t('Confirm password'),
         ];
     }
 

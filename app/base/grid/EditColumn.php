@@ -42,6 +42,6 @@ class EditColumn extends Column
      */
     protected function getHeaderCellLabel()
     {
-        return Yii::t('app', 'Edit');
+        return t('Edit');
     }
 }

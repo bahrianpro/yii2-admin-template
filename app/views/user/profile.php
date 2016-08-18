@@ -7,7 +7,7 @@ use yii\helpers\Html;
 /** @var $this yii\web\View */
 /** @var $model app\forms\user\Profile */
 
-$this->title = Yii::t('app', 'User Profile');
+$this->title = t('User Profile');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= Html::encode($model->name) ?>
             </h3>
             <p class="text-muted text-center">
-                <?= Yii::t('app', 'Member since {date}', ['date' => Yii::$app->formatter->asDate(Yii::$app->user->identity->created_at)]) ?>
+                <?= t('Member since {date}', ['date' => Yii::$app->formatter->asDate(Yii::$app->user->identity->created_at)]) ?>
             </p>
         <?php Box::end() ?>
     </div>

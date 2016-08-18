@@ -41,7 +41,7 @@ class DeleteColumn extends Column
             $confirm = $this->confirm;
         }
         else {
-            $confirm = Yii::t('app', 'Are you sure ?');
+            $confirm = t('Are you sure ?');
         }
         $confirm = Html::encode($confirm);
         
@@ -55,6 +55,6 @@ class DeleteColumn extends Column
      */
     protected function getHeaderCellLabel()
     {
-        return Yii::t('app', 'Delete');
+        return t('Delete');
     }
 }

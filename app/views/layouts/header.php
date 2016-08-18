@@ -242,7 +242,7 @@ use yii\helpers\Html;
                             <?= Html::img(Yii::$app->params['noAvatarImage'], ['class' => 'img-circle']) ?>
                             <p>
                                 <?= Html::encode(Yii::$app->user->identity->name) ?>
-                                <small><?= Yii::t('app', 'Member since {date}', ['date' => Yii::$app->formatter->asDate(Yii::$app->user->identity->created_at)]) ?></small>
+                                <small><?= t('Member since {date}', ['date' => Yii::$app->formatter->asDate(Yii::$app->user->identity->created_at)]) ?></small>
                             </p>
                         </li>
                         <!-- Menu Body -->
@@ -261,14 +261,14 @@ use yii\helpers\Html;
                         <li class="user-footer">
                             <div class="pull-left">
                                 <?= Html::a(
-                                    Yii::t('app', 'Profile'),
+                                    t('Profile'),
                                     ['user/profile'],
                                     ['class' => 'btn btn-default btn-flat']
                                 ) ?>
                             </div>
                             <div class="pull-right">
                                 <?= Html::a(
-                                    Yii::t('app', 'Sign out'),
+                                    t('Sign out'),
                                     ['user/logout'],
                                     ['data-method' => 'post', 'class' => 'btn btn-default btn-flat']
                                 ) ?>

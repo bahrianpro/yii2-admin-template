@@ -29,7 +29,7 @@ class UserController extends Controller
     {
         $filters = ['all', 'enabled', 'disabled', 'pending'];
         if (!in_array($filter, $filters)) {
-            throw new ConsoleException(Yii::t('app', 'Filter accepts values: {values}', ['values' => implode(',', $filters)]));
+            throw new ConsoleException(t('Filter accepts values: {values}', ['values' => implode(',', $filters)]));
         }
         
         $users = User::find();
@@ -119,7 +119,7 @@ class UserController extends Controller
     {
         $user = $this->findUser($email);
         if ($user->status === User::STATUS_DISABLED) {
-            throw new ConsoleException(Yii::t('app', 'User "{email}" already disabled.', compact('email')));
+            throw new ConsoleException(t('User "{email}" already disabled.', compact('email')));
         }
         $user->status = User::STATUS_DISABLED;
         if ($user->save()) {
@@ -135,7 +135,7 @@ class UserController extends Controller
     {
         $user = $this->findUser($email);
         if ($user->status === User::STATUS_ENABLED) {
-            throw new ConsoleException(Yii::t('app', 'User "{email}" already enabled.', compact('email')));
+            throw new ConsoleException(t('User "{email}" already enabled.', compact('email')));
         }
         $user->status = User::STATUS_ENABLED;
         if ($user->save()) {
@@ -173,7 +173,7 @@ class UserController extends Controller
     protected function findUser($email)
     {
         if (!($user = User::findByEmail($email))) {
-            throw new ConsoleException(Yii::t('app', 'User not found.'));
+            throw new ConsoleException(t('User not found.'));
         }
         return $user;
     }

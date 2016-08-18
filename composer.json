@@ -23,7 +23,8 @@
     "autoload": {
         "psr-4": {
             "app\\": "app/"
-        }
+        },
+        "files": ["app/base/globals.php"]
     },
     "scripts": {
         "post-create-project-cmd": "app\\base\\Composer::postCreateProjectCmd"

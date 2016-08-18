@@ -84,11 +84,11 @@ class Register extends Model
     public function attributeLabels()
     {
         return [
-            'name' => Yii::t('app', 'User name'),
-            'email' => Yii::t('app', 'Email'),
-            'password' => Yii::t('app', 'Password'),
-            'password_repeat' => Yii::t('app', 'Confirm password'),
-            'status' => Yii::t('app', 'Status'),
+            'name' => t('User name'),
+            'email' => t('Email'),
+            'password' => t('Password'),
+            'password_repeat' => t('Confirm password'),
+            'status' => t('Status'),
         ];
     }
 

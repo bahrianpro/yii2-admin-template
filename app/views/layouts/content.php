@@ -31,7 +31,7 @@ if ($this->context instanceof \yii\base\Controller) {
             echo Breadcrumbs::widget(
                 [
                     'homeLink' => [
-                        'label' => '<i class="fa fa-dashboard"></i>' . Yii::t('app', 'Home'),
+                        'label' => '<i class="fa fa-dashboard"></i>' . t('Home'),
                         'url' => Yii::$app->homeUrl,
                         'encode' => false,
                     ],

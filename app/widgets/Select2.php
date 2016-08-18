@@ -94,7 +94,7 @@ class Select2 extends InputWidget
             // Empty item must be first.
             $items = $this->items;
             $this->items = [
-                '' => is_string($this->empty) ? $this->empty : Yii::t('app', 'None'),
+                '' => is_string($this->empty) ? $this->empty : t('None'),
             ] + $items;
         }
         

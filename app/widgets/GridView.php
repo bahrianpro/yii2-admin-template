@@ -108,7 +108,7 @@ class GridView extends \yii\grid\GridView
     {
         $options = ['class' => 'btn btn-default btn-flat', 'data-pjax' => 0];
         if (empty($this->toolButtons['create'])) {
-            $this->toolButtons['create'] = Html::a(Icon::PLUS . Yii::t('app', 'Create'), ['create'], $options);
+            $this->toolButtons['create'] = Html::a(Icon::PLUS . t('Create'), ['create'], $options);
         }
     }
     

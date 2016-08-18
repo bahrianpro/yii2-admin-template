@@ -74,9 +74,9 @@ class Profile extends Model
     public function attributeLabels()
     {
         return [
-            'name' => Yii::t('app', 'User name'),
-            'password' => Yii::t('app', 'Password'),
-            'password_repeat' => Yii::t('app', 'Confirm password'),
+            'name' => t('User name'),
+            'password' => t('Password'),
+            'password_repeat' => t('Confirm password'),
         ];
     }
     

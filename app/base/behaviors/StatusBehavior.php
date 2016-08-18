@@ -89,6 +89,6 @@ class StatusBehavior extends Behavior
     {
         $label = str_replace('STATUS_', '', $const);
         $label = ucfirst(strtolower($label));
-        return Yii::t('app', $label);
+        return t($label);
     }
 }

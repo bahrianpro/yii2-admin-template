@@ -114,14 +114,14 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return [
             'id' => 'ID',
-            'name' => Yii::t('app', 'User name'),
-            'email' => Yii::t('app', 'Email'),
-            'password_hash' => Yii::t('app', 'Password'),
-            'reset_token' => Yii::t('app', 'Reset token'),
-            'activate_token' => Yii::t('app', 'Activate token'),
-            'status' => Yii::t('app', 'Status'),
-            'created_at' => Yii::t('app', 'Created'),
-            'updated_at' => Yii::t('app', 'Updated'),
+            'name' => t('User name'),
+            'email' => t('Email'),
+            'password_hash' => t('Password'),
+            'reset_token' => t('Reset token'),
+            'activate_token' => t('Activate token'),
+            'status' => t('Status'),
+            'created_at' => t('Created'),
+            'updated_at' => t('Updated'),
         ];
     }
 
@@ -211,9 +211,9 @@ class User extends ActiveRecord implements IdentityInterface
     public static function getStatus($status = null)
     {
         $statuses = [
-            self::STATUS_DISABLED => Yii::t('app', 'Disabled'),
-            self::STATUS_ENABLED => Yii::t('app', 'Enabled'),
-            self::STATUS_PENDING => Yii::t('app', 'Pending'),
+            self::STATUS_DISABLED => t('Disabled'),
+            self::STATUS_ENABLED => t('Enabled'),
+            self::STATUS_PENDING => t('Pending'),
         ];
         return ($status === null) ? $statuses : (isset($statuses[$status]) ? $statuses[$status] : null);
     }

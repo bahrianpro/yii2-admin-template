@@ -112,7 +112,7 @@ class Menu extends Component
                 }
             }
             if ($this->translateItems) {
-                $item['label'] = Yii::t('app', $item['label']);
+                $item['label'] = t($item['label']);
             }
             if (isset($item['items'])) {
                 $item['items'] = $this->processMenuItems($item['items']);

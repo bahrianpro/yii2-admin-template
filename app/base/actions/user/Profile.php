@@ -43,7 +43,7 @@ class Profile extends Action
         $model = new $this->modelClass(Yii::$app->user->getIdentity());
         if (Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                $this->controller->addFlash(Controller::FLASH_INFO, Yii::t('app', 'Changes saved.'));
+                $this->controller->addFlash(Controller::FLASH_INFO, t('Changes saved.'));
                 $model->reset();
             }
         }

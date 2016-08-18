@@ -8,7 +8,7 @@ use yii\helpers\Url;
 /** @var $form yii\bootstrap\ActiveForm */
 /** @var $model app\forms\user\PasswordRequest */
 
-$this->title = Yii::t('app', 'Request password');
+$this->title = t('Request password');
 $fieldOptions = function ($icon) {
     return [
         'options' => ['class' => 'form-group has-feedback'],
@@ -22,7 +22,7 @@ $fieldOptions = function ($icon) {
     </div>
     <!-- /.login-logo -->
     <div class="login-box-body">
-        <p class="login-box-msg password-request"><?= Yii::t('app', 'If you have forgotten your password, you can reset it here. When you fill in your registered email address, you will be sent instructions on how to reset your password.') ?></p>
+        <p class="login-box-msg password-request"><?= t('If you have forgotten your password, you can reset it here. When you fill in your registered email address, you will be sent instructions on how to reset your password.') ?></p>
 
         <?php $form = ActiveForm::begin(['id' => 'login-form', 'enableClientValidation' => false]); ?>
 
@@ -33,7 +33,7 @@ $fieldOptions = function ($icon) {
 
         <div class="row">
             <div class="col-xs-4">
-                <?= Html::submitButton(Yii::t('app', 'Submit'), ['class' => 'btn btn-primary btn-block btn-flat', 'name' => 'submit-button']) ?>
+                <?= Html::submitButton(t('Submit'), ['class' => 'btn btn-primary btn-block btn-flat', 'name' => 'submit-button']) ?>
             </div>
             <!-- /.col -->
         </div>

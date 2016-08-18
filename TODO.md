@@ -17,3 +17,4 @@ Features for 0.2 release:
 3. Simple RBAC with "Administrator" and "Registered" roles.
 4. Modal with remote content. +++
 5. System log page.
+6. User activation by email (levearage of 'Pending' status).
