@@ -38,6 +38,7 @@ class Controller extends \yii\web\Controller
     public function init()
     {
         parent::init();
+        $this->_sidebarCollapsed = $this->getSidebarState();
     }
     
     /**
@@ -51,11 +52,11 @@ class Controller extends \yii\web\Controller
     /**
      * @inheritdoc
      */
-    public function render($view, $params = [])
+    public function renderContent($content)
     {
         $_view = $this->getView();
-        $_view->params['sidebarCollapsed'] = $this->getSidebarState();
-        return parent::render($view, $params);
+        $_view->params['sidebarCollapsed'] = $this->_sidebarCollapsed;
+        return parent::renderContent($content);
     }
     
     /**
