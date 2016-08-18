@@ -15,7 +15,7 @@ use yii\base\InvalidValueException;
 use yii\db\Query;
 
 /**
- * Param
+ * Site parameters management.
  *
  * @author skoro
  */
@@ -24,9 +24,15 @@ class Param extends Component
     
     const DEFAULT_SECTION = 'Site';
     
+    /**
+     * Events.
+     */
     const EVENT_PARAM_GET = 'parameterGet';
     const EVENT_PARAM_UPDATE = 'parameterUpdate';
     
+    /**
+     * @var Config[] models cache.
+     */
     protected static $cache = [];
     
     /**
@@ -51,6 +57,15 @@ class Param extends Component
         return $config->value;
     }
     
+    /**
+     * Update parameter.
+     * Parameter must be exists before updating.
+     * @param string $param parameter name including section.
+     * @param mixed $value
+     * @return mixed
+     * @throws InvalidValueException when parameter not found.
+     * @throws ErrorException when parameter failed to save.
+     */
     public static function update($param, $value)
     {
         if (isset(static::$cache[$param])) {
@@ -73,6 +88,11 @@ class Param extends Component
         return $value;
     }
     
+    /**
+     * Get parameter config model.
+     * @param string $param parameter name including section.
+     * @return Config
+     */
     public static function getConfig($param)
     {
         list ($section, $name) = static::parseParamName($param);
@@ -83,6 +103,11 @@ class Param extends Component
         ]);
     }
     
+    /**
+     * Get models from specified section.
+     * @param string $section
+     * @return Config[]
+     */
     public static function getConfigsBySection($section)
     {
         return Config::find()
@@ -93,6 +118,10 @@ class Param extends Component
                 ->all();
     }
     
+    /**
+     * Returns list of section names.
+     * @return array
+     */
     public static function getSections()
     {
         $rows = (new Query)
@@ -106,6 +135,11 @@ class Param extends Component
         }, $rows);
     }
     
+    /**
+     * Parse parameter name for section name and parameter.
+     * @param string $param
+     * @return array list of two: section, parameter.
+     */
     public static function parseParamName($param)
     {
         $section = self::DEFAULT_SECTION;
