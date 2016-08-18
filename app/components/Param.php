@@ -9,7 +9,10 @@
 namespace app\components;
 
 use app\models\Config;
+use ErrorException;
 use yii\base\Component;
+use yii\base\InvalidValueException;
+use yii\db\Query;
 
 /**
  * Param
@@ -57,12 +60,12 @@ class Param extends Component
         }
         
         if (!$config) {
-            throw new \yii\base\InvalidValueException('Cannot find config for parameter: ' . $param);
+            throw new InvalidValueException('Cannot find config for parameter: ' . $param);
         }
         
         $config->value = $value;
         if (!$config->save()) {
-            throw new \ErrorException('Cannot save config model for parameter: ' . $param);
+            throw new ErrorException('Cannot save config model for parameter: ' . $param);
         }
         
         static::$cache[$param] = $config;
@@ -92,7 +95,7 @@ class Param extends Component
     
     public static function getSections()
     {
-        $rows = (new \yii\db\Query)
+        $rows = (new Query)
                 ->from(Config::tableName())
                 ->select('section')
                 ->distinct()
