@@ -8,6 +8,7 @@
 
 namespace app\models;
 
+use app\base\behaviors\SerializableBehavior;
 use app\components\Param;
 use Yii;
 use yii\base\InvalidParamException;
@@ -40,6 +41,19 @@ class Config extends ActiveRecord
     public static function tableName()
     {
         return '{{%config}}';
+    }
+    
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            'serialize' => [
+                'class' => SerializableBehavior::className(),
+                'attributes' => ['value', 'options'],
+            ],
+        ];
     }
 
     /**
@@ -135,37 +149,5 @@ class Config extends ActiveRecord
         if (!$validator->validate($this->$attribute)) {
             $this->addError($attribute, $validator->message);
         }
-    }
-    
-    /**
-     * @inheritdoc
-     */
-    public function afterFind()
-    {
-        $this->options = unserialize($this->options);
-        $this->value = unserialize($this->value);
-        // Force getDirtyAttributes() work with unserialized values.
-        $this->setOldAttribute('value', $this->value);
-        parent::afterFind();
-    }
-    
-    /**
-     * @inheritdoc
-     */
-    public function beforeSave($insert)
-    {
-        $this->value = serialize($this->value);
-        $this->options = serialize($this->options);
-        return parent::beforeSave($insert);
-    }
-    
-    /**
-     * @inheritdoc
-     */
-    public function afterSave($insert, $changedAttributes)
-    {
-        $this->value = unserialize($this->value);
-        $this->options = unserialize($this->options);
-        parent::afterSave($insert, $changedAttributes);
     }
 }
