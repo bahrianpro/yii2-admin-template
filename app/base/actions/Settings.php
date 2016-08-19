@@ -57,6 +57,11 @@ class Settings extends Action
     protected $_tab;
     
     /**
+     * @var array
+     */
+    protected $_configs = [];
+    
+    /**
      * @inheritdoc
      */
     public function init()
@@ -86,17 +91,18 @@ class Settings extends Action
                 
                 /** @var $config Config */
                 foreach ($configs as $config) {
-                    $config->scenario = 'update';
                     $isDirty = $config->getDirtyAttributes(['value']);
-                    if (!$config->getErrors() && $isDirty && $config->save(false)) {
+                    if (!$config->getErrors() && $isDirty && $config->save(false, ['value'])) {
                         $this->controller->addFlash(
                             Controller::FLASH_SUCCESS,
-                            Yii::t('app', 'Parameter <b>{name}</b> updated.', [
-                                'name' => $this->getConfigLabel($config)
+                            Yii::t('app', '<b>{title}</b> updated.', [
+                                'title' => $config->title,
                             ])
                         );
                     }
                 }
+                
+                $this->_configs[$section] = $configs;
             }
         }
         
@@ -129,7 +135,8 @@ class Settings extends Action
      */
     protected function renderSection($section)
     {
-        $configs = Param::getConfigsBySection($section);
+        $configs = isset($this->_configs[$section]) ?
+                $this->_configs[$section] : Param::getConfigsBySection($section);
         
         ob_start();
         ob_implicit_flush(false);
@@ -142,20 +149,22 @@ class Settings extends Action
         echo Html::hiddenInput('section', $section);
         
         foreach ($configs as $config) {
-            $field = $form->field($config, "[{$config->id}]value");
-            $label = $this->getConfigLabel($config);
+            $desc = Html::encode($config->desc);
+            $field = $form->field($config, "[{$config->id}]value", [
+                'template' => "{label}{input}<p class='text-muted param-desc'><small>$desc</small></p>{error}",
+            ]);
             
             switch ($config->value_type) {
                 case 'text':
                 case 'url':
                 case 'email':
                 case 'integer':
-                    echo $field->textInput()->label($label);
+                    echo $field->textInput()->label($config->title);
                     break;
                 
                 case 'switch':
                     echo $field->widget(Check::className(), [
-                        'label' => $label,
+                        'label' => $config->title,
                     ])->label(false);
                     break;
             }
@@ -166,15 +175,5 @@ class Settings extends Action
         ]);
         
         return ob_get_clean();
-    }
-    
-    /**
-     * Gets parameter label.
-     * @param Config $config
-     * @return string
-     */
-    protected function getConfigLabel(Config $config)
-    {
-        return $config->desc ? $config->desc : $config->name;
     }
 }

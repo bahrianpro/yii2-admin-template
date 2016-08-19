@@ -25,8 +25,10 @@ use yii\validators\UrlValidator;
  * @property string $name
  * @property resource $value
  * @property string $value_type
+ * @property string $title
  * @property string $desc
  * @property string $section
+ * @property boolean $required
  */
 class Config extends ActiveRecord
 {
@@ -47,7 +49,13 @@ class Config extends ActiveRecord
             ['name', 'required'],
             ['name', 'string', 'max' => 255],
             
-            ['value', 'validateValue', 'on' => ['default', 'update']],
+            ['title', 'required'],
+            ['title', 'string', 'max' => 255],
+
+            ['value', 'required', 'when' => function ($model) {
+                return $model->required == true;
+            }],
+            ['value', 'validateValue'],
             
             ['value_type', 'required'],
             ['value_type', 'string', 'max' => 8],
@@ -57,6 +65,9 @@ class Config extends ActiveRecord
             
             ['section', 'string', 'max' => 32],
             ['section', 'default', 'value' => Param::DEFAULT_SECTION],
+            
+            ['required', 'boolean'],
+            ['required', 'default', 'value' => false],
             
             [['name', 'section'], 'unique', 'targetAttribute' => ['name', 'section'], 'message' => 'The combination of Name and Section has already been taken.'],
         ];
@@ -87,24 +98,28 @@ class Config extends ActiveRecord
                 $args = [
                     'class' => NumberValidator::className(),
                     'integerOnly' => true,
+                    'message' => 'Not a number',
                 ];
                 break;
             
             case 'email':
                 $args = [
                     'class' => EmailValidator::className(),
+                    'message' => 'Not a valid email',
                 ];
                 break;
             
             case 'url':
                 $args = [
                     'class' => UrlValidator::className(),
+                    'message' => 'Not a valid url',
                 ];
                 break;
             
             case 'switch':
                 $args = [
                     'class' => BooleanValidator::className(),
+                    'message' => 'Must be boolean value',
                 ];
                 break;
             
@@ -142,5 +157,14 @@ class Config extends ActiveRecord
     {
         $this->value = serialize($this->value);
         return parent::beforeSave($insert);
+    }
+    
+    /**
+     * @inheritdoc
+     */
+    public function afterSave($insert, $changedAttributes)
+    {
+        $this->value = unserialize($this->value);
+        parent::afterSave($insert, $changedAttributes);
     }
 }
