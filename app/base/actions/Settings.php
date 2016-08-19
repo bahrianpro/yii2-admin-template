@@ -20,11 +20,25 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 
 /**
- * Description of Param
+ * Site settings action.
+ *
+ * Build a page with site settings.
+ * Include in your controller actions following:
+ * ```php
+ * public function actions() {
+ *    return [
+ *        ....
+ *        'settings' => [
+ *            'class' => 'app\base\actions\Settings',
+ *        ],
+ *        ....
+ *    ];
+ * }
+ * ```
  *
  * @author skoro
  */
-class Params extends Action
+class Settings extends Action
 {
     
     /**

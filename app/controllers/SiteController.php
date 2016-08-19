@@ -20,7 +20,7 @@ class SiteController extends Controller
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
             ],
             'settings' => [
-                'class' => 'app\base\actions\Params',
+                'class' => 'app\base\actions\Settings',
             ],
         ];
     }
