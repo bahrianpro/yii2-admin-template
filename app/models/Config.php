@@ -78,21 +78,6 @@ class Config extends ActiveRecord
     }
 
     /**
-     * @inheritdoc
-     */
-    public function attributeLabels()
-    {
-        return [
-            'id' => 'ID',
-            'name' => 'Name',
-            'value' => 'Value',
-            'value_type' => 'Value Type',
-            'desc' => 'Desc',
-            'section' => 'Section',
-        ];
-    }
-    
-    /**
      * Validate 'value' attribute against of 'value_type'.
      */
     public function validateValue($attribute, $params = [])
