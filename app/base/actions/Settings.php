@@ -14,6 +14,7 @@ use app\components\Param;
 use app\models\Config;
 use app\widgets\ActiveForm;
 use app\widgets\Check;
+use app\widgets\Pjax;
 use app\widgets\Tabs;
 use Yii;
 use yii\helpers\ArrayHelper;
@@ -50,6 +51,16 @@ class Settings extends Action
      * @var array
      */
     public $tabsOptions = [];
+    
+    /**
+     * @var boolean use pjax for update settings tabs.
+     */
+    public $pjax = true;
+    
+    /**
+     * @var array
+     */
+    public $pjaxOptions = [];
     
     /**
      * @var string current active tab.
@@ -141,9 +152,13 @@ class Settings extends Action
         ob_start();
         ob_implicit_flush(false);
         
+        if ($this->pjax) {
+            Pjax::begin($this->pjaxOptions);
+        }
+        
         $form = ActiveForm::begin([
             'action' => [$this->id, 'tab' => $section],
-            'pjax' => true,
+            'pjax' => $this->pjax,
         ]);
         
         echo Html::hiddenInput('section', $section);
@@ -173,6 +188,10 @@ class Settings extends Action
         ActiveForm::endWithActions([
             'cancel' => false,
         ]);
+        
+        if ($this->pjax) {
+            Pjax::end();
+        }
         
         return ob_get_clean();
     }
