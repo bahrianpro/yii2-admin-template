@@ -177,10 +177,12 @@ class Param extends Component
         $section = self::DEFAULT_SECTION;
         if (($pos = strpos($param, '.')) !== false) {
             $section = trim(substr($param, 0, $pos));
-            $name = trim(substr($name, $pos + 1));
+            $name = trim(substr($param, $pos + 1));
             if (!$section) {
                 $section = self::DEFAULT_SECTION;
             }
+        } else {
+            $name = $param;
         }
         return [$section, $name];
     }

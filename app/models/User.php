@@ -7,10 +7,11 @@
 
 namespace app\models;
 
+use app\components\Param;
 use Yii;
+use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
-use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "user".
@@ -258,8 +259,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function findByResetToken($token)
     {
-        $expire = isset(Yii::$app->params['passwordResetTokenExpire']) ?
-                (int) Yii::$app->params['passwordResetTokenExpire'] : 3600;
+        $expire = Param::value('User.passwordResetTokenExpire', 3600);
         
         // Is token expired ?
         $list = explode('_', $token);

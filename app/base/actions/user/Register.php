@@ -8,8 +8,8 @@
 namespace app\base\actions\user;
 
 use app\base\Action;
+use app\components\Param;
 use Yii;
-use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
@@ -41,7 +41,7 @@ class Register extends Action
      */
     public function run()
     {
-        if (ArrayHelper::getValue(Yii::$app->params, 'disableUserRegister', false)) {
+        if (Param::value('User.disableUserRegister', false)) {
             throw new NotFoundHttpException();
         }
         

@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'box' => Box::BOX_PRIMARY,
             'bodyOptions' => ['class' => 'box-profile'],
         ]) ?>
-            <?= Html::img(Yii::$app->params['noAvatarImage'], ['class' => 'profile-user-img img-responsive img-circle']) ?>
+            <?= Html::img(app\components\Param::value('User.noAvatarImage'), ['class' => 'profile-user-img img-responsive img-circle']) ?>
             <h3 class="profile-username text-center">
                 <?= Html::encode($model->name) ?>
             </h3>

@@ -1,5 +1,6 @@
 <?php
 
+use app\components\Param;
 use yii\helpers\Html;
 
 /** @var $this \yii\web\View */
@@ -233,13 +234,13 @@ use yii\helpers\Html;
                 <?php if (!Yii::$app->user->isGuest): ?>
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <?= Html::img(Yii::$app->params['noAvatarImage'], ['class' => 'user-image']) ?>
+                        <?= Html::img(Param::value('User.noAvatarImage'), ['class' => 'user-image']) ?>
                         <span class="hidden-xs"><?= Html::encode(Yii::$app->user->identity->name) ?></span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
                         <li class="user-header">
-                            <?= Html::img(Yii::$app->params['noAvatarImage'], ['class' => 'img-circle']) ?>
+                            <?= Html::img(Param::value('User.noAvatarImage'), ['class' => 'img-circle']) ?>
                             <p>
                                 <?= Html::encode(Yii::$app->user->identity->name) ?>
                                 <small><?= t('Member since {date}', ['date' => Yii::$app->formatter->asDate(Yii::$app->user->identity->created_at)]) ?></small>

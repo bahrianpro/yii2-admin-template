@@ -7,9 +7,10 @@
 
 namespace app\forms\user;
 
+use app\components\Param;
+use app\models\User;
 use Yii;
 use yii\base\Model;
-use app\models\User;
 
 /**
  * PasswordRequest
@@ -56,7 +57,7 @@ class PasswordRequest extends Model
                                 'text' => 'passwordRequest-text'
                             ],
                             ['user' => $user])
-                        ->setFrom(Yii::$app->params['adminEmail'])
+                        ->setFrom(Param::value('Site.adminEmail'))
                         ->setTo($this->email)
                         ->setSubject(t('Reset password information for {name} at {site}', ['name' => $user->name, 'site' => Yii::$app->name]))
                         ->send();
