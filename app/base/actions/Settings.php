@@ -135,6 +135,7 @@ class Settings extends Action
         ob_implicit_flush(false);
         
         $form = ActiveForm::begin([
+            'action' => [$this->id, 'tab' => $section],
             'pjax' => true,
         ]);
         
