@@ -33,12 +33,6 @@ class Param extends Component
     const DEFAULT_SECTION = 'Site';
     
     /**
-     * Events.
-     */
-    const EVENT_PARAM_GET = 'parameterGet';
-    const EVENT_PARAM_UPDATE = 'parameterUpdate';
-    
-    /**
      * @var Config[] models cache.
      */
     protected static $cache = [];
