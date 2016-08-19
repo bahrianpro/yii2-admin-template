@@ -80,7 +80,7 @@ class Settings extends Action
     {
         parent::init();
         if (!$this->title) {
-            $this->title = Yii::t('app', 'Site settings');
+            $this->title = t('Site settings');
         }
     }
     
@@ -107,7 +107,7 @@ class Settings extends Action
                     if (!$config->getErrors() && $isDirty && $config->save(false, ['value'])) {
                         $this->controller->addFlash(
                             Controller::FLASH_SUCCESS,
-                            Yii::t('app', '<b>{title}</b> updated.', [
+                            t('<b>{title}</b> updated.', [
                                 'title' => $config->title,
                             ])
                         );
@@ -166,6 +166,7 @@ class Settings extends Action
         
         foreach ($configs as $config) {
             $desc = Html::encode($config->desc);
+            $title = Yii::t('param', $config->title);
             $field = $form->field($config, "[{$config->id}]value", [
                 'template' => "{label}{input}<p class='text-muted param-desc'><small>$desc</small></p>{error}",
             ]);
@@ -175,23 +176,23 @@ class Settings extends Action
                 case 'url':
                 case 'email':
                 case 'integer':
-                    echo $field->textInput()->label($config->title);
+                    echo $field->textInput()->label($title);
                     break;
                 
                 case 'editor':
-                    echo $field->textArea()->label($config->title);
+                    echo $field->textArea()->label($title);
                     break;
                 
                 case 'switch':
                     echo $field->widget(Check::className(), [
-                        'label' => $config->title,
+                        'label' => $title,
                     ])->label(false);
                     break;
                 
                 case 'select':
                     echo $field->widget(Select2::className(), [
                         'items' => $config->options,
-                    ])->label($config->title);
+                    ])->label($title);
                     break;
             }
         }
