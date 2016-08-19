@@ -78,19 +78,18 @@ class Check extends InputWidget
     public function run()
     {
         $this->registerPlugin('iCheck');
+        
+        if ($this->label) {
+            $this->options['label'] = $this->label;
+        }
+        
         if ($this->hasModel()) {
             $input = Html::activeCheckbox($this->model, $this->attribute, $this->options);
         } else {
             $input = Html::checkbox($this->name, $this->checked, $this->options);
         }
         
-        if (!empty($this->label)) {
-            $label = '&nbsp;' . Html::label($this->label, $this->options['id']);
-        } else {
-            $label = '';
-        }
-        
-        return $input . $label;
+        return $input;
     }
     
     /**
