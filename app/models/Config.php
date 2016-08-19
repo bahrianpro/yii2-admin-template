@@ -47,7 +47,7 @@ class Config extends ActiveRecord
             ['name', 'required'],
             ['name', 'string', 'max' => 255],
             
-            ['value', 'validateValue'],
+            ['value', 'validateValue', 'on' => ['default', 'update']],
             
             ['value_type', 'required'],
             ['value_type', 'string', 'max' => 8],
@@ -130,6 +130,8 @@ class Config extends ActiveRecord
     public function afterFind()
     {
         $this->value = unserialize($this->value);
+        // Force getDirtyAttributes() work with unserialized values.
+        $this->setOldAttribute('value', $this->value);
         parent::afterFind();
     }
     

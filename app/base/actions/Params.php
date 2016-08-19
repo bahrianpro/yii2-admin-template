@@ -64,15 +64,22 @@ class Params extends Action
         if (Yii::$app->request->isPost) {
             $post = Yii::$app->request->post();
             $section = ArrayHelper::getValue($post, 'section', Param::DEFAULT_SECTION);
+            
+            /** @var $configs Config[] */
             $configs = Param::getConfigsBySection($section);
             if (Config::loadMultiple($configs, $post)) {
                 Config::validateMultiple($configs);
+                
+                /** @var $config Config */
                 foreach ($configs as $config) {
-//                    $config->scenario = 'update';
-                    if ($config->getErrors() && $config->save(false)) {
+                    $config->scenario = 'update';
+                    $isDirty = $config->getDirtyAttributes(['value']);
+                    if (!$config->getErrors() && $isDirty && $config->save(false)) {
                         $this->controller->addFlash(
-                                Controller::FLASH_SUCCESS,
-                                Yii::t('app', 'Parameter <b>{name}</b> updated.', ['name' => $config->name])
+                            Controller::FLASH_SUCCESS,
+                            Yii::t('app', 'Parameter <b>{name}</b> updated.', [
+                                'name' => $this->getConfigLabel($config)
+                            ])
                         );
                     }
                 }
@@ -83,6 +90,10 @@ class Params extends Action
         return $this->controller->renderContent(Tabs::widget($this->tabsOptions));
     }
     
+    /**
+     * Renders items for Tabs widget.
+     * @return string
+     */
     protected function renderTabs()
     {
         $tabs = [];
@@ -97,6 +108,11 @@ class Params extends Action
         return $tabs;
     }
     
+    /**
+     * Renders tab section content.
+     * @param string $section
+     * @return string
+     */
     protected function renderSection($section)
     {
         $configs = Param::getConfigsBySection($section);
@@ -111,14 +127,17 @@ class Params extends Action
         echo Html::hiddenInput('section', $section);
         
         foreach ($configs as $config) {
-            
             $field = $form->field($config, "[{$config->id}]value");
-            $label = $config->desc ? $config->desc : $config->name;
+            $label = $this->getConfigLabel($config);
             
             switch ($config->value_type) {
-                case 'text': case 'url': case 'email': case 'integer':
+                case 'text':
+                case 'url':
+                case 'email':
+                case 'integer':
                     echo $field->textInput()->label($label);
                     break;
+                
                 case 'switch':
                     echo $field->widget(Check::className(), [
                         'label' => $label,
@@ -132,5 +151,15 @@ class Params extends Action
         ]);
         
         return ob_get_clean();
+    }
+    
+    /**
+     * Gets parameter label.
+     * @param Config $config
+     * @return string
+     */
+    protected function getConfigLabel(Config $config)
+    {
+        return $config->desc ? $config->desc : $config->name;
     }
 }
