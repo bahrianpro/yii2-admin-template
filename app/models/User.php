@@ -280,7 +280,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function removeResetToken()
     {
-        $this->reset_token = null;
+        $this->reset_token = '';
         return $this;
     }
     
