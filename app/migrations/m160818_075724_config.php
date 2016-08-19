@@ -14,6 +14,7 @@ class m160818_075724_config extends Migration
             'name' => $this->string(255)->notNull(),
             'value' => $this->binary(),
             'value_type' => $this->char(8)->notNull(),
+            'options' => $this->binary(),
             'title' => $this->string(255)->notNull(),
             'desc' => $this->text(),
             'section' => $this->string(32)->notNull()->defaultValue('global'),
@@ -60,6 +61,22 @@ class m160818_075724_config extends Migration
             'desc' => 'Email address used for replies.',
             'required' => true,
         ]);
+
+//        This is 'select' param demo:
+//        $this->insertParam([
+//            'name' => 'defaultUserRole',
+//            'title' => 'Default user role',
+//            'value' => 'Registered',
+//            'options' => [
+//                'Administrator' => 'Administrator',
+//                'Registered' => 'Registerd',
+//                'Editor' => 'Editor',
+//                'Subscriber' => 'Subscriber',
+//            ],
+//            'value_type' => 'select',
+//            'section' => 'User',
+//            'desc' => 'Assign newly registered users to specified role.',
+//        ]);
     }
 
     public function down()
@@ -70,6 +87,9 @@ class m160818_075724_config extends Migration
     protected function insertParam($data)
     {
         $data['value'] = serialize($data['value']);
+        if (isset($data['options'])) {
+            $data['options'] = serialize($data['options']);
+        }
         Yii::$app->db->createCommand()
                 ->insert($this->table, $data)
                 ->execute();

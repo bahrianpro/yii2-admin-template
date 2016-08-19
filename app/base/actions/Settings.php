@@ -16,6 +16,7 @@ use app\widgets\ActiveForm;
 use app\widgets\Check;
 use app\widgets\Pjax;
 use app\widgets\Tabs;
+use app\widgets\Select2;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -177,10 +178,20 @@ class Settings extends Action
                     echo $field->textInput()->label($config->title);
                     break;
                 
+                case 'editor':
+                    echo $field->textArea()->label($config->title);
+                    break;
+                
                 case 'switch':
                     echo $field->widget(Check::className(), [
                         'label' => $config->title,
                     ])->label(false);
+                    break;
+                
+                case 'select':
+                    echo $field->widget(Select2::className(), [
+                        'items' => $config->options,
+                    ])->label($config->title);
                     break;
             }
         }

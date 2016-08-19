@@ -15,6 +15,7 @@ use yii\db\ActiveRecord;
 use yii\validators\BooleanValidator;
 use yii\validators\EmailValidator;
 use yii\validators\NumberValidator;
+use yii\validators\RangeValidator;
 use yii\validators\StringValidator;
 use yii\validators\UrlValidator;
 
@@ -25,6 +26,7 @@ use yii\validators\UrlValidator;
  * @property string $name
  * @property resource $value
  * @property string $value_type
+ * @property string $options
  * @property string $title
  * @property string $desc
  * @property string $section
@@ -62,6 +64,8 @@ class Config extends ActiveRecord
             
             ['desc', 'string'],
             ['desc', 'default', 'value' => ''],
+                    
+            ['options', 'safe'],
             
             ['section', 'string', 'max' => 32],
             ['section', 'default', 'value' => Param::DEFAULT_SECTION],
@@ -124,8 +128,17 @@ class Config extends ActiveRecord
                 break;
             
             case 'text':
+            case 'editor':
                 $args = [
                     'class' => StringValidator::className(),
+                ];
+                break;
+            
+            case 'select':
+                $args = [
+                    'class' => RangeValidator::className(),
+                    'range' => array_keys($this->options),
+                    'message' => 'Invalid value',
                 ];
                 break;
             
@@ -144,6 +157,7 @@ class Config extends ActiveRecord
      */
     public function afterFind()
     {
+        $this->options = unserialize($this->options);
         $this->value = unserialize($this->value);
         // Force getDirtyAttributes() work with unserialized values.
         $this->setOldAttribute('value', $this->value);
@@ -156,6 +170,7 @@ class Config extends ActiveRecord
     public function beforeSave($insert)
     {
         $this->value = serialize($this->value);
+        $this->options = serialize($this->options);
         return parent::beforeSave($insert);
     }
     
@@ -165,6 +180,7 @@ class Config extends ActiveRecord
     public function afterSave($insert, $changedAttributes)
     {
         $this->value = unserialize($this->value);
+        $this->options = unserialize($this->options);
         parent::afterSave($insert, $changedAttributes);
     }
 }
