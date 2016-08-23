@@ -165,11 +165,8 @@ class Settings extends Action
         echo Html::hiddenInput('section', $section);
         
         foreach ($configs as $config) {
-            $desc = Html::encode(t($config->desc));
             $title = t($config->title);
-            $field = $form->field($config, "[{$config->id}]value", [
-                'template' => "{label}{input}<p class='text-muted param-desc'><small>$desc</small></p>{error}",
-            ]);
+            $field = $form->field($config, "[{$config->id}]value")->hint(t($config->desc));
             
             switch ($config->value_type) {
                 case 'text':
