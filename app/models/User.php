@@ -7,6 +7,7 @@
 
 namespace app\models;
 
+use app\base\behaviors\StatusBehavior;
 use app\components\Param;
 use Yii;
 use yii\behaviors\TimestampBehavior;
@@ -52,7 +53,10 @@ class User extends ActiveRecord implements IdentityInterface
             [
                 'class' => TimestampBehavior::className(),
                 'updatedAtAttribute' => false,
-            ]
+            ],
+            [
+                'class' => StatusBehavior::className(),
+            ],
         ];
     }
     
@@ -122,7 +126,7 @@ class User extends ActiveRecord implements IdentityInterface
             'activate_token' => t('Activate token'),
             'status' => t('Status'),
             'created_at' => t('Created'),
-            'updated_at' => t('Updated'),
+            'logged_at' => t('Last login'),
         ];
     }
 
@@ -202,21 +206,6 @@ class User extends ActiveRecord implements IdentityInterface
     {
         $this->password_hash = Yii::$app->security->generatePasswordHash($password);
         return $this;
-    }
-    
-    /**
-     * Get human readable user status.
-     * @param integer $status Optional. If missed all statuses returned.
-     * @return array|string|null
-     */
-    public static function getStatus($status = null)
-    {
-        $statuses = [
-            self::STATUS_DISABLED => t('Disabled'),
-            self::STATUS_ENABLED => t('Enabled'),
-            self::STATUS_PENDING => t('Pending'),
-        ];
-        return ($status === null) ? $statuses : (isset($statuses[$status]) ? $statuses[$status] : null);
     }
     
     /**
