@@ -8,6 +8,7 @@
 namespace app\base\actions\user;
 
 use app\base\Action;
+use app\base\Controller;
 use app\components\Param;
 use Yii;
 use yii\web\Response;
@@ -45,6 +46,9 @@ class Login extends Action
         if (Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post()) && $model->login()) {
                 return $this->controller->goBack();
+            } else {
+                $this->controller->addFlash(Controller::FLASH_ERROR, t('Login to your account failed.'));
+                $model->password = '';
             }
         }
         
