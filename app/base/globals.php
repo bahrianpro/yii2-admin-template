@@ -14,9 +14,14 @@ function t($message, $params = [], $language = null)
 {
     static $data = [];
     
-    if (isset($data[$message])) {
+    if (!$params && !$language && isset($data[$message])) {
         return $data[$message];
     }
     
-    return $data[$message] = Yii::t('app', $message, $params, $language);
+    $translated = Yii::t('app', $message, $params, $language);
+    if (!$params && !$language) {
+        $data[$message] = $translated;
+    }
+    
+    return $translated;
 }
