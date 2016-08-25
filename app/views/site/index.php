@@ -2,7 +2,6 @@
 
 use app\widgets\Box;
 use app\widgets\Check;
-use app\widgets\DataTable;
 use app\widgets\ItemList;
 use app\widgets\ProgressBar;
 use app\widgets\ProgressBarGroup;
@@ -205,13 +204,6 @@ $dataProvider = new ArrayDataProvider([
     </div>
     
     <div class="col-md-12">
-        <?php Box::begin([
-            'label' => 'DataTable demo',
-        ]) ?>
-            <?= DataTable::widget([
-                'dataProvider' => $dataProvider,
-            ]) ?>
-        <?php Box::end() ?>
     </div>
     
 </div> <!-- /.demo-page -->
