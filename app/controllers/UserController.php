@@ -67,7 +67,7 @@ class UserController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['profile', 'logout', 'index'],
+                        'actions' => ['profile', 'logout', 'index', 'delete'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -102,7 +102,7 @@ class UserController extends Controller
             }
             if ($user = $register->register()) {
                 $this->addFlash(self::FLASH_SUCCESS, t('User <b>{name}</b> created.', [
-                    'name' => $user->name,
+                    'name' => e($user->name),
                 ]));
             }
         }
@@ -111,5 +111,23 @@ class UserController extends Controller
             'userProvider' => $userProvider,
             'register' => $register,
         ]);
+    }
+    
+    /**
+     * Delete user action.
+     * @param integer $id user id
+     * @since 0.2
+     */
+    public function actionDelete($id)
+    {
+        /** @var $user UserModel */
+        $user = $this->findModel(UserModel::className(), $id);
+        if ($user->delete()) {
+            $this->addFlash(self::FLASH_SUCCESS, t('User <b>{name}</b> deleted.', [
+                'name' => e($user->name),
+            ]));
+        }
+        
+        return $this->redirect(['index']);
     }
 }
