@@ -90,6 +90,15 @@ class Profile extends Model
     }
     
     /**
+     * Returns user instance.
+     * @return User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+    
+    /**
      * Save changes.
      * @return boolean
      */
