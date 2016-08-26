@@ -7,9 +7,10 @@
 
 namespace app\base\actions\user;
 
-use Yii;
 use app\base\Action;
 use app\base\Controller;
+use app\models\User;
+use Yii;
 use yii\web\Response;
 use yii\widgets\ActiveForm;
 
@@ -34,13 +35,19 @@ class Profile extends Action
     /**
      * @inheritdoc
      */
-    public function run()
+    public function run($id = null)
     {
         if (Yii::$app->user->isGuest) {
             return $this->controller->redirect(['user/login']);
         }
         
-        $model = new $this->modelClass(Yii::$app->user->getIdentity());
+        if ($id === null) {
+            $user = Yii::$app->user->getIdentity();
+        } else {
+            $user = $this->controller->findModel(User::className(), $id);
+        }
+        
+        $model = new $this->modelClass($user);
         if (Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 $this->controller->addFlash(Controller::FLASH_INFO, t('Changes saved.'));
