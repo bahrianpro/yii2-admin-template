@@ -22,12 +22,21 @@ class Pjax extends \yii\widgets\Pjax
     public $notifyOptions = [];
     
     /**
+     * @var boolean
+     */
+    public $modal = false;
+    
+    /**
      * @inheritdoc
      */
     public function run()
     {
         if ($this->requiresPjax()) {
             echo Notify::widget($this->notifyOptions);
+        }
+        $id = $this->options['id'];
+        if ($this->modal) {
+            $this->getView()->registerJs("Admin.Modal.pjax('#$id');");
         }
         parent::run();
     }

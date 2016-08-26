@@ -48,6 +48,30 @@
             $(el).on('show.bs.modal', function (e) {
                 $(this).find('.modal-body').load(url);
             });
+        },
+        
+        // Fix Pjax widget in Modal forms.
+        pjax: function (el) {
+            var $modal = $(el).find('.modal');
+
+            function onBeforeSend(options, xhr) {
+                if ($modal.is(':hidden')) {
+                    $(document).off('pjax:beforeSend', onBeforeSend);
+                    return;
+                }
+                $modal.on('hidden.bs.modal', function (e) {
+                    $(document).off('pjax:beforeSend', onBeforeSend);
+                    if ($(options.relatedTarget).is('form')) {
+                        $(options.relatedTarget).submit();
+                    }
+                });
+                $modal.modal('hide');
+                return false;
+            }
+
+            if ($modal.size()) {
+                $(document).on('pjax:beforeSend', onBeforeSend);
+            }
         }
         
     };

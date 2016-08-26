@@ -9,9 +9,13 @@ namespace app\controllers;
 
 use app\base\actions\user;
 use app\base\Controller;
+use app\forms\user\Register;
 use app\models\User as UserModel;
+use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
+use yii\web\Response;
+use yii\widgets\ActiveForm;
 
 /**
  * UserController
@@ -88,8 +92,24 @@ class UserController extends Controller
             'query' => UserModel::find(),
         ]);
         
+        $register = new Register();
+        
+        $request = Yii::$app->request;
+        if ($request->isPost && $register->load($request->post())) {
+            if ($request->isAjax && !$request->isPjax) {
+                Yii::$app->response->format = Response::FORMAT_JSON;
+                return ActiveForm::validate($register);
+            }
+            if ($user = $register->register()) {
+                $this->addFlash(self::FLASH_SUCCESS, t('User <b>{name}</b> created.', [
+                    'name' => $user->name,
+                ]));
+            }
+        }
+        
         return $this->render('index', [
             'userProvider' => $userProvider,
+            'register' => $register,
         ]);
     }
 }
