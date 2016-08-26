@@ -9,6 +9,8 @@ namespace app\controllers;
 
 use app\base\actions\user;
 use app\base\Controller;
+use app\models\User as UserModel;
+use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 
 /**
@@ -61,7 +63,7 @@ class UserController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['profile', 'logout'],
+                        'actions' => ['profile', 'logout', 'index'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -74,5 +76,20 @@ class UserController extends Controller
                 ],
             ],
         ];
+    }
+    
+    /**
+     * Users list.
+     * @since 0.2
+     */
+    public function actionIndex()
+    {
+        $userProvider = new ActiveDataProvider([
+            'query' => UserModel::find(),
+        ]);
+        
+        return $this->render('index', [
+            'userProvider' => $userProvider,
+        ]);
     }
 }
