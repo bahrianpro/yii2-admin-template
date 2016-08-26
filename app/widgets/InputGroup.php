@@ -1,9 +1,9 @@
 <?php
 /**
- * @author Skorobogatko Alexei <a.skorobogatko@soft-industry.com>
- * @copyright 2016 Soft-Industry
- * @version $Id: InputGroup.php 304 2016-07-01 08:57:44Z skoro $
- * @since 1.0.0
+ * @author Skorobogatko Alexei <skorobogatko.oleksii@gmail.com>
+ * @copyright 2016
+ * @version $Id$
+ * @since 0.1
  */
 
 namespace app\widgets;
