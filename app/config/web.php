@@ -53,6 +53,8 @@ $config = [
                 'login' => 'user/login',
                 'register' => 'user/register',
                 'logout' => 'user/logout',
+                'users' => 'user/index',
+                'user/<id:[0-9]+>' => 'user/profile',
             ],
         ], // urlManager
         // Application menus.
