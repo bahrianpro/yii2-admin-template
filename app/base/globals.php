@@ -25,3 +25,13 @@ function t($message, $params = [], $language = null)
     
     return $translated;
 }
+
+/**
+ * Wrapper for yii\helpers\Html::encode().
+ * @param string $content
+ * @return string
+ */
+function e($content)
+{
+    return yii\helpers\Html::encode($content);
+}
