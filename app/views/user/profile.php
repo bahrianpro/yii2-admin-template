@@ -1,6 +1,9 @@
 <?php
 
+use app\components\Param;
+use app\helpers\UserHelper;
 use app\widgets\Box;
+use app\widgets\ItemList;
 use yii\bootstrap\Tabs;
 use yii\helpers\Html;
 
@@ -18,13 +21,29 @@ $this->params['breadcrumbs'][] = $this->title;
             'box' => Box::BOX_PRIMARY,
             'bodyOptions' => ['class' => 'box-profile'],
         ]) ?>
-            <?= Html::img(app\components\Param::value('User.noAvatarImage'), ['class' => 'profile-user-img img-responsive img-circle']) ?>
+            <?= Html::img(Param::value('User.noAvatarImage'), ['class' => 'profile-user-img img-responsive img-circle']) ?>
             <h3 class="profile-username text-center">
                 <?= Html::encode($model->name) ?>
             </h3>
             <p class="text-muted text-center">
                 <?= t('Member since {date}', ['date' => Yii::$app->formatter->asDate(Yii::$app->user->identity->created_at)]) ?>
             </p>
+            <?= ItemList::widget([
+                'items' => [
+                    [
+                        'title' => 'ID',
+                        'value' => $model->getUser()->id,
+                    ],
+                    [
+                        'title' => t('Status'),
+                        'value' => UserHelper::status($model->getUser()),
+                    ],
+                    [
+                        'title' => t('Last login'),
+                        'value' => Yii::$app->formatter->asRelativeTime($model->getUser()->logged_at),
+                    ],
+                ],
+            ]) ?>
         <?php Box::end() ?>
     </div>
     
