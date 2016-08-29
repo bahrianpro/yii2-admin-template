@@ -24,6 +24,9 @@ $config = [
             'enableAutoLogin' => true,
             'loginUrl' => ['user/login'],
         ],
+        'authManager' => [
+            'class' => 'yii\rbac\DbManager',
+        ],
         'formatter' => [
             'class' => 'app\base\Formatter',
         ],

@@ -23,6 +23,9 @@ $config = [
                 ],
             ],
         ],
+        'authManager' => [
+            'class' => 'yii\rbac\DbManager',
+        ],
     ],
     'controllerMap' => [
         'migrate' => [
