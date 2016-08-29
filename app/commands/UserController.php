@@ -196,7 +196,7 @@ class UserController extends Controller
                     $user->email,
                     $user->name,
                     date('Y-m-d H:i', $user->created_at),
-                    User::getStatus($user->status)
+                    $user->getStatusLabel()
             );
         }
     }
