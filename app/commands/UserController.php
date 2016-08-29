@@ -187,17 +187,32 @@ class UserController extends Controller
             return $this->p('No users found.');
         }
     
-        $this->stdout(sprintf("%4s %-32s %-24s %-16s %-8s\n", 'ID', 'Email address', 'User name', 'Created', 'Status'), Console::BOLD);
-        $this->stdout(str_repeat('-', 86) . PHP_EOL);
+        $this->stdout(sprintf("%4s %-32s %-24s %-10s %-16s %-8s\n", 'ID', 'Email address', 'User name', 'Roles', 'Created', 'Status'), Console::BOLD);
+        $this->stdout(str_repeat('-', 94) . PHP_EOL);
         
         foreach ($users as $user) {
-            printf("%4d %-32s %-24s %-16s %-8s\n",
+            $roles = $user->getRoles();
+            printf("%4d %-32s %-24s %-10s %-16s %-8s\n",
                     $user->id,
                     $user->email,
                     $user->name,
+                    count($roles) ? reset($roles)->name : '',
                     date('Y-m-d H:i', $user->created_at),
                     $user->getStatusLabel()
             );
+            if (count($roles) > 1) {
+                array_shift($roles);
+                foreach ($roles as $role) {
+                    printf("%4s %-32s %-24s %-10s %-16s %-8s\n",
+                        '',
+                        '',
+                        '',
+                        $role->name,
+                        '',
+                        ''
+                    );
+                }
+            }
         }
     }
     
