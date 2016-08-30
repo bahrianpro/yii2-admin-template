@@ -68,11 +68,6 @@ class Check extends InputWidget
     public $label = '';
     
     /**
-     * @var boolean initial checkbox state (checked/unchecked).
-     */
-    public $checked = false;
-    
-    /**
      * @inheritdoc
      */
     public function run()
@@ -86,7 +81,7 @@ class Check extends InputWidget
         if ($this->hasModel()) {
             $input = Html::activeCheckbox($this->model, $this->attribute, $this->options);
         } else {
-            $input = Html::checkbox($this->name, $this->checked, $this->options);
+            $input = Html::checkbox($this->name, (bool) $this->value, $this->options);
         }
         
         return $input;
