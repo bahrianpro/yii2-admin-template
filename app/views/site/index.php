@@ -77,7 +77,7 @@ $dataProvider = new ArrayDataProvider([
                         Check::widget([
                             'name' => 'chk2',
                             'label' => 'Send email',
-                            'checked'  => true,
+                            'value'  => true,
                         ]) . '</div>',
                 ],
                 [
