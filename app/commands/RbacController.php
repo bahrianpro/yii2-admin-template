@@ -2,7 +2,7 @@
 /**
  * @author Skorobogatko Alexei <skorobogatko.oleksii@gmail.com>
  * @copyright 2016
- * @version $$
+ * @version $Id$
  * @since 0.2
  */
 
