@@ -22,3 +22,7 @@
 .register-box .account-links {
     margin-top: 10px;
 }
+
+.checkbox-list-vert label {
+    display: block;
+}

@@ -1,6 +1,7 @@
 <?php
 
 use app\widgets\ActiveForm;
+use app\widgets\Check;
 use yii\helpers\ArrayHelper;
 
 /** @var $this yii\web\View */
@@ -19,11 +20,16 @@ use yii\helpers\ArrayHelper;
     'action' => ['profile', 'id' => $model->getUser()->id, 'tab' => 'admin'],
 ]) ?>
 
-    <?= $form->field($model, 'roles')->checkboxList(
-            ArrayHelper::map(Yii::$app->authManager->getRoles(), 'name', 'name')
-    ) ?>
+    <?= $form->field($model, 'roles')->widget(Check::className(), [
+        'items' => ArrayHelper::map(Yii::$app->authManager->getRoles(), 'name', 'name'),
+        'options' => ['class' => 'checkbox-list-vert'],
+    ]) ?>
 
-    <?= $form->field($model, 'status')->radioList($model->getUser()->getStatusLabels()) ?>
+    <?= $form->field($model, 'status')->widget(Check::className(), [
+        'type' => Check::TYPE_RADIO,
+        'items' => $model->getUser()->getStatusLabels(),
+        'options' => ['class' => 'checkbox-list-vert'],
+    ]) ?>
 
 <?php ActiveForm::endWithActions([
     'cancel' => false,
