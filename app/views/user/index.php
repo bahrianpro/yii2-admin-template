@@ -66,6 +66,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'logged_at:relativeTime',
                 [
                     'class' => DeleteColumn::className(),
+                    'visible' => Yii::$app->user->can('deleteAnyUser'),
                 ],
             ],
         ]) ?>
