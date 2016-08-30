@@ -68,6 +68,11 @@ class Check extends InputWidget
     public $label = '';
     
     /**
+     * @var array checkbox list
+     */
+    public $items = [];
+    
+    /**
      * @inheritdoc
      */
     public function run()
@@ -79,7 +84,15 @@ class Check extends InputWidget
         }
         
         if ($this->hasModel()) {
-            $input = Html::activeCheckbox($this->model, $this->attribute, $this->options);
+            if ($this->items) {
+                $method = $this->type === static::TYPE_CHECKBOX ? 'activeCheckboxList' : 'activeRadioList';
+                $input = Html::$method($this->model, $this->attribute, $this->items, $this->options);
+            } else {
+                $input = Html::activeCheckbox($this->model, $this->attribute, $this->options);
+            }
+        } elseif ($this->items) {
+            $method = $this->type === static::TYPE_CHECKBOX ? 'checkboxList' : 'radioList';
+            $input = Html::$method($this->name, (bool) $this->value, $this->items, $this->options);
         } else {
             $input = Html::checkbox($this->name, (bool) $this->value, $this->options);
         }
@@ -95,7 +108,8 @@ class Check extends InputWidget
         $asset = CheckAsset::register($this->getView());
         $asset->style = $this->style;
         
-        $this->clientOptions['checkboxClass'] = 'i' . $this->type . '_' . 
+        $class = $this->type === static::TYPE_CHECKBOX ? 'checkboxClass' : 'radioClass';
+        $this->clientOptions[$class] = 'i' . $this->type . '_' . 
                 $this->style . '-' . $this->color;
         
         parent::registerPlugin($name);
