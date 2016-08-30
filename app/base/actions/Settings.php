@@ -89,6 +89,10 @@ class Settings extends Action
      */
     public function run($tab = '')
     {
+        if (!Yii::$app->user->can('updateSettings')) {
+            throw new \yii\web\ForbiddenHttpException();
+        }
+        
         $this->controller->getView()->title = $this->title;
         $this->_tab = $tab;
         
