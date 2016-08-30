@@ -76,11 +76,8 @@ class UserController extends Controller
                         'allow' => true,
                         'roles' => ['deleteAnyUser'],
                     ],
-                ],
-                
-                'rules' => [
                     [
-                        'actions' => ['profile', 'logout', 'index', 'delete'],
+                        'actions' => ['profile', 'logout'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
