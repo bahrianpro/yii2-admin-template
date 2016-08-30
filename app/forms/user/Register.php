@@ -7,10 +7,11 @@
 
 namespace app\forms\user;
 
+use app\models\User;
 use Yii;
 use yii\base\Model;
+use yii\helpers\ArrayHelper;
 use yii\web\UserEvent;
-use app\models\User;
 
 /**
  * User register form.
@@ -110,11 +111,35 @@ class Register extends Model
         
         if ($this->userRegisterEvent(self::EVENT_BEFORE_REGISTER, $user) &&
                 $user->save()) {
+            $this->assignDefaultRole($user);
             $this->userRegisterEvent(self::EVENT_AFTER_REGISTER, $user);
             return $user;
         }
         
         return false;
+    }
+    
+    /**
+     * Assign default role to user.
+     * @param User $user
+     * @return boolean
+     */
+    protected function assignDefaultRole(User $user)
+    {
+        $auth = Yii::$app->authManager;
+        
+        $roleName = \app\components\Param::value('User.defaultRole');
+        if (!$roleName) {
+            return false;
+        }
+        
+        if (!($role = $auth->getRole($roleName))) {
+            Yii::warning('Cannot find role: ' . $roleName);
+            return false;
+        }
+        
+        $auth->assign($role, $user->id);
+        return true;
     }
     
     /**
