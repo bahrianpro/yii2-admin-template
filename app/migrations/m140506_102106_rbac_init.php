@@ -130,13 +130,10 @@ class m140506_102106_rbac_init extends \yii\db\Migration
         
         echo PHP_EOL;
         echo '================================================' . PHP_EOL;
-        echo 'Please, don\'t forget to initialize permissions ' . PHP_EOL;
-        echo 'by executing command:' . PHP_EOL;
-        echo PHP_EOL;
-        echo './bin/yii rbac/init' . PHP_EOL;
-        echo PHP_EOL;
+        echo "Applying RBAC rules...\n";
+        $command = new \app\commands\RbacController('rbac', Yii::$app);
+        $command->actionInit(true);
         echo '================================================' . PHP_EOL;
-        echo PHP_EOL;
         echo PHP_EOL;
     }
 
