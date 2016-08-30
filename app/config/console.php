@@ -1,14 +1,9 @@
 <?php
 
-defined('APPROOT_DIR') or define('APPROOT_DIR', dirname(dirname(__DIR__)));
-
 Yii::setAlias('@tests', APPROOT_DIR . '/tests');
 
 $config = [
-    'id' => 'basic-console',
-    'basePath' => APPROOT_DIR . '/app',
-    'vendorPath' => APPROOT_DIR . '/vendor',
-    'runtimePath' => APPROOT_DIR . '/runtime',
+    'id' => 'backend-console',
     'bootstrap' => ['log'],
     'controllerNamespace' => 'app\commands',
     'components' => [
@@ -22,9 +17,6 @@ $config = [
                     'levels' => ['error', 'warning'],
                 ],
             ],
-        ],
-        'authManager' => [
-            'class' => 'yii\rbac\DbManager',
         ],
     ],
     'controllerMap' => [
@@ -50,4 +42,4 @@ if (YII_ENV_DEV) {
     ];
 }
 
-return $config;
+return yii\helpers\ArrayHelper::merge(require APPROOT_DIR . '/app/config/common.php', $config);

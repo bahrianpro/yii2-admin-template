@@ -1,19 +1,12 @@
 <?php
-
 /**
  * Don't edit this file.
  * Put your modifications to APPROOT_DIR . '/config.php'
  */
 
-// Should be defined in web/index.php but ensure that is.
-defined('APPROOT_DIR') or define('APPROOT_DIR', dirname(dirname(__DIR__)));
-
 $config = [
     'id' => 'admin',
     'name' => 'Admin Template',
-    'basePath' => APPROOT_DIR . '/app',
-    'vendorPath' => APPROOT_DIR . '/vendor',
-    'runtimePath' => APPROOT_DIR . '/runtime',
     'bootstrap' => ['log'],
     'components' => [
         'cache' => [
@@ -23,9 +16,6 @@ $config = [
             'identityClass' => 'app\models\User',
             'enableAutoLogin' => true,
             'loginUrl' => ['user/login'],
-        ],
-        'authManager' => [
-            'class' => 'yii\rbac\DbManager',
         ],
         'formatter' => [
             'class' => 'app\base\Formatter',
@@ -103,4 +93,4 @@ if (YII_ENV_DEV) {
     $config['components']['assetManager']['linkAssets'] = true;
 }
 
-return $config;
+return yii\helpers\ArrayHelper::merge(require APPROOT_DIR . '/app/config/common.php', $config);
