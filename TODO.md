@@ -26,3 +26,4 @@ Features for 0.3 release:
 2. Localization.
 3. System log page.
 4. User activation by email (levearage of 'Pending' status).
+5. Role editor (allow to add/delete permissions to role).
