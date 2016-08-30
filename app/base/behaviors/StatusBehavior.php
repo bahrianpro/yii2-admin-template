@@ -19,7 +19,7 @@ use yii\base\Behavior;
  * ```php
  * class Order extends Model {
  *      const STATUS_ACTIVE = 0;
- *      const STATUS_COMPELTED = 1;
+ *      const STATUS_COMPLETED = 1;
  *      const STATUS_CANCELLED = 2;
  *
  *      public $status;
