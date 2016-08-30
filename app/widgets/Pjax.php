@@ -22,7 +22,7 @@ class Pjax extends \yii\widgets\Pjax
     public $notifyOptions = [];
     
     /**
-     * @var boolean
+     * @var boolean enable hacks when pjax container in modal.
      */
     public $modal = false;
     
