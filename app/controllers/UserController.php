@@ -67,6 +67,19 @@ class UserController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
+                        'actions' => ['index'],
+                        'allow' => true,
+                        'roles' => ['viewAnyUser'],
+                    ],
+                    [
+                        'actions' => ['delete'],
+                        'allow' => true,
+                        'roles' => ['deleteAnyUser'],
+                    ],
+                ],
+                
+                'rules' => [
+                    [
                         'actions' => ['profile', 'logout', 'index', 'delete'],
                         'allow' => true,
                         'roles' => ['@'],
@@ -95,7 +108,8 @@ class UserController extends Controller
         $register = new Register();
         
         $request = Yii::$app->request;
-        if ($request->isPost && $register->load($request->post())) {
+        if (Yii::$app->user->can('createUser') && $request->isPost && 
+                $register->load($request->post())) {
             if ($request->isAjax && !$request->isPjax) {
                 Yii::$app->response->format = Response::FORMAT_JSON;
                 return ActiveForm::validate($register);

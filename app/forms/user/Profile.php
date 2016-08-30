@@ -7,9 +7,10 @@
 
 namespace app\forms\user;
 
+use app\models\User;
 use Yii;
 use yii\base\Model;
-use app\models\User;
+use yii\helpers\ArrayHelper;
 
 /**
  * User Profile form.
@@ -35,6 +36,16 @@ class Profile extends Model
     public $password_repeat;
     
     /**
+     * @var string[]
+     */
+    public $roles;
+    
+    /**
+     * @var integer
+     */
+    public $status;
+    
+    /**
      * @var User
      */
     protected $user;
@@ -47,7 +58,7 @@ class Profile extends Model
     public function __construct(User $user, $config = [])
     {
         $this->user = $user;
-        $this->name = $user->name;
+        $this->reset();
         parent::__construct($config);
     }
     
@@ -65,6 +76,15 @@ class Profile extends Model
             ['password', 'string', 'min' => 6, 'max' => 64],
             
             ['password_repeat', 'string', 'min' => 6, 'max' => 64],
+            
+            ['roles', 'required', 'on' => 'admin'],
+            ['roles', 'each', 'rule' => ['string'], 'on' => 'admin'],
+            
+            ['status', 'required', 'on' => 'admin'],
+            ['status', 'integer'],
+            ['status', 'in',
+                'range' => [User::STATUS_DISABLED, User::STATUS_ENABLED, User::STATUS_PENDING],
+            ],
         ];
     }
     
@@ -77,6 +97,8 @@ class Profile extends Model
             'name' => t('User name'),
             'password' => t('Password'),
             'password_repeat' => t('Confirm password'),
+            'roles' => t('Roles'),
+            'status' => t('Status'),
         ];
     }
     
@@ -112,6 +134,28 @@ class Profile extends Model
         if (!empty($this->password)) {
             $this->user->setPassword($this->password);
         }
+
+        // Changes made by administrator.
+        if ($this->getScenario() === 'admin') {
+            $auth = Yii::$app->authManager;
+            $this->user->status = $this->status;
+            // Save only those roles that not assigned to user.
+            $userRoles = $this->getUserRoleNames();
+            // New roles.
+            $diffAssign = array_diff($this->roles, $userRoles);
+            foreach ($diffAssign as $roleName) {
+                if ($role = $auth->getRole($roleName)) {
+                    $auth->assign($role, $this->user->id);
+                }
+            }
+            // Revoked roles.
+            $diffRevoke = array_diff($userRoles, $this->roles);
+            foreach ($diffRevoke as $roleName) {
+                if ($role = $auth->getRole($roleName)) {
+                    $auth->revoke($role, $this->user->id);
+                }
+            }
+        }
         
         return $this->user->save();
     }
@@ -121,6 +165,15 @@ class Profile extends Model
         $this->name = $this->user->name;
         $this->password = '';
         $this->password_repeat = '';
+        $this->status = $this->user->status;
+        $this->roles = $this->getUserRoleNames();
     }
     
+    /**
+     * @return string[]
+     */
+    protected function getUserRoleNames()
+    {
+        return ArrayHelper::getColumn($this->user->getRoles(), 'name', false);
+    }
 }

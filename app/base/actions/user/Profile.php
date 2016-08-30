@@ -35,7 +35,7 @@ class Profile extends Action
     /**
      * @inheritdoc
      */
-    public function run($id = null)
+    public function run($id = null, $tab = 'account')
     {
         if (Yii::$app->user->isGuest) {
             return $this->controller->redirect(['user/login']);
@@ -43,12 +43,18 @@ class Profile extends Action
         
         if ($id === null) {
             $user = Yii::$app->user->getIdentity();
-        } else {
+        } elseif (Yii::$app->user->can('updateAnyUser')) {
             $user = $this->controller->findModel(User::className(), $id);
+        } else {
+            throw new \yii\web\ForbiddenHttpException();
         }
         
         $model = new $this->modelClass($user);
+        
         if (Yii::$app->request->isPost) {
+            if (Yii::$app->user->can('updateAnyUser')) {
+                $model->setScenario('admin');
+            }
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 $this->controller->addFlash(Controller::FLASH_INFO, t('Changes saved.'));
                 $model->reset();
@@ -62,6 +68,7 @@ class Profile extends Action
         
         return $this->render([
             'model' => $model,
+            'tab' => $tab,
         ]);
     }
     

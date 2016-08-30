@@ -9,8 +9,12 @@ use yii\helpers\Html;
 
 /** @var $this yii\web\View */
 /** @var $model app\forms\user\Profile */
+/** @var $tab string current active tab */
 
 $this->title = t('User Profile');
+if (Yii::$app->user->can('viewAnyUser')) {
+    $this->params['breadcrumbs'][] = ['label' => t('Users'), 'url' => ['index']];
+}
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -52,9 +56,15 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= Tabs::widget([
                 'items' => [
                     [
-                        'label' => 'Account',
+                        'label' => t('Account'),
                         'content' => $this->render('_profile_account', ['model' => $model]),
-                        'active' => true,
+                        'active' => $tab == 'account',
+                    ],
+                    [
+                        'label' => t('Administer'),
+                        'content' => $this->render('_profile_admin', ['model' => $model]),
+                        'visible' => Yii::$app->user->can('updateAnyUser'),
+                        'active' => $tab == 'admin',
                     ],
                 ],
             ]) ?>

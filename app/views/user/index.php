@@ -6,6 +6,8 @@ use app\widgets\Box;
 use app\widgets\Modal;
 use app\widgets\Pjax;
 use yii\grid\GridView;
+use yii\helpers\ArrayHelper;
+use yii\helpers\Html;
 
 /** @var $this yii\web\View */
 /** @var $userProvider yii\data\ActiveDataProvider */
@@ -22,6 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'modal' => true,
     ]) ?>
         <div class="btn-group">
+            <?php if (Yii::$app->user->can('createUser')): ?>
             <?php Modal::begin([
                 'header' => '<b>' . t('Create a new user') . '</b>',
                 'toggleButton' => [
@@ -31,6 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ]) ?>
                 <?= $this->render('_create_modal', ['register' => $register]) ?>
             <?php Modal::end() ?>
+            <?php endif ?>
         </div>
         <?= GridView::widget([
             'dataProvider' => $userProvider,
@@ -44,6 +48,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     },
                 ],
                 'email',
+                [
+                    'header' => t('Roles'),
+                    'format' => 'html',
+                    'value' => function ($user) {
+                        return Html::ul(ArrayHelper::getColumn($user->getRoles(), 'name'));
+                    },
+                ],
                 [
                     'attribute' => 'status',
                     'format' => 'html',
