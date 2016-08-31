@@ -75,22 +75,11 @@ $config = [
     'params' => [
         // Warning! These parameters will override ones in config table.
     ], // params
+    'modules' => [
+        'wiki' => [
+            'class' => 'modules\wiki\WikiModule',
+        ],
+    ],
 ];
-
-if (YII_ENV_DEV) {
-    // configuration adjustments for 'dev' environment
-    $config['bootstrap'][] = 'debug';
-    $config['modules']['debug'] = [
-        'class' => 'yii\debug\Module',
-    ];
-
-    $config['bootstrap'][] = 'gii';
-    $config['modules']['gii'] = [
-        'class' => 'yii\gii\Module',
-    ];
-    
-    // Link assets instead of copy them (useful for development environment).
-    $config['components']['assetManager']['linkAssets'] = true;
-}
 
 return yii\helpers\ArrayHelper::merge(require APPROOT_DIR . '/app/config/common.php', $config);
