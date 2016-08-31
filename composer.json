@@ -22,7 +22,8 @@
     "minimum-stability": "stable",
     "autoload": {
         "psr-4": {
-            "app\\": "app/"
+            "app\\": "app/",
+            "modules\\": "modules/"
         },
         "files": ["app/base/globals.php"]
     },
