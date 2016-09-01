@@ -27,6 +27,6 @@ $config = yii\helpers\ArrayHelper::merge(
         ]] : []
 );
 
-$application = new yii\console\Application($config);
+$application = new app\base\ConsoleApplication($config);
 $exitCode = $application->run();
 exit($exitCode);

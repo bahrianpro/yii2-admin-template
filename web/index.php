@@ -23,5 +23,5 @@ $config = yii\helpers\ArrayHelper::merge(
     $localConfig
 );
 
-$app = new yii\web\Application($config);
+$app = new app\base\WebApplication($config);
 $app->run();
