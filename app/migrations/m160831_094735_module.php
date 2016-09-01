@@ -16,11 +16,14 @@ class m160831_094735_module extends Migration
             'desc' => $this->text(),
             'data' => $this->text(),
         ]);
+        $this->createIndex('idx_module_status', $this->table, ['status']);
     }
 
     public function down()
     {
         $this->dropTable($this->table);
+        echo "\n\nWARNING!\n";
+        echo "Module is essential part of application and application cannot work without module table.\n";
     }
 
 }
