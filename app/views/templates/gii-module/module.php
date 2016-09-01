@@ -22,6 +22,16 @@ namespace <?= $ns ?>;
 class <?= $className ?> extends \app\base\Module
 {
     /**
+     * @var string required, module name.
+     */
+    public $moduleName = '<?= $generator->moduleID ?>';
+    
+    /**
+     * @var string
+     */
+    public $moduleDescription = '';
+
+    /**
      * @inheritdoc
      */
     public $controllerNamespace = '<?= $generator->getControllerNamespace() ?>';
