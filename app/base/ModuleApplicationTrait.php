@@ -151,7 +151,7 @@ trait ModuleApplicationTrait
         foreach ($modules as $module) {
             $id = $module['module_id'];
             if (!isset($this->_modules[$id])) {
-                $params = unserialize($module['data']);
+                $params = $module['data'];
                 $this->_modules[$id] = $params['class'];
             }
         }
@@ -173,7 +173,13 @@ trait ModuleApplicationTrait
                 'status' => $status,
             ]);
         }
-        return $query->all();
+        
+        $modules = $query->all();
+        
+        return array_map(function ($module) {
+            $module['data'] = unserialize($module['data']);
+            return $module;
+        }, $modules);
     }
     
     /**
@@ -183,10 +189,32 @@ trait ModuleApplicationTrait
      */
     public function getModuleById($moduleId)
     {
-        return Yii::$app->db
+        $module = Yii::$app->db
                 ->createCommand('SELECT * FROM {{%module}} WHERE module_id = :module_id')
                 ->bindValue(':module_id', $moduleId)
                 ->queryOne();
+        if ($module) {
+            $module['data'] = unserialize($module['data']);
+        }
+        return $module;
+    }
+    
+    /**
+     * Update module entry.
+     * @param array $module module definition returned by getModuleById() method.
+     * @return boolean
+     */
+    public function updateModule($module)
+    {
+        if (isset($module['data'])) {
+            $module['data'] = serialize($module['data']);
+        }
+        
+        return Yii::$app->db->createCommand()
+                ->update('{{%module}}', $module, [
+                    'module_id' => $module['module_id'],
+                ])
+                ->execute();
     }
     
     /**
@@ -254,8 +282,8 @@ trait ModuleApplicationTrait
     /**
      * Install a module.
      * @param string $moduleId
-     * @return boolean
      * @throws \yii\base\Exception when module already installed or cannot be found.
+     * @throws ModuleMigrateException when migrations apply failed.
      */
     public function installModule($moduleId)
     {
@@ -267,19 +295,28 @@ trait ModuleApplicationTrait
             throw new \yii\base\Exception('Module already installed.');
         }
         
-        return Yii::$app->db->createCommand()
-                ->update('{{%module}}', [
-                    'status' => Module::STATUS_INSTALLED,
-                ], [
-                    'module_id' => $moduleId,
-                ])
-                ->execute();
+        /** @var $migrateController \app\commands\MigrateController */
+        $migrateController = Yii::createObject([
+            'class' => \app\commands\MigrateController::className(),
+            'db' => Yii::$app->db,
+        ], ['migrate', $this]);
+        
+        $migrations = $migrateController->getModuleNewMigrations($moduleId);
+        if ($migrations) {
+            $migrateController->moduleMigrateUp($moduleId);
+        }
+        
+        $module['status'] = Module::STATUS_INSTALLED;
+        $module['data']['migrations'] = $migrations;
+        
+        if (!$this->updateModule($module)) {
+            throw new \yii\base\Exception('Cannot install module.');
+        }
     }
     
     /**
      * Uninstall a module.
      * @param string $moduleId
-     * @return boolean
      * @throws \yii\base\Exception when module already uninstalled or cannot be found.
      */
     public function uninstallModule($moduleId)
@@ -292,12 +329,19 @@ trait ModuleApplicationTrait
             throw new \yii\base\Exception('Module already not installed.');
         }
         
-        return Yii::$app->db->createCommand()
-                ->update('{{%module}}', [
-                    'status' => Module::STATUS_NOTINSTALLED,
-                ], [
-                    'module_id' => $moduleId,
-                ])
-                ->execute();
+        if (isset($module['data']['migrations'])) {
+            /** @var $migrateController \app\commands\MigrateController */
+            $migrateController = Yii::createObject([
+                'class' => \app\commands\MigrateController::className(),
+                'db' => Yii::$app->db,
+            ], ['migrate', $this]);
+            $migrateController->moduleMigrateDown($moduleId, $module['data']['migrations']);
+        }
+        
+        $module['status'] = Module::STATUS_NOTINSTALLED;
+
+        if (!$this->updateModule($module)) {
+            throw new \yii\base\Exception('Cannot uninstall module.');
+        }
     }
 }

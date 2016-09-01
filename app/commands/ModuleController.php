@@ -9,6 +9,7 @@
 namespace app\commands;
 
 use app\base\console\Controller;
+use app\base\ModuleMigrateException;
 use Exception;
 use Yii;
 use yii\helpers\Console;
@@ -42,11 +43,13 @@ class ModuleController extends Controller
     public function actionInstall($moduleId)
     {
         try {
-            $status = Yii::$app->installModule($moduleId);
-            if (!$status) {
-                throw new Exception('Installation failed.');
-            }
+            Yii::$app->installModule($moduleId);
             $this->stdout('Module installed.', Console::BOLD);
+        } catch (ModuleMigrateException $e) {
+            $this->stderr($e->getMessage() . PHP_EOL);
+            foreach ($e->migrations as $migration) {
+                $this->stderr("\t" . $migration . PHP_EOL, Console::FG_RED);
+            }
         } catch (Exception $e) {
             $this->stderr($e->getMessage());
         }
@@ -59,11 +62,13 @@ class ModuleController extends Controller
     public function actionUninstall($moduleId)
     {
         try {
-            $status = Yii::$app->uninstallModule($moduleId);
-            if (!$status) {
-                throw new Exception('Uninstallation failed.');
-            }
+            Yii::$app->uninstallModule($moduleId);
             $this->stdout('Module uninstalled.', Console::BOLD);
+        } catch (ModuleMigrateException $e) {
+            $this->stderr($e->getMessage() . PHP_EOL);
+            foreach ($e->migrations as $migration) {
+                $this->stderr("\t" . $migration . PHP_EOL, Console::FG_RED);
+            }
         } catch (Exception $e) {
             $this->stderr($e->getMessage());
         }
