@@ -39,7 +39,7 @@ class ModuleGenerator extends \yii\gii\generators\module\Generator
         return [
             ['moduleID', 'required'],
             ['moduleID', 'filter', 'filter' => 'trim'],
-            ['moduleID', 'match', 'pattern' => '/^[a-zA-Z]+[a-zA-Z-]+$/', 'message' => 'Only word characters and dashes are allowed.'],
+            ['moduleID', 'match', 'pattern' => '/^[a-zA-Z]+[a-zA-Z-_]+$/', 'message' => 'Only word characters and dashes are allowed.'],
             ['moduleID', 'validateModuleID'],
             
             ['template', 'required', 'message' => 'A code template must be selected.'],
