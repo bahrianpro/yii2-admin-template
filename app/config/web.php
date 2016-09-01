@@ -76,9 +76,8 @@ $config = [
         // Warning! These parameters will override ones in config table.
     ], // params
     'modules' => [
-        'wiki' => [
-            'class' => 'modules\wiki\WikiModule',
-        ],
+        // Do not use this for modules in @modules directory. They are handled
+        // by `./bin/yii module` command.
     ],
 ];
 
