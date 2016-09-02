@@ -7,7 +7,10 @@
 
 namespace app\base;
 
+use app\models\User;
 use app\widgets\ProgressBar;
+use Yii;
+use yii\helpers\Html;
 
 /**
  * Formatter
@@ -47,5 +50,31 @@ class Formatter extends \yii\i18n\Formatter
     {
         $parser = new $parserClass();
         return $parser->parse($text);
+    }
+    
+    /**
+     * Output user as link to their profile.
+     * User must has 'viewAnyUser' permission to link to user profiles otherwise
+     * outputs as simple text.
+     * @param User $user
+     * @param array $options link options
+     * @return string
+     */
+    public function asUserlink($user, array $options = [])
+    {
+        if (empty($user)) {
+            return $this->nullDisplay;
+        }
+        
+        $username = Html::encode($user->name);
+        if (Yii::$app->user->id == $user->id) {
+            $link = ['user/profile'];
+        } elseif (Yii::$app->user->can('viewAnyUser')) {
+            $link = ['user/profile', 'id' => $user->id];
+        } else {
+            return $username;
+        }
+        
+        return Html::a($username, $link, $options);
     }
 }
