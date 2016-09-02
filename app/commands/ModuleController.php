@@ -28,11 +28,15 @@ class ModuleController extends Controller
     public function actionIndex()
     {
         Yii::$app->scanModules();
-        $modules = Yii::$app->getModulesByStatus();
+        $modules = Yii::$app->getModulesByStatus(null);
         printf("%-16s %-20s %-12s\n", 'ID', 'Module name', 'Status');
         print str_repeat('-', 60) . PHP_EOL;
         foreach ($modules as $module) {
-            printf("%-16s %-20s %-12s\n", $module['module_id'], $module['name'], $module['status']);
+            printf("%-16s %-20s %-12s\n",
+                $module['module_id'],
+                $module['name'],
+                $module['installed'] ? 'Installed' : 'Not installed'
+            );
         }
     }
     

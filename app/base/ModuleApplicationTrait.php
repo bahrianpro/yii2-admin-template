@@ -158,19 +158,20 @@ trait ModuleApplicationTrait
     }
     
     /**
-     * Get modules by its status
-     * @param string|null $status status name or null for full list.
+     * Get modules by its status: installed or not installed.
+     * @param boolean|null $installed boolean for installed or not installed,
+     *                                null for all modules.
      * @return array
      */
-    public function getModulesByStatus($status = null)
+    public function getModulesByStatus($installed = true)
     {
         $query = (new \yii\db\Query)
                 ->select('*')
                 ->from('{{%module}}')
                 ->orderBy('name');
-        if ($status !== null) {
+        if ($installed !== null) {
             $query->where([
-                'status' => $status,
+                'installed' => (int) $installed,
             ]);
         }
         
@@ -178,6 +179,7 @@ trait ModuleApplicationTrait
         
         return array_map(function ($module) {
             $module['data'] = unserialize($module['data']);
+            $module['installed'] = (bool) $module['installed'];
             return $module;
         }, $modules);
     }
@@ -195,8 +197,20 @@ trait ModuleApplicationTrait
                 ->queryOne();
         if ($module) {
             $module['data'] = unserialize($module['data']);
+            $module['installed'] = (bool) $module['installed'];
         }
         return $module;
+    }
+    
+    /**
+     * Check is module installed or not.
+     * @param string $moduleId
+     * @return boolean
+     */
+    public function isModuleInstalled($moduleId)
+    {
+        $module = $this->getModuleById($moduleId);
+        return $module && $module['installed'];
     }
     
     /**
@@ -209,6 +223,7 @@ trait ModuleApplicationTrait
         if (isset($module['data'])) {
             $module['data'] = serialize($module['data']);
         }
+        $module['installed'] = (int) $module['installed'];
         
         return Yii::$app->db->createCommand()
                 ->update('{{%module}}', $module, [
@@ -263,7 +278,7 @@ trait ModuleApplicationTrait
                         ->insert('{{%module}}', [
                             'module_id' => $module->id,
                             'name' => $module->moduleName,
-                            'status' => Module::STATUS_NOTINSTALLED,
+                            'installed' => false,
                             'desc' => $module->moduleDescription,
                             'data' => serialize([
                                 'class' => $moduleClass,
@@ -291,7 +306,7 @@ trait ModuleApplicationTrait
         if (!($module = $this->getModuleById($moduleId))) {
             throw new \yii\base\Exception('Module not found.');
         }
-        if ($module['status'] != Module::STATUS_NOTINSTALLED) {
+        if ($module['installed']) {
             throw new \yii\base\Exception('Module already installed.');
         }
         
@@ -306,7 +321,7 @@ trait ModuleApplicationTrait
             $migrateController->moduleMigrateUp($moduleId);
         }
         
-        $module['status'] = Module::STATUS_INSTALLED;
+        $module['installed'] = true;
         $module['data']['migrations'] = $migrations;
         
         if (!$this->updateModule($module)) {
@@ -325,7 +340,7 @@ trait ModuleApplicationTrait
         if (!($module = $this->getModuleById($moduleId))) {
             throw new \yii\base\Exception('Module not found.');
         }
-        if ($module['status'] != Module::STATUS_INSTALLED) {
+        if (!$module['installed']) {
             throw new \yii\base\Exception('Module already not installed.');
         }
         
@@ -338,7 +353,7 @@ trait ModuleApplicationTrait
             $migrateController->moduleMigrateDown($moduleId, $module['data']['migrations']);
         }
         
-        $module['status'] = Module::STATUS_NOTINSTALLED;
+        $module['installed'] = false;
 
         if (!$this->updateModule($module)) {
             throw new \yii\base\Exception('Cannot uninstall module.');

@@ -65,6 +65,8 @@ class MigrateController extends \yii\console\controllers\MigrateController
         $this->migrationPath = $this->getModuleMigrationsDir($moduleId);
         $failed = [];
         ob_start();
+        // Start revert migrations from reverse order.
+        $migrations = array_reverse($migrations);
         foreach ($migrations as $migration) {
             if (!$this->migrateDown($migration)) {
                 $failed[] = $migration;

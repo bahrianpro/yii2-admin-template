@@ -12,11 +12,11 @@ class m160831_094735_module extends Migration
         $this->createTable($this->table, [
             'module_id' => $this->string(32)->notNull()->unique(),
             'name' => $this->string(255)->notNull()->defaultValue(''),
-            'status' => $this->char(12)->notNull(),
+            'installed' => $this->boolean()->notNull()->defaultValue(false),
             'desc' => $this->text(),
             'data' => $this->text(),
         ]);
-        $this->createIndex('idx_module_status', $this->table, ['status']);
+        $this->createIndex('idx_module_status', $this->table, ['installed']);
     }
 
     public function down()

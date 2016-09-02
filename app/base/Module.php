@@ -18,8 +18,8 @@ class Module extends \yii\base\Module
     /**
      * Module statuses.
      */
-    const STATUS_INSTALLED = 'installed';
-    const STATUS_NOTINSTALLED = 'notinstalled';
+    const STATUS_INSTALLED = 1;
+    const STATUS_NOTINSTALLED = 0;
     
     /**
      * @var string required, module name.
@@ -30,9 +30,4 @@ class Module extends \yii\base\Module
      * @var string
      */
     public $moduleDescription = '';
-    
-    /**
-     * @var string module status.
-     */
-    public $status = self::STATUS_NOTINSTALLED;
 }
