@@ -324,9 +324,13 @@ trait ModuleApplicationTrait
         $module['installed'] = true;
         $module['data']['migrations'] = $migrations;
         
+        //TODO: Event moduleBeforeInstall
+        
         if (!$this->updateModule($module)) {
             throw new \yii\base\Exception('Cannot install module.');
         }
+        
+        // TODO: Event moduleAfterInstall
     }
     
     /**
@@ -355,8 +359,12 @@ trait ModuleApplicationTrait
         
         $module['installed'] = false;
 
+        // TODO: Event moduleBeforeUninstall
+        
         if (!$this->updateModule($module)) {
             throw new \yii\base\Exception('Cannot uninstall module.');
         }
+        
+        // TODO: Event moduleAfterInstall
     }
 }
