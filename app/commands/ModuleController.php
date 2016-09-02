@@ -93,6 +93,15 @@ class ModuleController extends Controller
     }
     
     /**
+     * Get detailed info about module.
+     * @param string $moduleId module id
+     */
+    public function actionInfo($moduleId)
+    {
+        $module = $this->getModule($moduleId);
+    }
+    
+    /**
      * Get module definition by module id.
      * @param string $moduleId
      * @return array
