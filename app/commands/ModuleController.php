@@ -47,6 +47,13 @@ class ModuleController extends Controller
     public function actionInstall($moduleId)
     {
         try {
+            $module = $this->getModule($moduleId);
+            if ($module['installed']) {
+                throw new Exception('Module already installed.');
+            }
+            if (!$this->confirm('Are you sure to install module: ' . $module['name'])) {
+                return;
+            }
             Yii::$app->installModule($moduleId);
             $this->stdout('Module installed.', Console::BOLD);
         } catch (ModuleMigrateException $e) {
@@ -66,6 +73,13 @@ class ModuleController extends Controller
     public function actionUninstall($moduleId)
     {
         try {
+            $module = $this->getModule($moduleId);
+            if (!$module['installed']) {
+                throw new Exception('Module already uninstalled.');
+            }
+            if (!$this->confirm('Are you sure to uninstall module: ' . $module['name'])) {
+                return;
+            }
             Yii::$app->uninstallModule($moduleId);
             $this->stdout('Module uninstalled.', Console::BOLD);
         } catch (ModuleMigrateException $e) {
@@ -76,5 +90,19 @@ class ModuleController extends Controller
         } catch (Exception $e) {
             $this->stderr($e->getMessage());
         }
+    }
+    
+    /**
+     * Get module definition by module id.
+     * @param string $moduleId
+     * @return array
+     * @throws Exception
+     */
+    protected function getModule($moduleId)
+    {
+        if (!($module = Yii::$app->getModuleById($moduleId))) {
+            throw new Exception('Module ' . $moduleId . ' not found.');
+        }
+        return $module;
     }
 }
