@@ -68,10 +68,7 @@ class Config extends ActiveRecord
             ['title', 'required'],
             ['title', 'string', 'max' => 255],
 
-            ['value', 'required', 'when' => function ($model) {
-                return $model->required == true;
-            }],
-            ['value', 'validateValue'],
+            ['value', 'validateValue', 'skipOnEmpty' => false],
             
             ['value_type', 'required'],
             ['value_type', 'string', 'max' => 8],
@@ -96,6 +93,19 @@ class Config extends ActiveRecord
      */
     public function validateValue($attribute, $params = [])
     {
+        if ($this->required) {
+            $required = Yii::createObject([
+                'class' => \yii\validators\RequiredValidator::className(),
+                'message' => t('{label} is required.', [
+                    'label' => $this->title,
+                ]),
+            ]);
+            if (!$required->validate($this->$attribute)) {
+                $this->addError($attribute, $required->message);
+                return;
+            }
+        }
+        
         switch ($this->value_type) {
             case 'integer':
                 $args = [
