@@ -22,7 +22,8 @@ class DefaultController extends Controller
     {
         $page = Param::value('Site.wikiStartPage');
         if (!$page) {
-            $this->redirect(['create']);
+            $this->addFlash(self::FLASH_WARNING, Yii::t('app', 'There is no start page. Please create one.'));
+            return $this->redirect(['create']);
         }
         return $this->render('view');
     }
