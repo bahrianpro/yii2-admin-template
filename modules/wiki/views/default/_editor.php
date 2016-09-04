@@ -20,6 +20,6 @@ use modules\wiki\widgets\MarkdownEditor;
 
 <?php ActiveForm::endWithActions([
     'cancel' => $editor->isNew() ? false : [
-        'url' => ['default/view', 'id' => $editor->getHistory()->wiki_id],
+        'url' => ['default/view', 'id' => $editor->getWiki()->id],
     ]
 ]) ?>

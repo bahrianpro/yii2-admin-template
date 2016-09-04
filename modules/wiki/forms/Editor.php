@@ -42,23 +42,17 @@ class Editor extends Model
     public $summary;
     
     /**
-     * @var History
+     * @var Wiki
      */
-    protected $_history;
+    protected $_wiki;
     
-    public function __construct($history = null, $config = array())
+    public function __construct(Wiki $wiki, $config = array())
     {
-        if ($history !== null && !$history instanceof History) {
-            throw new \yii\base\InvalidValueException('history must be a History model instance.');
-        }
+        $this->_wiki = $wiki;
+        $this->title = $wiki->title;
+        $this->slug = $wiki->slug;
         
-        $this->_history = $history;
-        
-        if ($history !== null) {
-            $this->title = $history->wiki->title;
-            $this->slug = $history->wiki->slug;
-            $this->content = $history->content;
-        }
+        $this->content = $this->getHistoryContent();
         
         parent::__construct($config);
     }
@@ -94,29 +88,23 @@ class Editor extends Model
             return false;
         }
         
-        if (!$this->isNew() && $this->content === $this->_history->content) {
-            return $this->_history->wiki;
-        }
-        
         $transaction = Yii::$app->db->beginTransaction();
         
         try {
-            $wiki = $this->isNew() ? new Wiki() : $this->_history->wiki;
-            $wiki->title = $this->title;
-            $wiki->slug = $this->slug;
-            if (!$wiki->save()) {
+            $this->_wiki->title = $this->title;
+            $this->_wiki->slug = $this->slug;
+            if (!$this->_wiki->save()) {
                 throw new \yii\db\Exception('Cannot save Wiki model.');
             }
 
             $history = new History();
-            $history->wiki_id = $wiki->id;
+            $history->wiki_id = $this->_wiki->id;
             $history->content = $this->content;
             $history->host_ip = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '';
             $history->summary = $this->summary;
             if (!$history->save()) {
                 throw new \yii\db\Exception('Cannot save History model.');
             }
-            $this->_history = $history;
             
             $transaction->commit();
         } catch (\Exception $e) {
@@ -124,16 +112,22 @@ class Editor extends Model
             return false;
         }
         
-        return $wiki;
+        return $this->_wiki;
     }
     
     public function isNew()
     {
-        return $this->_history === null;
+        return $this->_wiki->isNewRecord;
     }
     
-    public function getHistory()
+    public function getWiki()
     {
-        return $this->_history;
+        return $this->_wiki;
+    }
+    
+    public function getHistoryContent()
+    {
+        $history = $this->_wiki->historyLatest;
+        return $history ? $history->content : '';
     }
 }

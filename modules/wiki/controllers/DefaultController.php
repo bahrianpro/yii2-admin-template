@@ -28,14 +28,23 @@ class DefaultController extends Controller
         return $this->render('view');
     }
     
-    public function actionCreate()
+    /**
+     * Creates a new wiki page
+     * @param integer $id parent page id
+     */
+    public function actionCreate($id = null)
     {
-        $editor = new Editor();
+        $wiki = new \modules\wiki\models\Wiki();
+        if (!empty($id)) {
+            $parent = $this->findModel(\modules\wiki\models\Wiki::className(), $id);
+            $wiki->parent_id = $parent->id;
+        }
+        
+        $editor = new Editor($wiki);
         $editor->summary = Yii::t('app', 'Page created.');
         
-        /** @var $wiki \modules\wiki\models\Wiki */
-        if (($wiki = $this->updateWiki($editor))) {
-            return $this->redirect(['view', 'id' => $wiki->id]);
+        if ($this->updateWiki($editor)) {
+            return $this->redirect(['view', 'id' => $editor->getWiki()->id]);
         }
         
         return $this->render('create', [
@@ -49,16 +58,14 @@ class DefaultController extends Controller
      */
     public function actionUpdate($id)
     {
-        $history = $this->getHistoryLatest($id);
-        $editor = new Editor($history);
+        $wiki = $this->findModel(\modules\wiki\models\Wiki::className(), $id);
+        $editor = new Editor($wiki);
         
-        /** @var $wiki \modules\wiki\models\Wiki */
-        if (($wiki = $this->updateWiki($editor))) {
-            return $this->redirect(['view', 'id' => $wiki->id]);
+        if ($this->updateWiki($editor)) {
+            return $this->redirect(['view', 'id' => $editor->getWiki()->id]);
         }
         
         return $this->render('update', [
-            'history' => $history,
             'editor' => $editor,
         ]);
     }
@@ -107,10 +114,7 @@ class DefaultController extends Controller
     {
         if (Yii::$app->request->isPost) {
             $post = Yii::$app->request->post();
-            /** @var $wiki \modules\wiki\models\Wiki */
-            if ($editor->load($post) && ($wiki = $editor->save())) {
-                return $wiki;
-            }
+            return $editor->load($post) ? $editor->save() : false;
         }
         return false;
     }

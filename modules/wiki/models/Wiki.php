@@ -13,10 +13,13 @@ use yii\db\ActiveRecord;
  * @property integer $user_id
  * @property string $title
  * @property string $slug
+ * @property integer $parent_id
  * @property integer $created_at
  * 
  * @property User $user
  * @property History $history
+ * @property Wiki parent
+ * @property Wiki children
  */
 class Wiki extends ActiveRecord
 {
@@ -69,6 +72,15 @@ class Wiki extends ActiveRecord
                         
             ['slug', 'string', 'max' => 255],
             ['slug', 'default', 'value' => ''],
+                        
+            ['parent_id', 'integer'],
+            ['parent_id', 'default', 'value' => null],
+            ['parent_id', 'exist',
+                'skipOnEmpty' => true,
+                'skipOnError' => true,
+                'targetClass' => static::className(),
+                'targetAttribute' => ['parent_id' => 'id'],
+            ],
             
             ['created_at', 'integer'],
         ];
@@ -96,6 +108,30 @@ class Wiki extends ActiveRecord
      */
     public function getHistory()
     {
-        return $this->hasMany(History::className(), ['id' => 'wiki_id']);
+        return $this->hasMany(History::className(), ['wiki_id' => 'id']);
+    }
+    
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getHistoryLatest()
+    {
+        return $this->hasOne(History::className(), ['wiki_id' => 'id'])->orderBy('created_at DESC');
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+    public function getParent()
+    {
+        return $this->hasOne(static::className(), ['id' => 'parent_id']);
+    }
+    
+    /**
+     * @return ActiveQuery
+     */
+    public function getChildren()
+    {
+        return $this->hasMany(static::className(), ['parent_id' => 'id']);
     }
 }

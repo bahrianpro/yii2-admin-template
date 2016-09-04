@@ -16,7 +16,17 @@ $this->title = $history->wiki->title;
         ]) ?>
     </span>
     <span class="pull-right">
-        <?= Html::a(t('Edit'), ['default/update', 'id' => $history->wiki_id], ['class' => 'btn btn-flat btn-default']) ?>
+        <?= yii\bootstrap\ButtonDropdown::widget([
+            'label' => Yii::t('app', 'Actions'),
+            'options' => ['class' => 'btn btn-flat btn-default'],
+            'dropdown' => [
+                'items' => [
+                    ['label' => Yii::t('app', 'Edit'), 'url' => ['default/update', 'id' => $history->wiki_id]],
+                    ['label' => Yii::t('app', 'Create page'), 'url' => ['default/create', 'id' => $history->wiki_id]],
+                    ['label' => Yii::t('app', 'Delete'), 'url' => ['default/delete', 'id' => $history->wiki_id]],
+                ],
+            ],
+        ]) ?>
     </span>
 </div>
 
