@@ -31,6 +31,7 @@ class DefaultController extends Controller
     public function actionCreate()
     {
         $editor = new Editor();
+        $editor->summary = Yii::t('app', 'Page created.');
         
         /** @var $wiki \modules\wiki\models\Wiki */
         if (($wiki = $this->updateWiki($editor))) {
@@ -73,6 +74,13 @@ class DefaultController extends Controller
         return $this->render('view', [
             'history' => $history,
         ]);
+    }
+    
+    public function actionPreview()
+    {
+        $this->layout = false;
+        $content = Yii::$app->request->post('content', '');
+        return Yii::$app->formatter->asMarkdown($content);
     }
     
     /**

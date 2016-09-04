@@ -1,6 +1,7 @@
 <?php
 
 use app\widgets\ActiveForm;
+use modules\wiki\widgets\MarkdownEditor;
 
 /** @var $this yii\web\View */
 /** @var $editor modules\wiki\forms\Editor */
@@ -10,7 +11,9 @@ use app\widgets\ActiveForm;
 <?php $form = ActiveForm::begin() ?>
 
     <?= $form->field($editor, 'title') ?>
-    <?= $form->field($editor, 'content')->textArea(['rows' => 16]) ?>
+    <?= $form->field($editor, 'content')->widget(MarkdownEditor::className(), [
+        'previewUrl' => ['default/preview'],
+    ]) ?>
     <?= $form->field($editor, 'summary')->textInput([
         'placeholder' => Yii::t('app', 'What did you change ?'),
     ]) ?>
