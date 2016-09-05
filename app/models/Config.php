@@ -104,6 +104,11 @@ class Config extends ActiveRecord
                 $this->addError($attribute, $required->message);
                 return;
             }
+        } else {
+            $value = $this->$attribute;
+            if ($value === null || $value === '') {
+                return;
+            }
         }
         
         switch ($this->value_type) {
