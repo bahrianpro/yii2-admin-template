@@ -17,6 +17,10 @@ $this->params['breadcrumbs'][] = $this->title;
     'label' => $this->title,
     'actions' => [
         [
+            'visible' => !empty($wiki->parent_id),
+            'value' => Html::a(Icon::icon('fa fa-chevron-left'), ['default/index', 'id' => $wiki->parent_id]),
+        ],
+        [
             'value' => ButtonDropdown::widget([
                 'label' => Yii::t('app', 'Actions'),
                 'tagName' => 'a',
