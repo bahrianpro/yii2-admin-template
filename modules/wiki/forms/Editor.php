@@ -46,6 +46,10 @@ class Editor extends Model
      */
     protected $_wiki;
     
+    /**
+     * @param Wiki $wiki
+     * @param array $config
+     */
     public function __construct(Wiki $wiki, $config = array())
     {
         $this->_wiki = $wiki;
@@ -115,16 +119,27 @@ class Editor extends Model
         return $this->_wiki;
     }
     
+    /**
+     * @return boolean
+     */
     public function isNew()
     {
         return $this->_wiki->isNewRecord;
     }
     
+    /**
+     * Returns wiki instance.
+     * @return Wiki
+     */
     public function getWiki()
     {
         return $this->_wiki;
     }
     
+    /**
+     * Returns recent actual page content.
+     * @return string
+     */
     public function getHistoryContent()
     {
         $history = $this->_wiki->historyLatest;
