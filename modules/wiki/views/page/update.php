@@ -4,6 +4,7 @@ use app\widgets\Tabs;
 
 /** @var $this yii\web\View */
 /** @var $editor modules\wiki\forms\Editor */
+/** @var $historyProvider yii\data\ActiveDataProvider */
 ?>
 
 <?= Tabs::widget([
@@ -14,7 +15,9 @@ use app\widgets\Tabs;
         ],
         [
             'label' => Yii::t('app', 'History'),
-            'content' => $this->render('_history'),
+            'content' => $this->render('_history', [
+                'historyProvider' => $historyProvider,
+            ]),
         ],
     ],
 ]) ?>

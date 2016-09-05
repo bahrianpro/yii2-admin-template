@@ -11,9 +11,11 @@ namespace modules\wiki\controllers;
 use app\base\Controller;
 use app\components\Param;
 use modules\wiki\forms\Editor;
+use modules\wiki\models\History;
 use modules\wiki\models\Wiki;
 use Yii;
 use yii\base\Event;
+use yii\data\ActiveDataProvider;
 use yii\filters\VerbFilter;
 
 /**
@@ -80,6 +82,12 @@ class PageController extends Controller
         $wiki = $this->findModel(Wiki::className(), $id);
         $editor = new Editor($wiki);
         
+        $historyProvider = new ActiveDataProvider([
+            'query' => History::find()->where([
+                'wiki_id' => $id,
+            ])->orderBy('created_at DESC'),
+        ]);
+        
         if (Yii::$app->request->isPost) {
             $post = Yii::$app->request->post();
             if ($editor->load($post) && $editor->save()) {
@@ -89,6 +97,7 @@ class PageController extends Controller
         
         return $this->render('update', [
             'editor' => $editor,
+            'historyProvider' => $historyProvider,
         ]);
     }
     
