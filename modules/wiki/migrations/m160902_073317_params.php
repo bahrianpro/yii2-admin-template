@@ -12,11 +12,11 @@ class m160902_073317_params extends Migration
         $config->name = 'wikiStartPage';
         $config->section = 'Site';
         $config->title = 'Wiki start page';
-        $config->desc = 'Insert Id or Slug of wiki page which will load on access by /wiki url.';
-        $config->value = '';
-        $config->value_type = 'text';
+        $config->desc = 'Insert Id of wiki page which will load on access by /wiki url.';
+        $config->value_type = 'integer';
         
         if (!$config->save()) {
+            var_dump($config->getErrors());die();
             return false;
         }
     }
