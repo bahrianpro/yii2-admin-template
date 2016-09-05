@@ -12,7 +12,7 @@ use modules\wiki\widgets\MarkdownEditor;
 
     <?= $form->field($editor, 'title') ?>
     <?= $form->field($editor, 'content')->widget(MarkdownEditor::className(), [
-        'previewUrl' => ['default/preview'],
+        'previewUrl' => ['page/markdown-preview'],
     ]) ?>
     <?= $form->field($editor, 'summary')->textInput([
         'placeholder' => Yii::t('app', 'What did you change ?'),
@@ -20,6 +20,6 @@ use modules\wiki\widgets\MarkdownEditor;
 
 <?php ActiveForm::endWithActions([
     'cancel' => $editor->isNew() ? false : [
-        'url' => ['default/view', 'id' => $editor->getWiki()->id],
+        'url' => ['default/index', 'id' => $editor->getWiki()->id],
     ]
 ]) ?>
