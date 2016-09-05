@@ -136,6 +136,7 @@ class Box extends Widget
      * - 'icon' tool icon
      * - 'visible' toggle tool visibility
      * - 'options'
+     * or 'value' key which renders action item.
      */
     public $actions = [];
     
@@ -240,20 +241,28 @@ class Box extends Widget
             if (isset($action['visible']) && !$action['visible']) {
                 continue;
             }
-            $options = $this->toolButtonOptions;
-            if (isset($action['label'])) {
-                $options['data-original-title'] = $action['label'];
-                $options['data-toggle'] = 'tooltip';
+            if (isset($action['value'])) {
+                if ($action['value'] instanceof \Closure) {
+                    $actions .= call_user_func($action['value']);
+                } else {
+                    $actions .= $action['value'];
+                }
+            } else {
+                $options = $this->toolButtonOptions;
+                if (isset($action['label'])) {
+                    $options['data-original-title'] = $action['label'];
+                    $options['data-toggle'] = 'tooltip';
+                }
+                if (isset($action['options']['class'])) {
+                    Html::addCssClass($options, $action['options']['class']);
+                    ArrayHelper::remove($action['options'], 'class');
+                }
+                $options = ArrayHelper::merge($options, ArrayHelper::getValue($action, 'options', []));
+                $actions .= Html::button(
+                    Icon::icon(ArrayHelper::getValue($action, 'icon', 'fa fa-cog')),
+                    $options
+                );
             }
-            if (isset($action['options']['class'])) {
-                Html::addCssClass($options, $action['options']['class']);
-                ArrayHelper::remove($action['options'], 'class');
-            }
-            $options = ArrayHelper::merge($options, ArrayHelper::getValue($action, 'options', []));
-            $actions .= Html::button(
-                Icon::icon(ArrayHelper::getValue($action, 'icon', 'fa fa-cog')),
-                $options
-            );
         }
         return $actions;
     }
