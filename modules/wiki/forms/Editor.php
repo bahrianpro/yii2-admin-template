@@ -21,6 +21,9 @@ use yii\base\Model;
 class Editor extends Model
 {
     
+    const EVENT_BEFORE_UPDATE = 'beforeWikiUpdate';
+    const EVENT_AFTER_UPDATE = 'afterWikiUpdate';
+    
     /**
      * @var string
      */
@@ -88,6 +91,8 @@ class Editor extends Model
      */
     public function save()
     {
+        $this->trigger(self::EVENT_BEFORE_UPDATE);
+        
         if (!$this->validate()) {
             return false;
         }
@@ -116,6 +121,8 @@ class Editor extends Model
             return false;
         }
         
+        $this->trigger(self::EVENT_AFTER_UPDATE);
+            
         return $this->_wiki;
     }
     
