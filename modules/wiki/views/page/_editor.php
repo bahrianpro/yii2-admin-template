@@ -19,7 +19,7 @@ use modules\wiki\widgets\MarkdownEditor;
     ]) ?>
 
 <?php ActiveForm::endWithActions([
-    'cancel' => $editor->isNew() ? false : [
-        'url' => ['default/index', 'id' => $editor->getWiki()->id],
-    ]
+    'cancel' => [
+        'url' => ['default/index', 'id' => $editor->isNew() ? $editor->getWiki()->parent_id : $editor->getWiki()->id],
+    ],
 ]) ?>
