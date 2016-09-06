@@ -57,8 +57,6 @@ class Timeline extends ListView
     public function init()
     {
         parent::init();
-        $this->options['tag'] = 'ul';
-        Html::addCssClass($this->options, 'timeline');
         $this->_date = null;
         $this->layout = "{items}\n{pager}";
     }
@@ -76,7 +74,7 @@ class Timeline extends ListView
         }
         $rows[] = Html::tag('li', Icon::icon('fa fa-clock-o bg-gray'));
         
-        return implode($this->separator, $rows);
+        return Html::tag('ul', implode($this->separator, $rows), ['class' => 'timeline']);
     }
     
     /**
