@@ -5,6 +5,10 @@ use app\widgets\Tabs;
 /** @var $this yii\web\View */
 /** @var $editor modules\wiki\forms\Editor */
 /** @var $historyProvider yii\data\ActiveDataProvider */
+
+$this->title = Yii::t('app', 'Update page');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Wiki'), 'url' => ['page/index']];
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <?= Tabs::widget([
