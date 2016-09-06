@@ -139,6 +139,7 @@ class Timeline extends ListView
         } else {
             return '';
         }
+        $time = Icon::icon('fa fa-clock-o') . ' ' . $time;
         return Html::tag('span', $time, ['class' => 'time']);
     }
     
