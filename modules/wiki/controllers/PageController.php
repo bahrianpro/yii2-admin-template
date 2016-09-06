@@ -123,6 +123,9 @@ class PageController extends Controller
             'query' => History::find()->where([
                 'wiki_id' => $id,
             ])->orderBy('created_at DESC'),
+            'pagination' => [
+                'pageSize' => 5,
+            ],
         ]);
         
         if (Yii::$app->request->isPost) {
