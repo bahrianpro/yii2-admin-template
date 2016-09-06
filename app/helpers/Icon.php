@@ -49,7 +49,7 @@ class Icon
      */
     public static function icon($ico, $text = '')
     {
-        return '<i class="' . $ico . '"></i>&nbsp;' . $text;
+        return '<i class="' . $ico . '"></i> ' . $text;
     }
     
 }
