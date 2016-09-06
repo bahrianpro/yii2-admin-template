@@ -106,13 +106,16 @@ class Editor extends Model
                 throw new \yii\db\Exception('Cannot save Wiki model.');
             }
 
-            $history = new History();
-            $history->wiki_id = $this->_wiki->id;
-            $history->content = $this->content;
-            $history->host_ip = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '';
-            $history->summary = $this->summary;
-            if (!$history->save()) {
-                throw new \yii\db\Exception('Cannot save History model.');
+            // Don't save wiki if content not modified.
+            if ($this->content != $this->getHistoryContent()) {
+                $history = new History();
+                $history->wiki_id = $this->_wiki->id;
+                $history->content = $this->content;
+                $history->host_ip = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '';
+                $history->summary = $this->summary;
+                if (!$history->save()) {
+                    throw new \yii\db\Exception('Cannot save History model.');
+                }
             }
             
             $transaction->commit();
