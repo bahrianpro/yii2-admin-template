@@ -100,6 +100,7 @@ class Editor extends Model
         $transaction = Yii::$app->db->beginTransaction();
         
         try {
+            $isNew = $this->isNew(); // Preserve New status for later checking.
             $this->_wiki->title = $this->title;
             $this->_wiki->slug = $this->slug;
             if (!$this->_wiki->save()) {
@@ -107,7 +108,7 @@ class Editor extends Model
             }
 
             // Don't save wiki if content not modified.
-            if ($this->content != $this->getHistoryContent()) {
+            if ($isNew || $this->content != $this->getHistoryContent()) {
                 $history = new History();
                 $history->wiki_id = $this->_wiki->id;
                 $history->content = $this->content;
