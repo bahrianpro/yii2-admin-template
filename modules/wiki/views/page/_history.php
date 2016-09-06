@@ -1,13 +1,17 @@
 <?php
 
+use app\widgets\Pjax;
 use app\widgets\Timeline;
+use modules\wiki\assets\DiffAsset;
+use modules\wiki\helpers\DiffHelper;
 use yii\helpers\Html;
 
 /** @var $this yii\web\View */
 /** @var $historyProvider yii\data\ActiveDataProvider */
-modules\wiki\assets\DiffAsset::register($this);
+DiffAsset::register($this);
 ?>
 
+<?php Pjax::begin() ?>
 <?= Timeline::widget([
     'dataProvider' => $historyProvider,
     'dateValue' => function ($model) {
@@ -20,9 +24,10 @@ modules\wiki\assets\DiffAsset::register($this);
         return Yii::$app->formatter->asUserlink($model->user) . ' ' . Html::tag('span', e($model->summary), ['class' => 'text-muted summary-change']);
     },
     'itemView' => function ($model) {
-        return Html::tag('pre', modules\wiki\helpers\DiffHelper::diff($model));
+        return Html::tag('pre', DiffHelper::diff($model));
     },
     'itemFooterView' => function ($model) {
         return Html::a(Yii::t('app', 'Edit'), ['page/update', 'id' => $model->wiki_id, 'rev' => $model->id], ['class' => 'btn btn-default btn-flat btn-xs']);
     },
 ]) ?>
+<?php Pjax::end() ?>
