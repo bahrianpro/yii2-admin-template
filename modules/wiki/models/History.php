@@ -18,6 +18,7 @@ use yii\db\ActiveRecord;
  * @property integer $created_at
  * @property string $summary
  * @property string $host_ip
+ * @property integer $rev
  *
  * @property Wiki $wiki
  * @property User $user
@@ -50,6 +51,12 @@ class History extends ActiveRecord
         ];
     }
     
+    public function init()
+    {
+        parent::init();
+        $this->on(self::EVENT_BEFORE_VALIDATE, [$this, 'onBeforeValidate']);
+    }
+    
     /**
      * @inheritdoc
      */
@@ -72,6 +79,9 @@ class History extends ActiveRecord
             ],
             
             ['content', 'string'],
+            
+            ['rev', 'required'],
+            ['rev', 'integer'],
             
             ['summary', 'string', 'max' => 255],
             ['summary', 'filter', 'filter' => 'strip_tags'],
@@ -100,6 +110,18 @@ class History extends ActiveRecord
     }
     
     /**
+     * Increment revision number for new records.
+     */
+    public function onBeforeValidate()
+    {
+        if (!$this->isNewRecord && !$this->wiki_id) {
+            return;
+        }
+        $max = static::find()->where(['wiki_id' => $this->wiki_id])->max('rev');
+        $this->rev = (int) $max + 1;
+    }
+    
+    /**
      * @return ActiveQuery
      */
     public function getWiki()
@@ -113,6 +135,18 @@ class History extends ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
+    
+    /**
+     * @return ActiveQuery
+     */
+    public function getPrevious()
+    {
+        $rev = (int) $this->rev - 1;
+        if ($rev < 1) {
+            return false;
+        }
+        return static::find()->where(['wiki_id' => $this->wiki_id, 'rev' => $rev]);
     }
     
     /**

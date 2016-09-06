@@ -111,7 +111,7 @@ class PageController extends Controller
             /** @var $history History */
             $history = History::findOne([
                 'wiki_id' => $id,
-                'id' => $rev,
+                'rev' => $rev,
             ]);
             if (!$history) {
                 $this->addFlash(self::FLASH_WARNING, Yii::t('app', 'Revision not found.'));

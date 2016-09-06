@@ -26,12 +26,13 @@ class DiffHelper
      */
     public static function diff(History $history, $diffOptions = [])
     {
-        if (!($current = $history->wiki->historyLatest)) {
+        if (!($previous = $history->previous)) {
             return '';
         }
-        $original = explode("\n", $current->content);
+        
         $content = explode("\n", $history->content);
-        $diff = new \Diff($original, $content, $diffOptions);
+        $prevContent = explode("\n", $previous->content);
+        $diff = new \Diff($content, $prevContent, $diffOptions);
         $renderer = new \modules\wiki\DiffRendererHtmlInline();
         return $diff->render($renderer);
     }

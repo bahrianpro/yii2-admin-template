@@ -27,7 +27,7 @@ DiffAsset::register($this);
         return Html::tag('pre', DiffHelper::diff($model));
     },
     'itemFooterView' => function ($model) {
-        return Html::a(Yii::t('app', 'Edit'), ['page/update', 'id' => $model->wiki_id, 'rev' => $model->id], ['class' => 'btn btn-default btn-flat btn-xs']);
+        return Html::a(Yii::t('app', 'Edit'), ['page/update', 'id' => $model->wiki_id, 'rev' => $model->id], ['class' => 'btn btn-default btn-flat btn-xs', 'data-pjax' => 0]);
     },
 ]) ?>
 <?php Pjax::end() ?>
