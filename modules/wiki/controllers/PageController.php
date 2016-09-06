@@ -99,12 +99,25 @@ class PageController extends Controller
     /**
      * Update wiki page.
      * @param integer $id wiki page id
+     * @param integer $rev history revision id
      */
-    public function actionUpdate($id)
+    public function actionUpdate($id, $rev = null)
     {
         /** @var $wiki Wiki */
         $wiki = $this->findModel(Wiki::className(), $id);
         $editor = new Editor($wiki);
+        
+        if ($rev) {
+            /** @var $history History */
+            $history = History::findOne([
+                'wiki_id' => $id,
+                'id' => $rev,
+            ]);
+            if (!$history) {
+                $this->addFlash(self::FLASH_WARNING, Yii::t('app', 'Revision not found.'));
+            }
+            $editor->content = $history->content;
+        }
         
         $historyProvider = new ActiveDataProvider([
             'query' => History::find()->where([
