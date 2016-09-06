@@ -19,6 +19,9 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ],
 ]) ?>
+<?php if (!$rootPages): ?>
+    <?= Yii::t('app', 'Page list is empty.') ?>
+<?php endif ?>
 <ul class="list-unstyled pages">
     <?php foreach ($rootPages as $wiki): ?>
     <li class="wiki-page">
