@@ -6,7 +6,7 @@ use app\widgets\Box;
 /** @var $editor modules\wiki\forms\Editor */
 
 $this->title = Yii::t('app', 'Create a new page');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Wiki'), 'url' => ['default/index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Wiki'), 'url' => ['page/index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 

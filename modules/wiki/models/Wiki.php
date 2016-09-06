@@ -134,4 +134,13 @@ class Wiki extends ActiveRecord
     {
         return $this->hasMany(static::className(), ['parent_id' => 'id']);
     }
+    
+    /**
+     * Finds all root pages.
+     * @return Wiki[]
+     */
+    public static function findAllRoot()
+    {
+        return static::findAll(['parent_id' => null]);
+    }
 }

@@ -9,7 +9,7 @@ use yii\helpers\Html;
 /** @var $wiki modules\wiki\models\Wiki */
 
 $this->title = $wiki->title;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Wiki'), 'url' => ['default/index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Wiki'), 'url' => ['page/index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
     'actions' => [
         [
             'visible' => !empty($wiki->parent_id),
-            'value' => Html::a(Icon::icon('fa fa-chevron-left'), ['default/index', 'id' => $wiki->parent_id]),
+            'value' => Html::a(Icon::icon('fa fa-chevron-left'), ['page/view', 'id' => $wiki->parent_id]),
         ],
         [
             'value' => ButtonDropdown::widget([
@@ -53,7 +53,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ]) ?>
 <ul class="list-unstyled">
     <?php foreach ($wiki->children as $child): ?>
-    <li><?= Html::a(Icon::icon('fa fa-file-text', e($child->title)), ['default/index', 'id' => $child->id]) ?></li>
+    <li><?= Html::a(Icon::icon('fa fa-file-text', e($child->title)), ['page/view', 'id' => $child->id]) ?></li>
     <?php endforeach ?>
 </ul>
 <?php Box::end() ?>

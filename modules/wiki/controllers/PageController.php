@@ -42,6 +42,33 @@ class PageController extends Controller
     }
     
     /**
+     * Wiki index.
+     * Shows all root pages.
+     */
+    public function actionIndex()
+    {
+        $rootPages = Wiki::findAllRoot();
+        
+        return $this->render('index', [
+            'rootPages' => $rootPages,
+        ]);
+    }
+    
+    /**
+     * View wiki page.
+     * @param integer $id wiki page id
+     */
+    public function actionView($id)
+    {
+        /** @var $wiki Wiki */
+        $wiki = $this->findModel(Wiki::className(), $id);
+        
+        return $this->render('view', [
+            'wiki' => $wiki,
+        ]);
+    }
+    
+    /**
      * Create root or child page.
      * @param integer $id wiki parent page id
      */
@@ -58,12 +85,9 @@ class PageController extends Controller
         $editor->summary = Yii::t('app', 'Page created.');
         
         if (Yii::$app->request->isPost) {
-            if (empty($id)) {
-                $editor->on(Editor::EVENT_AFTER_UPDATE, [$this, 'setStartPage']);
-            }
             $post = Yii::$app->request->post();
             if ($editor->load($post) && $editor->save()) {
-                return $this->redirect(['default/index', 'id' => $editor->getWiki()->id]);
+                return $this->redirect(['page/index', 'id' => $editor->getWiki()->id]);
             }
         }
         
@@ -91,7 +115,7 @@ class PageController extends Controller
         if (Yii::$app->request->isPost) {
             $post = Yii::$app->request->post();
             if ($editor->load($post) && $editor->save()) {
-                return $this->redirect(['default/index', 'id' => $editor->getWiki()->id]);
+                return $this->redirect(['page/index', 'id' => $editor->getWiki()->id]);
             }
         }
         
@@ -119,15 +143,5 @@ class PageController extends Controller
         $this->layout = false;
         $content = Yii::$app->request->post('content', '');
         return Yii::$app->formatter->asMarkdown($content);
-    }
-    
-    public function setStartPage(Event $event)
-    {
-        if (!($wiki = Yii::$app->getModule('wiki')->getStartWiki())) {
-            /** @var $editor Editor */
-            $editor = $event->sender;
-            Param::update('Site.wikiStartPage', $editor->getWiki()->id);
-            $this->addFlash(self::FLASH_INFO, Yii::t('app', 'This page will be default start page.'));
-        }
     }
 }
