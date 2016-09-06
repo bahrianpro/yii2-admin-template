@@ -87,7 +87,7 @@ class PageController extends Controller
         if (Yii::$app->request->isPost) {
             $post = Yii::$app->request->post();
             if ($editor->load($post) && $editor->save()) {
-                return $this->redirect(['page/index', 'id' => $editor->getWiki()->id]);
+                return $this->redirect(['page/view', 'id' => $editor->getWiki()->id]);
             }
         }
         
@@ -115,7 +115,7 @@ class PageController extends Controller
         if (Yii::$app->request->isPost) {
             $post = Yii::$app->request->post();
             if ($editor->load($post) && $editor->save()) {
-                return $this->redirect(['page/index', 'id' => $editor->getWiki()->id]);
+                return $this->redirect(['page/view', 'id' => $editor->getWiki()->id]);
             }
         }
         
