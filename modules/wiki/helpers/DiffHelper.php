@@ -8,6 +8,8 @@
 
 namespace modules\wiki\helpers;
 
+use Diff;
+use modules\wiki\DiffRendererHtmlInline;
 use modules\wiki\models\History;
 
 /**
@@ -32,8 +34,8 @@ class DiffHelper
         
         $content = explode("\n", $history->content);
         $prevContent = explode("\n", $previous->content);
-        $diff = new \Diff($content, $prevContent, $diffOptions);
-        $renderer = new \modules\wiki\DiffRendererHtmlInline();
+        $diff = new Diff($content, $prevContent, $diffOptions);
+        $renderer = new DiffRendererHtmlInline();
         return $diff->render($renderer);
     }
 }
