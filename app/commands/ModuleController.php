@@ -85,6 +85,7 @@ class ModuleController extends Controller
             if (!$module['installed']) {
                 throw new Exception('Module already uninstalled.');
             }
+            $this->stdout('All module data WILL BE deleted!' . PHP_EOL, Console::BOLD);
             if (!$this->confirm('Are you sure to uninstall module: ' . $module['name'])) {
                 return;
             }
