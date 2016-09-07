@@ -9,12 +9,10 @@
 namespace modules\wiki\controllers;
 
 use app\base\Controller;
-use app\components\Param;
 use modules\wiki\forms\Editor;
 use modules\wiki\models\History;
 use modules\wiki\models\Wiki;
 use Yii;
-use yii\base\Event;
 use yii\data\ActiveDataProvider;
 use yii\filters\VerbFilter;
 
