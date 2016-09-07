@@ -107,6 +107,20 @@ class ModuleController extends Controller
     public function actionInfo($moduleId)
     {
         $module = $this->getModule($moduleId);
+        $this->stdout('ID: ', Console::BOLD);
+        $this->stdout($module['module_id'] . PHP_EOL);
+        $this->stdout('Status: ', Console::BOLD);
+        $this->stdout(($module['installed'] ? 'Installed' : 'Not installed') . PHP_EOL);
+        $this->stdout('Name: ', Console::BOLD);
+        $this->stdout($module['name'] . PHP_EOL);
+        $this->stdout('Description: ', Console::BOLD);
+        $this->stdout($module['desc'] . PHP_EOL);
+        if (isset($module['data']['migrations'])) {
+            $this->stdout('Migrations:' . PHP_EOL, Console::BOLD);
+            foreach ($module['data']['migrations'] as $migration) {
+                $this->stdout("\t" . $migration . PHP_EOL);
+            }
+        }
     }
     
     /**
