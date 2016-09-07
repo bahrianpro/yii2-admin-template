@@ -23,11 +23,19 @@ class ModuleController extends Controller
 {
     
     /**
+     * Refresh module list before any module operation.
+     */
+    public function beforeAction($action)
+    {
+        Yii::$app->scanModules();
+        return parent::beforeAction($action);
+    }
+    
+    /**
      * List all application modules.
      */
     public function actionIndex()
     {
-        Yii::$app->scanModules();
         $modules = Yii::$app->getModulesByStatus(null);
         printf("%-16s %-20s %-12s\n", 'ID', 'Module name', 'Status');
         print str_repeat('-', 60) . PHP_EOL;
