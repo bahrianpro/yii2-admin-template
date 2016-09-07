@@ -13,17 +13,31 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Wiki'), 'url' => ['p
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<?php Box::begin([
-    'label' => $this->title,
-    'actions' => [
-        [
-            'visible' => !empty($wiki->parent_id),
-            'value' => Html::a(Icon::icon('fa fa-chevron-left'), ['page/view', 'id' => $wiki->parent_id]),
-        ],
-        [
-            'value' => ButtonDropdown::widget([
+<?php Box::begin([]) ?>
+    <div class="btn-group">
+        <?= Html::a(Icon::icon('fa fa-home'), ['page/index'], ['class' => 'btn btn-flat btn-default']) ?>
+        <?php if (!empty($wiki->parent_id)): ?>
+        <?= Html::a(Icon::icon('fa fa-chevron-left'), ['page/view', 'id' => $wiki->parent_id], ['class' => 'btn btn-flat btn-default']) ?>
+        <?php endif ?>
+        <?php if ($wiki->getChildren()->count()): ?>
+            <?= ButtonDropdown::widget([
+                'label' => Yii::t('app', 'Pages'),
+                'tagName' => 'a',
+                'options' => ['class' => ['btn btn-flat btn-default']],
+                'dropdown' => [
+                    'items' => array_map(function ($child) {
+                        return [
+                            'label' => $child->title,
+                            'url' => ['page/view', 'id' => $child->id],
+                        ];
+                    }, $wiki->children),
+                ],
+            ]) ?>
+        <?php endif ?>
+        <?= ButtonDropdown::widget([
                 'label' => Yii::t('app', 'Actions'),
                 'tagName' => 'a',
+                'options' => ['class' => ['btn btn-flat btn-default']],
                 'dropdown' => [
                     'items' => [
                         ['label' => Yii::t('app', 'Edit'), 'url' => ['page/update', 'id' => $wiki->id]],
@@ -32,10 +46,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         ['label' => Yii::t('app', 'Delete'), 'url' => ['page/delete', 'id' => $wiki->id]],
                     ],
                 ],
-            ]),
-        ],
-    ],
-]) ?>
+            ]) ?>
+    </div>
     <div class="wiki-summary">
         <span class="summary-info text-muted text-sm">
             <?= Yii::t('app', 'Added by {creator}, last edit by {editor} {time}', [

@@ -11,14 +11,12 @@ $this->title = Yii::t('app', 'Wiki');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<?php Box::begin([
-    'label' => Yii::t('app', 'Page list'),
-    'actions' => [
-        [
-            'value' => Html::a(Icon::PLUS . Yii::t('app', 'Create'), ['page/create']),
-        ],
-    ],
-]) ?>
+<?php Box::begin([]) ?>
+
+<div class="btn-group">
+    <?= Html::a(Yii::t('app', 'Create'), ['page/create'], ['class' => 'btn btn-flat btn-default']) ?>
+</div>
+
 <?php if (!$rootPages): ?>
     <?= Yii::t('app', 'Page list is empty.') ?>
 <?php endif ?>
