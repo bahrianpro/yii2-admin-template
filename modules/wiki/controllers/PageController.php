@@ -159,7 +159,12 @@ class PageController extends Controller
      */
     public function actionDelete($id)
     {
+        /** @var $wiki Wiki */
+        $wiki = $this->findModel(Wiki::className(), $id);
         
+        return $this->render('delete', [
+            'wiki' => $wiki,
+        ]);
     }
     
     /**
