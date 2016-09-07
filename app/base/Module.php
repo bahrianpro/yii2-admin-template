@@ -22,6 +22,12 @@ class Module extends \yii\base\Module
     const STATUS_NOTINSTALLED = 0;
     
     /**
+     * Events.
+     */
+    const EVENT_MODULE_INSTALLED = 'eventModuleInstalled';
+    const EVENT_MODULE_UNINSTALLED = 'eventModuleUninstalled';
+    
+    /**
      * @var string required, module name.
      */
     public $moduleName;
@@ -30,4 +36,20 @@ class Module extends \yii\base\Module
      * @var string
      */
     public $moduleDescription = '';
+    
+    /**
+     * Emit event when module is installed.
+     */
+    public function install()
+    {
+        $this->trigger(self::EVENT_MODULE_INSTALLED);
+    }
+    
+    /**
+     * Emit event when module is uninstalled.
+     */
+    public function uninstall()
+    {
+        $this->trigger(self::EVENT_MODULE_UNINSTALLED);
+    }
 }

@@ -11,7 +11,7 @@ namespace app\base;
 use Yii;
 
 /**
- * Description of ModuleApplicationTrait
+ * ModuleApplicationTrait
  *
  * @author skoro
  */
@@ -324,13 +324,15 @@ trait ModuleApplicationTrait
         $module['installed'] = true;
         $module['data']['migrations'] = $migrations;
         
-        //TODO: Event moduleBeforeInstall
-        
         if (!$this->updateModule($module)) {
             throw new \yii\base\Exception('Cannot install module.');
         }
         
-        // TODO: Event moduleAfterInstall
+        // Invoke install hook of module.
+        $moduleObject = Yii::createObject($module['data']['class'], [$moduleId, $this]);
+        if ($moduleObject instanceof Module) {
+            $moduleObject->install();
+        }
     }
     
     /**
@@ -359,12 +361,14 @@ trait ModuleApplicationTrait
         
         $module['installed'] = false;
 
-        // TODO: Event moduleBeforeUninstall
-        
         if (!$this->updateModule($module)) {
             throw new \yii\base\Exception('Cannot uninstall module.');
         }
         
-        // TODO: Event moduleAfterInstall
+        // Invoke uninstall hook of module.
+        $moduleObject = Yii::createObject($module['data']['class'], [$moduleId, $this]);
+        if ($moduleObject instanceof Module) {
+            $moduleObject->uninstall();
+        }
     }
 }
