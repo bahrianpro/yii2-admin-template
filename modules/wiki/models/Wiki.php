@@ -116,7 +116,7 @@ class Wiki extends ActiveRecord
      */
     public function getHistoryLatest()
     {
-        return $this->hasOne(History::className(), ['wiki_id' => 'id'])->orderBy('created_at DESC');
+        return $this->hasOne(History::className(), ['wiki_id' => 'id'])->orderBy('rev DESC');
     }
 
     /**
