@@ -142,6 +142,20 @@ class PageController extends Controller
     }
     
     /**
+     * View raw markup.
+     * @param integer $id wiki page id
+     */
+    public function actionRaw($id)
+    {
+        /** @var $wiki Wiki */
+        $wiki = $this->findModel(Wiki::className(), $id);
+        $this->layout = false;
+        if ($history = $wiki->historyLatest) {
+            print '<pre>' . $history->content . '</pre>';
+        }
+    }
+    
+    /**
      * Delete wiki page.
      * @param integer $id wiki page id
      */

@@ -28,6 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'items' => [
                         ['label' => Yii::t('app', 'Edit'), 'url' => ['page/update', 'id' => $wiki->id]],
                         ['label' => Yii::t('app', 'Create child page'), 'url' => ['page/create', 'id' => $wiki->id]],
+                        ['label' => Yii::t('app', 'View raw'), 'url' => ['page/raw', 'id' => $wiki->id]],
                         ['label' => Yii::t('app', 'Delete'), 'url' => ['page/delete', 'id' => $wiki->id]],
                     ],
                 ],
