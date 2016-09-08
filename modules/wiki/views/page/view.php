@@ -40,10 +40,26 @@ $this->params['breadcrumbs'][] = $this->title;
                 'options' => ['class' => ['btn btn-flat btn-default']],
                 'dropdown' => [
                     'items' => [
-                        ['label' => Yii::t('app', 'Edit'), 'url' => ['page/update', 'id' => $wiki->id]],
-                        ['label' => Yii::t('app', 'Create child page'), 'url' => ['page/create', 'id' => $wiki->id]],
-                        ['label' => Yii::t('app', 'View raw'), 'url' => ['page/raw', 'id' => $wiki->id]],
-                        ['label' => Yii::t('app', 'Delete'), 'url' => ['page/delete', 'id' => $wiki->id]],
+                        [
+                            'label' => Yii::t('app', 'Edit'),
+                            'url' => ['page/update', 'id' => $wiki->id],
+                            'visible' => Yii::$app->user->can('updateWiki', ['wiki' => $wiki]),
+                        ],
+                        [
+                            'label' => Yii::t('app', 'Create child page'),
+                            'url' => ['page/create', 'id' => $wiki->id],
+                            'visible' => Yii::$app->user->can('createWiki'),
+                        ],
+                        [
+                            'label' => Yii::t('app', 'View raw'),
+                            'url' => ['page/raw', 'id' => $wiki->id],
+                            'visible' => Yii::$app->user->can('viewWiki'),
+                        ],
+                        [
+                            'label' => Yii::t('app', 'Delete'),
+                            'url' => ['page/delete', 'id' => $wiki->id],
+                            'visible' => Yii::$app->user->can('deleteWiki', ['wiki' => $wiki]),
+                        ],
                     ],
                 ],
             ]) ?>

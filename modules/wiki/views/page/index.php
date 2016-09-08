@@ -14,7 +14,9 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php Box::begin([]) ?>
 
 <div class="btn-group">
+    <?php if (Yii::$app->user->can('createWiki')): ?>
     <?= Html::a(Yii::t('app', 'Create'), ['page/create'], ['class' => 'btn btn-flat btn-default']) ?>
+    <?php endif ?>
 </div>
 
 <?php if (!$rootPages): ?>

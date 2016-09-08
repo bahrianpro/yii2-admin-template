@@ -14,7 +14,9 @@ use modules\wiki\models\History;
 use modules\wiki\models\Wiki;
 use Yii;
 use yii\data\ActiveDataProvider;
+use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
+use yii\web\ForbiddenHttpException;
 
 /**
  * PageController
@@ -34,6 +36,22 @@ class PageController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'markdown-preview' => ['post'],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['index', 'view', 'raw', 'markdown-preview', 'create'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['index', 'view', 'raw', 'markdown-preview'],
+                        'roles' => ['viewWiki'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['create'],
+                        'roles' => ['createWiki'],
+                    ],
                 ],
             ],
         ];
@@ -103,6 +121,9 @@ class PageController extends Controller
     {
         /** @var $wiki Wiki */
         $wiki = $this->findModel(Wiki::className(), $id);
+        if (!Yii::$app->user->can('updateWiki', ['wiki' => $wiki])) {
+            throw new ForbiddenHttpException();
+        }
         $editor = new Editor($wiki);
         
         if ($rev) {
@@ -161,6 +182,10 @@ class PageController extends Controller
     {
         /** @var $wiki Wiki */
         $wiki = $this->findModel(Wiki::className(), $id);
+        
+        if (!Yii::$app->user->can('deleteWiki', ['wiki' => $wiki])) {
+            throw new ForbiddenHttpException();
+        }
         
         return $this->render('delete', [
             'wiki' => $wiki,

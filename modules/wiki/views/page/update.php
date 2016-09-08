@@ -22,6 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'content' => $this->render('_history', [
                 'historyProvider' => $historyProvider,
             ]),
+            'visible' => Yii::$app->user->can('viewWikiHistory'),
         ],
     ],
 ]) ?>
