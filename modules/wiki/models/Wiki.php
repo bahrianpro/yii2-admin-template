@@ -136,6 +136,21 @@ class Wiki extends ActiveRecord
     }
     
     /**
+     * Recursive finds current wiki children.
+     * @return Wiki[]
+     */
+    public function getChildrenAll()
+    {
+        $walk = function (Wiki $current) {
+            $children = $current->children;
+            foreach ($children as $child) {
+                
+            }
+        };
+        
+    }
+    
+    /**
      * Finds all root pages.
      * @return Wiki[]
      */

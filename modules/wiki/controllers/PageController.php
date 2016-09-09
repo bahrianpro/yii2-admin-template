@@ -40,11 +40,14 @@ class PageController extends Controller
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index', 'view', 'raw', 'markdown-preview', 'create'],
+                'only' => ['index', 'view', 'raw', 'markdown-preview', 'create', 'wiki-suggest'],
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['index', 'view', 'raw', 'markdown-preview'],
+                        'actions' => [
+                            'index', 'view', 'raw', 'markdown-preview',
+                            'wiki-suggest',
+                        ],
                         'roles' => ['viewWiki'],
                     ],
                     [
@@ -187,8 +190,16 @@ class PageController extends Controller
             throw new ForbiddenHttpException();
         }
         
+        $delete = new \modules\wiki\forms\DeleteWiki($wiki);
+        if (Yii::$app->request->isPost) {
+            $post = Yii::$app->request->post();
+            if ($delete->load($post) && $delete->delete()) {
+                
+            }
+        }
+        
         return $this->render('delete', [
-            'wiki' => $wiki,
+            'delete' => $delete,
         ]);
     }
     
@@ -201,5 +212,27 @@ class PageController extends Controller
         $this->layout = false;
         $content = Yii::$app->request->post('content', '');
         return Yii::$app->formatter->asMarkdown($content);
+    }
+    
+    /**
+     * Autocomplete wiki title.
+     * @param string $q
+     */
+    public function actionWikiSuggest($q = '')
+    {
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        
+        $wikis = Wiki::find()
+                ->filterwhere(['like', 'title', $q])
+                ->orderBy('title')
+                ->limit(10)
+                ->all();
+        
+        return array_map(function (Wiki $wiki) {
+            return [
+                'id' => $wiki->id,
+                'text' => $wiki->title,
+            ];
+        }, $wikis);
     }
 }
