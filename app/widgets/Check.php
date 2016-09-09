@@ -8,6 +8,7 @@
 namespace app\widgets;
 
 use app\assets\CheckAsset;
+use yii\base\InvalidValueException;
 use yii\bootstrap\InputWidget;
 use yii\helpers\Html;
 
@@ -81,6 +82,12 @@ class Check extends InputWidget
         
         if ($this->label) {
             $this->options['label'] = $this->label;
+        }
+        
+        if ($this->items) {
+            if (!($this->items = array_filter($this->items))) {
+                throw new InvalidValueException('Empty items list.');
+            }
         }
         
         if ($this->hasModel()) {
