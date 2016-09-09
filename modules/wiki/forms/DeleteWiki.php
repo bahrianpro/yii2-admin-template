@@ -10,7 +10,9 @@ namespace modules\wiki\forms;
 
 use modules\wiki\models\Wiki;
 use Yii;
+use yii\base\InvalidValueException;
 use yii\base\Model;
+use yii\db\Exception as DbException;
 
 /**
  * Description of DeletePage
@@ -62,8 +64,8 @@ class DeleteWiki extends Model
             
             ['parentId', 'integer'],
             ['parentId', 'exist',
-                'when' => function ($model) {
-                    return $model->parentId;
+                'when' => function (DeleteWiki $model) {
+                    return $model->parentId && $model->mode == self::DELETE_MOVEID;
                 },
                 'targetClass' => Wiki::className(),
                 'targetAttribute' => ['parentId' => 'id'],
@@ -123,8 +125,62 @@ class DeleteWiki extends Model
             return false;
         }
         
-        if ($this->mode == self::DELETE_CHILDREN) {
+        $result = true;
+        $db = Yii::$app->db;
+        $transaction = $db->beginTransaction();
+        
+        try {
+        
+            switch ($this->mode) {
+                case self::DELETE_CHILDREN:
+                    $this->deleteAllChildren();
+                    $this->parentId = null;
+                    break;
+                
+                case self::DELETE_MOVEUP:
+                    if (!($parent = $this->_wiki->parent)) {
+                        throw new InvalidValueException('Wiki has not parent.');
+                    }
+                    $this->parentId = $parent->id;
+                    break;
+                
+                case self::DELETE_MOVEID:
+                    break;
+            }
             
+            // Reparent wiki children.
+            if ($this->parentId) {
+                $db->createCommand()
+                    ->update(Wiki::tableName(), [
+                        'parent_id' => $this->parentId,
+                    ], [
+                        'parent_id' => $this->_wiki->id,
+                    ])
+                    ->execute();
+            }
+            
+            if ($this->_wiki->delete() === false) {
+                throw new DbException('Cannot delete wiki');
+            }
+            
+            $transaction->commit();
+            
+        } catch (\Exception $ex) {
+            $transaction->rollBack();
+            $result = false;
+        }
+        
+        return $result;
+    }
+    
+    protected function deleteAllChildren()
+    {
+        $children = $this->_wiki->getChildrenAll();
+        
+        foreach ($children as $child) {
+            if ($child->delete() === false) {
+                throw new DbException('Cannot delete child wiki id: ' . $child->id);
+            }
         }
     }
 }

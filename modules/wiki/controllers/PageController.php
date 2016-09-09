@@ -9,6 +9,7 @@
 namespace modules\wiki\controllers;
 
 use app\base\Controller;
+use modules\wiki\forms\DeleteWiki;
 use modules\wiki\forms\Editor;
 use modules\wiki\models\History;
 use modules\wiki\models\Wiki;
@@ -17,6 +18,7 @@ use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\ForbiddenHttpException;
+use yii\web\Response;
 
 /**
  * PageController
@@ -189,13 +191,26 @@ class PageController extends Controller
         if (!Yii::$app->user->can('deleteWiki', ['wiki' => $wiki])) {
             throw new ForbiddenHttpException();
         }
-        
-        $delete = new \modules\wiki\forms\DeleteWiki($wiki);
+
+        $delete = new DeleteWiki($wiki);
         if (Yii::$app->request->isPost) {
+            if (!$delete->isChildrenExists() && $wiki->delete()) {
+                $this->addFlash(self::FLASH_SUCCESS, Yii::t('app', 'Page <em>{title}</em> deleted.', [
+                    'title' => $wiki->title,
+                ]));
+                return $this->redirect('index');
+            }
             $post = Yii::$app->request->post();
             if ($delete->load($post) && $delete->delete()) {
-                
+                $this->addFlash(self::FLASH_SUCCESS, Yii::t('app', 'Page <em>{title}</em> deleted.', [
+                    'title' => $delete->getWiki()->title,
+                ]));
+                if ($delete->mode == DeleteWiki::DELETE_CHILDREN) {
+                    return $this->redirect('index');
+                }
+                return $this->redirect(['view', 'id' => $delete->parentId]);
             }
+            $this->addFlash(self::FLASH_ERROR, Yii::t('app', 'Cannot delete page.'));
         }
         
         return $this->render('delete', [
@@ -220,7 +235,7 @@ class PageController extends Controller
      */
     public function actionWikiSuggest($q = '')
     {
-        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        Yii::$app->response->format = Response::FORMAT_JSON;
         
         $wikis = Wiki::find()
                 ->filterwhere(['like', 'title', $q])

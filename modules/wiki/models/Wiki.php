@@ -141,13 +141,19 @@ class Wiki extends ActiveRecord
      */
     public function getChildrenAll()
     {
-        $walk = function (Wiki $current) {
-            $children = $current->children;
-            foreach ($children as $child) {
-                
+        return $this->getTree($this->id);
+    }
+    
+    protected function getTree($parentId = 0, $tree = [])
+    {
+        $children = static::findAll(['parent_id' => $parentId]);
+        foreach ($children as $child) {
+            if ($child->parent_id == $parentId) {
+                $tree[] = $child;
+                $tree = $this->getTree($child->id, $tree);
             }
-        };
-        
+        }
+        return $tree;
     }
     
     /**
