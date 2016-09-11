@@ -33,7 +33,7 @@ $this->title = $delete->getWiki()->title;
     ]) ?>
     <?= $form->field($delete, 'parentId')->widget(Select2::className(), [
         'hideSearch' => false,
-        'remote' => ['wiki-suggest'],
+        'remote' => ['wiki-suggest', 'ign' => $delete->getWiki()->id],
     ])->label(false) ?>
     <hr>
 <?php endif ?>

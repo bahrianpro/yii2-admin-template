@@ -231,17 +231,35 @@ class PageController extends Controller
     
     /**
      * Autocomplete wiki title.
+     * @param integer $ign ignore suggests from wiki page id
      * @param string $q
      */
-    public function actionWikiSuggest($q = '')
+    public function actionWikiSuggest($ign = '', $q = '')
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
         
-        $wikis = Wiki::find()
-                ->filterwhere(['like', 'title', $q])
+        $query = Wiki::find()
+                ->andFilterWhere(['like', 'title', $q])
                 ->orderBy('title')
-                ->limit(10)
-                ->all();
+                ->limit(10);
+        
+        if ($ign) {
+            /** @var $wiki Wiki */
+            $wiki = $this->findModel(Wiki::className(), $ign);
+
+            $children = $wiki->getChildrenAll(function ($query) {
+                $query->select('id');
+            });
+            
+            $childrenIds = array_map(function ($child) {
+                return $child->id;
+            }, $children);
+            
+            $query->where(['!=', 'id', $wiki->id])
+                  ->andWhere(['not in', 'id', $childrenIds]);  
+        }
+        
+        $wikis = $query->all();
         
         return array_map(function (Wiki $wiki) {
             return [

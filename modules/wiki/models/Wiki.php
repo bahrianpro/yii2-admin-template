@@ -5,6 +5,7 @@ namespace modules\wiki\models;
 use app\models\User;
 use yii\behaviors\BlameableBehavior;
 use yii\db\ActiveRecord;
+use yii\db\ActiveQuery;
 
 /**
  * This is the model class for table "wiki".
@@ -139,19 +140,31 @@ class Wiki extends ActiveRecord
      * Recursive finds current wiki children.
      * @return Wiki[]
      */
-    public function getChildrenAll()
+    public function getChildrenAll($queryCallback = null)
     {
-        return $this->getTree($this->id);
+        $query = new ActiveQuery(static::className());
+        if ($queryCallback instanceof \Closure) {
+            call_user_func($queryCallback, $query);
+        }
+        return $this->getTree($query, $this->id);
     }
     
-    protected function getTree($parentId = 0, $tree = [])
+    /**
+     * Get recursive all children.
+     * @param ActiveQuery $query get parents query.
+     * @param array $id request children from parent id.
+     * @param array $tree internal, current list of children.
+     * @return Wiki[]
+     */
+    protected function getTree($query, $id = 0, $tree = [])
     {
-        $children = static::findAll(['parent_id' => $parentId]);
+        $_query = clone $query;
+        /** @var $children Wiki[] */
+        $children = $_query->where(['parent_id' => $id])->all();
+        /** @var $child Wiki */
         foreach ($children as $child) {
-            if ($child->parent_id == $parentId) {
-                $tree[] = $child;
-                $tree = $this->getTree($child->id, $tree);
-            }
+            $tree[] = $child;
+            $tree = $this->getTree($query, $child->id, $tree);
         }
         return $tree;
     }
