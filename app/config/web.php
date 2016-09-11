@@ -58,16 +58,16 @@ $config = [
                 // Navigation menu.
                 'main-nav' => [
                     ['label' => 'Administer', 'icon' => 'fa fa-user-secret', 'url' => '#', 'items' => [
-                        ['label' => 'Users', 'icon' => 'fa fa-circle-o', 'url' => ['user/index'], 'roles' => ['viewAnyUser']],
-                        ['label' => 'Settings', 'icon' => 'fa fa-circle-o', 'url' => ['site/settings'], 'roles' => ['updateSettings']],
+                        ['label' => 'Users', 'icon' => 'fa fa-circle-o', 'url' => ['/user/index'], 'roles' => ['viewAnyUser']],
+                        ['label' => 'Settings', 'icon' => 'fa fa-circle-o', 'url' => ['/site/settings'], 'roles' => ['updateSettings']],
                     ], 'roles' => ['viewAnyUser', 'updateSettings']],
                     ['label' => 'Development', 'icon' => 'fa fa-building-o', 'url' => '#', 'items' => [
-                        ['label' => 'Gii', 'icon' => 'fa fa-file-code-o', 'url' => ['gii/default/index']],
-                        ['label' => 'Debug', 'icon' => 'fa fa-dashboard', 'url' => ['debug/default/index']],
+                        ['label' => 'Gii', 'icon' => 'fa fa-file-code-o', 'url' => ['/gii/default/index']],
+                        ['label' => 'Debug', 'icon' => 'fa fa-dashboard', 'url' => ['/debug/default/index']],
                     ], 'guest' => false],
-                    ['label' => 'Login', 'url' => ['user/login'], 'icon' => 'fa fa-sign-in', 'guest' => true],
-                    ['label' => 'Register', 'url' => ['user/register'], 'icon' => 'fa fa-user-plus', 'guest' => true],
-                    ['label' => 'Logout', 'url' => ['user/logout'], 'icon' => 'fa fa-sign-out', 'guest' => false],
+                    ['label' => 'Login', 'url' => ['/user/login'], 'icon' => 'fa fa-sign-in', 'guest' => true],
+                    ['label' => 'Register', 'url' => ['/user/register'], 'icon' => 'fa fa-user-plus', 'guest' => true],
+                    ['label' => 'Logout', 'url' => ['/user/logout'], 'icon' => 'fa fa-sign-out', 'guest' => false],
                 ],
             ],
         ], // menu
