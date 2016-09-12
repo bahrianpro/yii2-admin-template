@@ -135,7 +135,7 @@ class Composer
         
         file_put_contents($config, $contents);
         
-        echo "\nDone. Now you can import database migrate data by execute following command:\n";
+        echo "\nDone. Now you must import database migrate data by execute following command:\n";
         echo "\n\t\tcd <to-your-project-dir>";
         echo "\n\t\t./bin/yii migrate\n\n";
         
