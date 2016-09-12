@@ -2,7 +2,7 @@
 /**
  * @author Skorobogatko Alexei <skorobogatko.oleksii@gmail.com>
  * @copyright 2016
- * @version $$
+ * @version $Id$
  * @since 0.2
  */
 
@@ -49,12 +49,15 @@ class RbacController extends Controller
     
     /**
      * Initializes rbac rules.
+     * @param boolean $forceYes put 'yes' to confirmation, use this with caution!
      */
-    public function actionInit()
+    public function actionInit($forceYes = false)
     {
-        $confirm = $this->confirm("Do you want to initialize RBAC rules ?\nPlease aware, previous rules WILL BE OVERWRITTEN", false);
-        if (!$confirm) {
-            return;
+        if (!$forceYes) {
+            $confirm = $this->confirm("Do you want to initialize RBAC rules ?\nPlease aware, previous rules WILL BE OVERWRITTEN", false);
+            if (!$confirm) {
+                return;
+            }
         }
         
         $this->stdout('Auth rules are deleting...'.PHP_EOL, Console::BOLD);
