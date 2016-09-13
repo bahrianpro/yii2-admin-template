@@ -165,23 +165,29 @@ trait ModuleApplicationTrait
      */
     public function getModulesByStatus($installed = true)
     {
-        $query = (new \yii\db\Query)
-                ->select('*')
-                ->from('{{%module}}')
-                ->orderBy('name');
-        if ($installed !== null) {
-            $query->where([
-                'installed' => (int) $installed,
-            ]);
+        try {
+            $query = (new \yii\db\Query)
+                    ->select('*')
+                    ->from('{{%module}}')
+                    ->orderBy('name');
+            if ($installed !== null) {
+                $query->where([
+                    'installed' => (int) $installed,
+                ]);
+            }
+
+            $modules = array_map(function ($module) {
+                $module['data'] = unserialize($module['data']);
+                $module['installed'] = (bool) $module['installed'];
+                return $module;
+            }, $query->all());
+            
+        } catch (\Exception $e) {
+            Yii::error($e->getMessage());
+            $modules = [];
         }
         
-        $modules = $query->all();
-        
-        return array_map(function ($module) {
-            $module['data'] = unserialize($module['data']);
-            $module['installed'] = (bool) $module['installed'];
-            return $module;
-        }, $modules);
+        return $modules;
     }
     
     /**
