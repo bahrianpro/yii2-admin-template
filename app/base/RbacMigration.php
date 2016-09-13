@@ -8,6 +8,7 @@
 
 namespace app\base;
 
+use app\components\Param;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\rbac\ManagerInterface;
@@ -67,6 +68,7 @@ class RbacMigration extends Migration
     {
         $this->createPermissions();
         $this->createRoles();
+        $this->addRolesToDefaultRoleList();
     }
 
     /**
@@ -74,6 +76,7 @@ class RbacMigration extends Migration
      */
     public function down()
     {
+        $this->addRolesToDefaultRoleList(true);
         $this->removePermissions();
         $this->removeRoles();
     }
@@ -187,5 +190,29 @@ class RbacMigration extends Migration
             $this->_auth->remove($permission);
             $this->_permissions[$name] = $permission;
         }
+    }
+    
+    /**
+     * Add or remove roles to User.defaultRole parameter.
+     * @param boolean $uninstall remove roles instead adding.
+     */
+    protected function addRolesToDefaultRoleList($uninstall = false)
+    {
+        if (!($roles = ArrayHelper::getValue($this->rbac, 'roles'))) {
+            return;
+        }
+        if (!($config = Param::getConfig('User.defaultRole'))) {
+            return;
+        }
+        foreach ($roles as $roleName => $ignore) {
+            $options = $config->options;
+            if ($uninstall && isset($options[$roleName])) {
+                unset($options[$roleName]);
+            } elseif (!$uninstall && !isset($options[$roleName])) {
+                $options[$roleName] = $roleName;
+            }
+            $config->options = $options;
+        }
+        $config->save();
     }
 }
