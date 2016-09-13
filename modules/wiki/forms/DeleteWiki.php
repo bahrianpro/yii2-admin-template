@@ -56,21 +56,33 @@ class DeleteWiki extends Model
     public function rules()
     {
         return [
-            ['mode', 'required'],
+            ['mode', 'required', 'message' => 'Select how to delete pages.'],
             ['mode', 'integer'],
             ['mode', 'in', 'range' => [
                 self::DELETE_CHILDREN, self::DELETE_MOVEUP, self::DELETE_MOVEID,
             ]],
+            ['mode', 'validateMode'],
             
             ['parentId', 'integer'],
             ['parentId', 'exist',
                 'when' => function (DeleteWiki $model) {
-                    return $model->parentId && $model->mode == self::DELETE_MOVEID;
+                    return $model->mode == self::DELETE_MOVEID;
                 },
                 'targetClass' => Wiki::className(),
                 'targetAttribute' => ['parentId' => 'id'],
             ],
         ];
+    }
+    
+    /**
+     * Validate 'mode' parameter.
+     */
+    public function validateMode($attribute, $params = [])
+    {
+        $value = $this->$attribute;
+        if ($value == self::DELETE_MOVEID && empty($this->parentId)) {
+            $this->addError('parentId', Yii::t('app', 'Select base page.'));
+        }
     }
     
     /**
