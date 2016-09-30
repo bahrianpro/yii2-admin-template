@@ -12,6 +12,7 @@ Things to be done
 9. Option for enable/disable social login in user login action.
 
 Features for 0.2 release:
+
 1. Users management page (related with no.3). +++
 2. Configuration editor (avoid of manual editing params in config/web.php). +++
 3. Simple RBAC with "Administrator" and "Registered" roles. +++
@@ -19,6 +20,7 @@ Features for 0.2 release:
 5. Modules integration (consider module as subapplication).
 
 Features for 0.3 release:
+
 1. Send email after registration:
     - email text
     - setting for enable/disable sending
