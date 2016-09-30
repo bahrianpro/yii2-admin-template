@@ -16,6 +16,7 @@ Features:
   * Popup notifications.
   * ItemList (wrapper for nice AdminLTE lists)
   * TimePicker
+  * Timeline
   * TypeAhead (bootstrap version from @bower/typeahead.js)
    
 
@@ -37,6 +38,7 @@ DIRECTORY STRUCTURE
           tests/          contains various tests for the basic application
           views/          contains view files for the Web application
           widgets/        contains widgets ready to use in views
+    modules/     contains custom modules
     vendor/      contains dependent 3rd-party packages
     runtime/     contains files generated during runtime
     web/         contains the entry script and Web resources
@@ -58,7 +60,7 @@ php composer.phar global require "fxp/composer-asset-plugin"
 
 Get the project and all dependencies:
 ~~~
-php composer.phar create-project skoro/yii2-admin-template yii2-admin 0.1
+php composer.phar create-project skoro/yii2-admin-template yii2-admin 0.2
 ~~~
 
 Answer the questions and if you need apply database migrations. And that's all.
