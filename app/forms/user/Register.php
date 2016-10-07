@@ -58,6 +58,7 @@ class Register extends Model
             ['name', 'filter', 'filter' => 'trim'],
             ['name', 'required'],
             ['name', 'string', 'min' => 2, 'max' => 255],
+            ['name', 'unique', 'targetClass' => User::className(), 'message' => 'The name has already been taken.'],
 
             ['email', 'filter', 'filter' => 'trim'],
             ['email', 'required'],
@@ -99,22 +100,22 @@ class Register extends Model
      */
     public function register()
     {
-        if (!$this->validate()) {
-            return false;
+        if ($this->validate()) {
+            $user = new User();
+            $user->name = $this->name;
+            $user->email = $this->email;
+            $user->status = $this->status;
+            $user->setPassword($this->password);
+
+            if ($this->userRegisterEvent(self::EVENT_BEFORE_REGISTER, $user) &&
+                    $user->save()) {
+                $this->assignDefaultRole($user);
+                $this->userRegisterEvent(self::EVENT_AFTER_REGISTER, $user);
+                return $user;
+            }
         }
         
-        $user = new User();
-        $user->name = $this->name;
-        $user->email = $this->email;
-        $user->status = $this->status;
-        $user->setPassword($this->password);
-        
-        if ($this->userRegisterEvent(self::EVENT_BEFORE_REGISTER, $user) &&
-                $user->save()) {
-            $this->assignDefaultRole($user);
-            $this->userRegisterEvent(self::EVENT_AFTER_REGISTER, $user);
-            return $user;
-        }
+        $this->password = $this->password_repeat = '';
         
         return false;
     }

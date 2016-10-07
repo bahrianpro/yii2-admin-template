@@ -10,7 +10,7 @@ class m160314_212231_user extends Migration
     {
         $this->createTable(User::tableName(), [
             'id' => $this->primaryKey(),
-            'name' => $this->string(64)->notNull(),
+            'name' => $this->string(64)->notNull()->unique(),
             'email' => $this->string(64)->unique(),
             'password_hash' => $this->string()->notNull(),
             'reset_token' => $this->string()->notNull()->defaultValue(''),
