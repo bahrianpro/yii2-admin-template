@@ -17,7 +17,7 @@ Features for 0.2 release:
 2. Configuration editor (avoid of manual editing params in config/web.php). +++
 3. Simple RBAC with "Administrator" and "Registered" roles. +++
 4. Modal with remote content. +++
-5. Modules integration (consider module as subapplication).
+5. Modules integration (consider module as subapplication). +++
 
 Features for 0.3 release:
 
