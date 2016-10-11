@@ -19,6 +19,7 @@ Features:
   * Timeline
   * TypeAhead (bootstrap version from @bower/typeahead.js)
    
+[Screenshot](screenshot.png)
 
 DIRECTORY STRUCTURE
 -------------------
