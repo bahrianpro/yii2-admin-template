@@ -152,7 +152,10 @@ trait ModuleApplicationTrait
             $id = $module['module_id'];
             if (!isset($this->_modules[$id])) {
                 $params = $module['data'];
-                $this->_modules[$id] = $params['class'];
+                /** @var $module Module */
+                $module = Yii::createObject($params['class'], [$id, $this]);
+                $module->setInstance($module);
+                $this->_modules[$id] = $module;
             }
         }
     }
