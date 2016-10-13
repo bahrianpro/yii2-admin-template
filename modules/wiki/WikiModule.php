@@ -39,7 +39,7 @@ class WikiModule extends Module
         try {
             Yii::$app->menu->insertBefore('main-nav', 'Administer', [
                 ['label' => 'Wiki', 'icon' => 'fa fa-wikipedia-w', 'url' => '#', 'items' => [
-                    ['label' => 'Home', 'icon' => 'fa fa-home', 'url' => ['/wiki/page/index']],
+                    ['label' => 'Pages list', 'icon' => 'fa fa-file-text', 'url' => ['/wiki/page/index']],
                 ]],
             ]);
         } catch (Exception $e) {
