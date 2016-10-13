@@ -2,6 +2,8 @@
 namespace modules\wiki;
 
 use app\base\Module;
+use Exception;
+use Yii;
 
 /**
  * wiki module definition class
@@ -29,6 +31,19 @@ class WikiModule extends Module
     public function init()
     {
         parent::init();
-        // custom initialization code goes here
+        $this->addMenu();
+    }
+    
+    public function addMenu()
+    {
+        try {
+            Yii::$app->menu->insertBefore('main-nav', 'Administer', [
+                ['label' => 'Wiki', 'icon' => 'fa fa-wikipedia-w', 'url' => '#', 'items' => [
+                    ['label' => 'Home', 'icon' => 'fa fa-home', 'url' => ['/wiki/page/index']],
+                ]],
+            ]);
+        } catch (Exception $e) {
+            
+        }
     }
 }
