@@ -22,6 +22,7 @@ $fieldOptions = function ($icon) {
     </div>
     <!-- /.login-logo -->
     <div class="login-box-body">
+        <p class="text-center text-uppercase"><strong><?= Html::encode($model->getUser()->name) ?></strong></p>
         <p class="login-box-msg"><?= t('Please, change your password.') ?></p>
 
         <?php $form = ActiveForm::begin(['id' => 'reset-password-form', 'enableClientValidation' => false]); ?>

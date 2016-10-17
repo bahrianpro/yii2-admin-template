@@ -82,4 +82,12 @@ class PasswordReset extends Model
 
         return $user->save(false);
     }
+    
+    /**
+     * @return User
+     */
+    public function getUser()
+    {
+        return $this->_user;
+    }
 }
