@@ -51,6 +51,25 @@ class Menu extends Component
     }
     
     /**
+     * Insert items to begin of menu.
+     * @param string $menu
+     * @param array $items
+     * @return Menu
+     * @see Menu::addItems()
+     */
+    public function insertItems($menu, array $items)
+    {
+        if (!isset($this->items[$menu])) {
+            $this->items[$menu] = $items;
+        } else {
+            foreach ($items as $item) {
+                array_unshift($this->items[$menu], $item);
+            }
+        }
+        return $this;
+    }
+    
+    /**
      * Get menu items.
      * @param string $menu
      * @param boolean $filter filter menu items or return as is.
