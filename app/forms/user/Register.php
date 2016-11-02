@@ -7,10 +7,11 @@
 
 namespace app\forms\user;
 
+use app\components\Param;
 use app\models\User;
+use app\base\MailTrait;
 use Yii;
 use yii\base\Model;
-use yii\helpers\ArrayHelper;
 use yii\web\UserEvent;
 
 /**
@@ -20,6 +21,8 @@ use yii\web\UserEvent;
  */
 class Register extends Model
 {
+    
+    use MailTrait;
     
     const EVENT_BEFORE_REGISTER = 'userBeforeRegister';
     const EVENT_AFTER_REGISTER = 'userAfterRegister';
@@ -50,6 +53,11 @@ class Register extends Model
     public $status;
     
     /**
+     * @var boolean
+     */
+    public $sendmail;
+    
+    /**
      * @inheritdoc
      */
     public function rules()
@@ -77,6 +85,9 @@ class Register extends Model
             ['status', 'in',
                 'range' => [User::STATUS_DISABLED, User::STATUS_ENABLED, User::STATUS_PENDING],
             ],
+            
+            ['sendmail', 'boolean'],
+            ['sendmail', 'default', 'value' => false],
         ];
     }
     
@@ -91,6 +102,7 @@ class Register extends Model
             'password' => t('Password'),
             'password_repeat' => t('Confirm password'),
             'status' => t('Status'),
+            'sendmail' => t('Send email to user'),
         ];
     }
 
@@ -110,12 +122,14 @@ class Register extends Model
             if ($this->userRegisterEvent(self::EVENT_BEFORE_REGISTER, $user) &&
                     $user->save()) {
                 $this->assignDefaultRole($user);
+                $this->mailAccountCreated($user);
                 $this->userRegisterEvent(self::EVENT_AFTER_REGISTER, $user);
                 return $user;
             }
         }
         
         $this->password = $this->password_repeat = '';
+        $this->sendmail = false;
         
         return false;
     }
@@ -129,7 +143,7 @@ class Register extends Model
     {
         $auth = Yii::$app->authManager;
         
-        $roleName = \app\components\Param::value('User.defaultRole');
+        $roleName = Param::value('User.defaultRole');
         if (!$roleName) {
             return false;
         }
@@ -159,4 +173,20 @@ class Register extends Model
         return $event->isValid;
     }
     
+    /**
+     * Mail to user when account created.
+     * @param User $user
+     */
+    protected function mailAccountCreated(User $user)
+    {
+        if ($this->sendmail) {
+            return $this->mail('accountCreated', $user->email, [
+                'subject' => t('An account created for you at {site}', [
+                    'site' => Yii::$app->name,
+                ]),
+                'register' => $this,
+                'user' => $user,
+            ]);
+        }
+    }
 }
