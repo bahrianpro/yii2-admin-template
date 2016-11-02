@@ -7,8 +7,8 @@
 
 namespace app\forms\user;
 
-use app\components\Param;
 use app\models\User;
+use app\base\MailTrait;
 use Yii;
 use yii\base\Model;
 
@@ -19,6 +19,8 @@ use yii\base\Model;
  */
 class PasswordRequest extends Model
 {
+    
+    use MailTrait;
     
     /**
      * @var string
@@ -51,16 +53,13 @@ class PasswordRequest extends Model
         if ($user && $user->status === User::STATUS_ENABLED) {
             $user->generatePasswordResetToken();
             if ($user->save()) {
-                return Yii::$app->mailer->compose(
-                            [
-                                'html' => 'passwordRequest-html',
-                                'text' => 'passwordRequest-text'
-                            ],
-                            ['user' => $user])
-                        ->setFrom(Param::value('Site.adminEmail'))
-                        ->setTo($this->email)
-                        ->setSubject(t('Reset password information for {name} at {site}', ['name' => $user->name, 'site' => Yii::$app->name]))
-                        ->send();
+                return $this->mail('passwordRequest', $this->email, [
+                    'subject' => t('Reset password information for {name} at {site}', [
+                        'name' => $user->name,
+                        'site' => Yii::$app->name]
+                    ),
+                    'user' => $user,
+                ]);
             }
         }
         
