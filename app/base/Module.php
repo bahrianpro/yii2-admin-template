@@ -8,6 +8,8 @@
 
 namespace app\base;
 
+use Yii;
+
 /**
  * Application module.
  *
@@ -51,5 +53,17 @@ class Module extends \yii\base\Module
     public function uninstall()
     {
         $this->trigger(self::EVENT_MODULE_UNINSTALLED);
+    }
+    
+    /**
+     * Adds menu entries.
+     */
+    public function addMenu($menu, array $items)
+    {
+        try {
+            Yii::$app->menu->insertItems($menu, $items);
+        } catch (\Exception $e) {
+            // Menu does not available in console applications.
+        }
     }
 }

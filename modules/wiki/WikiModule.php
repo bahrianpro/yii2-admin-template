@@ -31,22 +31,10 @@ class WikiModule extends Module
     public function init()
     {
         parent::init();
-        $this->addMenu();
-    }
-    
-    /**
-     * Adds menu entries.
-     */
-    public function addMenu()
-    {
-        try {
-            Yii::$app->menu->insertItems('main-nav', [
-                ['label' => 'Wiki', 'icon' => 'fa fa-wikipedia-w', 'url' => '#', 'items' => [
-                    ['label' => 'Pages list', 'icon' => 'fa fa-file-text', 'url' => ['/wiki/page/index']],
-                ]],
-            ]);
-        } catch (Exception $e) {
-            // Menu does not available in console applications.
-        }
+        $this->addMenu('main-nav', [
+            ['label' => 'Wiki', 'icon' => 'fa fa-wikipedia-w', 'url' => '#', 'items' => [
+                ['label' => 'Pages list', 'icon' => 'fa fa-file-text', 'url' => ['/wiki/page/index']],
+            ]],
+        ]);
     }
 }
