@@ -86,8 +86,8 @@ class Register extends Model
                 'range' => [User::STATUS_DISABLED, User::STATUS_ENABLED, User::STATUS_PENDING],
             ],
             
-            ['sendmail', 'boolean'],
-            ['sendmail', 'default', 'value' => false],
+            ['sendmail', 'boolean', 'on' => ['admin']],
+            ['sendmail', 'default', 'value' => false, 'on' => ['admin']],
         ];
     }
     

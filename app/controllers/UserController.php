@@ -103,6 +103,7 @@ class UserController extends Controller
         ]);
         
         $register = new Register();
+        $register->setScenario('admin');
         
         $request = Yii::$app->request;
         if (Yii::$app->user->can('createUser') && $request->isPost && 
