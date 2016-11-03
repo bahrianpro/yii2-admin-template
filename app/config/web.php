@@ -90,6 +90,7 @@ $config = [
                             ],
                         ],
                         'guest' => false,
+                        'visible' => YII_DEBUG,
                     ],
                     [
                         'label' => 'Login', 'icon' => 'fa fa-sign-in',
