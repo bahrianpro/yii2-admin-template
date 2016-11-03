@@ -66,7 +66,7 @@ $config = [
                         ['label' => 'Debug', 'icon' => 'fa fa-dashboard', 'url' => ['/debug/default/index']],
                     ], 'guest' => false],
                     ['label' => 'Login', 'url' => ['/user/login'], 'icon' => 'fa fa-sign-in', 'guest' => true],
-                    ['label' => 'Register', 'url' => ['/user/register'], 'icon' => 'fa fa-user-plus', 'guest' => true],
+                    ['label' => 'Register', 'url' => ['/user/register'], 'icon' => 'fa fa-user-plus', 'guest' => true, 'visible' => function () { return ! (bool) \app\components\Param::value('User.disableUserRegister'); }],
                     ['label' => 'Logout', 'url' => ['/user/logout'], 'icon' => 'fa fa-sign-out', 'guest' => false],
                 ],
             ],
