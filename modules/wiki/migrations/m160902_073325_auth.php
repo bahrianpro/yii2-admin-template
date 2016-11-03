@@ -25,6 +25,7 @@ class m160902_073325_auth extends \app\base\RbacMigration
         'roles' => [
             'WikiEditor' => ['createWiki', 'viewWiki', 'viewWikiHistory', 'updateOwnWiki', 'deleteOwnWiki'],
             'WikiAdmin' => ['WikiEditor', 'updateWiki', 'deleteWiki'],
+            'Administrator' => ['WikiAdmin'],
         ],
     ];
 }
