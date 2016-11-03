@@ -130,6 +130,13 @@ class Menu extends Component
                     continue;
                 }
             }
+            if (isset($item['visible'])) {
+                if ((is_callable($item['visible']) && !call_user_func($item['visible']))
+                        || !$item['visible']) {
+                    unset($items[$i]);
+                    continue;
+                }
+            }
             if ($this->translateItems) {
                 $item['label'] = t($item['label']);
             }
