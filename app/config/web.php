@@ -74,7 +74,7 @@ $config = [
                                 'roles' => ['updateSettings']
                             ],
                         ],
-                        'roles' => ['viewAnyUser', 'updateSettings']
+                        'roles' => ['viewAnyUser', 'updateSettings'],
                     ],
                     [
                         'label' => 'Development', 'icon' => 'fa fa-building-o',
@@ -89,12 +89,12 @@ $config = [
                                 'url' => ['/debug/default/index']
                             ],
                         ],
-                        'guest' => false
+                        'guest' => false,
                     ],
                     [
                         'label' => 'Login', 'icon' => 'fa fa-sign-in',
                         'url' => ['/user/login'],
-                        'guest' => true
+                        'guest' => true,
                     ],
                     [
                         'label' => 'Register', 'icon' => 'fa fa-user-plus',
@@ -102,12 +102,12 @@ $config = [
                         'guest' => true,
                         'visible' => function () {
                             return ! (bool) \app\components\Param::value('User.disableUserRegister');
-                        }
+                        },
                     ],
                     [
                         'label' => 'Logout', 'icon' => 'fa fa-sign-out',
                         'url' => ['/user/logout'],
-                        'guest' => false
+                        'guest' => false,
                     ],
                 ],
             ],
