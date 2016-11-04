@@ -4,6 +4,13 @@
     "keywords": ["yii2", "framework", "project template", "admin", "backend"],
     "license": "MIT",
     "type": "project",
+    "authors": [
+        {
+            "name": "Alexei Skorobogatko",
+            "email": "skorobogatko.oleksii@gmail.com",
+            "role": "Developer"
+        }
+    ],
     "require": {
         "php": ">=5.4.0",
         "yiisoft/yii2": "^2.0",
