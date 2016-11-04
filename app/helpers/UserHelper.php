@@ -52,7 +52,7 @@ class UserHelper
      */
     public static function getProfileUrl(User $user, array $params = [])
     {
-        return array_merge(['user/profile', 'id' => $user->id], $params);
+        return array_merge(['/user/profile', 'id' => $user->id], $params);
     }
     
     /**

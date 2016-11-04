@@ -68,9 +68,9 @@ class Formatter extends \yii\i18n\Formatter
         
         $username = Html::encode($user->name);
         if (Yii::$app->user->id == $user->id) {
-            $link = ['user/profile'];
+            $link = ['/user/profile'];
         } elseif (Yii::$app->user->can('viewAnyUser')) {
-            $link = ['user/profile', 'id' => $user->id];
+            $link = ['/user/profile', 'id' => $user->id];
         } else {
             return $username;
         }
