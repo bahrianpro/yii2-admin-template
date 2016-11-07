@@ -173,24 +173,25 @@ class Settings extends Action
             $field = $form->field($config, "[{$config->id}]value")->hint(t($config->desc));
             
             switch ($config->value_type) {
-                case 'text':
-                case 'url':
-                case 'email':
-                case 'integer':
+                case Config::TYPE_TEXT:
+                case Config::TYPE_URL:
+                case Config::TYPE_EMAIL:
+                case Config::TYPE_INT:
+                case Config::TYPE_NUM:
                     echo $field->textInput()->label($title);
                     break;
                 
-                case 'editor':
+                case Config::TYPE_EDITOR:
                     echo $field->textArea()->label($title);
                     break;
                 
-                case 'switch':
+                case Config::TYPE_SWITCH:
                     echo $field->widget(Check::className(), [
                         'label' => $title,
                     ])->label(false);
                     break;
                 
-                case 'select':
+                case Config::TYPE_SELECT:
                     echo $field->widget(Select2::className(), [
                         'items' => $config->options,
                     ])->label($title);

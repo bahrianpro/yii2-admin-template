@@ -35,6 +35,19 @@ use yii\validators\UrlValidator;
  */
 class Config extends ActiveRecord
 {
+    
+    /**
+     * Config value types.
+     */
+    const TYPE_INT = 'integer';
+    const TYPE_NUM = 'numeric';
+    const TYPE_EMAIL = 'email';
+    const TYPE_URL = 'url';
+    const TYPE_SWITCH = 'switch';
+    const TYPE_TEXT = 'text';
+    const TYPE_EDITOR = 'editor';
+    const TYPE_SELECT = 'select';
+    
     /**
      * @inheritdoc
      */
@@ -112,43 +125,50 @@ class Config extends ActiveRecord
         }
         
         switch ($this->value_type) {
-            case 'integer':
+            case static::TYPE_INT:
                 $args = [
                     'class' => NumberValidator::className(),
                     'integerOnly' => true,
+                    'message' => 'Not an integer',
+                ];
+                break;
+            
+            case static::TYPE_NUM:
+                $args = [
+                    'class' => NumberValidator::className(),
                     'message' => 'Not a number',
                 ];
                 break;
             
-            case 'email':
+            case static::TYPE_EMAIL:
                 $args = [
                     'class' => EmailValidator::className(),
                     'message' => 'Not a valid email',
                 ];
                 break;
             
-            case 'url':
+            case static::TYPE_URL:
                 $args = [
                     'class' => UrlValidator::className(),
                     'message' => 'Not a valid url',
                 ];
                 break;
             
-            case 'switch':
+            case static::TYPE_SWITCH:
                 $args = [
                     'class' => BooleanValidator::className(),
                     'message' => 'Must be boolean value',
                 ];
                 break;
             
-            case 'text':
-            case 'editor':
+            case static::TYPE_TEXT:
+            case static::TYPE_EDITOR:
                 $args = [
                     'class' => StringValidator::className(),
                 ];
                 break;
             
-            case 'select':
+            case static::TYPE_SELECT:
                 $args = [
                     'class' => RangeValidator::className(),
                     'range' => array_keys($this->options),
@@ -163,6 +183,28 @@ class Config extends ActiveRecord
         $validator = Yii::createObject($args);
         if (!$validator->validate($this->$attribute)) {
             $this->addError($attribute, $validator->message);
+        } else {
+            $this->castType();
+        }
+    }
+    
+    /**
+     * Cast value to its type.
+     */
+    protected function castType()
+    {
+        switch ($this->value_type) {
+            case static::TYPE_INT:
+                $this->value = (int) $this->value;
+                break;
+            
+            case static::TYPE_NUM:
+                $this->value = (float) $this->value;
+                break;
+            
+            case static::TYPE_SWITCH:
+                $this->value = (boolean) $this->value;
+                break;
         }
     }
 }
