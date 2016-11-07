@@ -28,7 +28,7 @@ class m160818_075724_config extends Migration
             'name' => 'passwordResetTokenExpire',
             'title' => 'Password reset token expire',
             'value' => 3600,
-            'value_type' => 'text',
+            'value_type' => 'integer',
             'section' => 'User',
             'desc' => 'How long (in seconds) password reset token will be actual.',
             'required' => true,
