@@ -32,6 +32,7 @@ use yii\validators\UrlValidator;
  * @property string $desc
  * @property string $section
  * @property boolean $required
+ * @property array $perms
  */
 class Config extends ActiveRecord
 {
@@ -64,7 +65,7 @@ class Config extends ActiveRecord
         return [
             'serialize' => [
                 'class' => SerializableBehavior::className(),
-                'attributes' => ['value', 'options'],
+                'attributes' => ['value', 'options', 'perms'],
             ],
         ];
     }
@@ -98,6 +99,8 @@ class Config extends ActiveRecord
             ['required', 'default', 'value' => false],
             
             [['name', 'section'], 'unique', 'targetAttribute' => ['name', 'section'], 'message' => 'The combination of Name and Section has already been taken.'],
+            
+            ['perms', 'safe'],
         ];
     }
 
