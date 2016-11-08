@@ -220,6 +220,11 @@ class Settings extends Action
         return ob_get_clean();
     }
     
+    /**
+     * Check current user's permission for section.
+     * @param string $section
+     * @return boolean
+     */
     protected function checkSectionAccess($section = '')
     {
         $permissions = Param::getSectionPermissions($section);
