@@ -117,10 +117,16 @@ class Menu extends Component
                     continue;
                 }
             }
+            // TODO: rename to 'permissions'.
             if (isset($item['roles'])) {
                 $access = false;
-                foreach ($item['roles'] as $roleName) {
-                    if (Yii::$app->user->can($roleName)) {
+                if (is_callable($item['roles'])) {
+                    $permissions = call_user_func($item['roles']);
+                } else {
+                    $permissions = $item['roles'];
+                }
+                foreach ($permissions as $permName) {
+                    if (Yii::$app->user->can($permName)) {
                         $access = true;
                         break;
                     }
