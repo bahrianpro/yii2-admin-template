@@ -102,7 +102,7 @@ $config = [
                         'url' => ['/user/register'],
                         'guest' => true,
                         'visible' => function () {
-                            return ! (bool) \app\components\Param::value('User.disableUserRegister');
+                            return ! \app\components\Param::value('User.disableUserRegister');
                         },
                     ],
                     [
