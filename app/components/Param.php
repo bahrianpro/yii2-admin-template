@@ -73,6 +73,7 @@ class Param extends Component
      * @return mixed
      * @throws InvalidValueException when parameter not found.
      * @throws ErrorException when parameter failed to save.
+     * @throws ForbiddenHttpException when user has not permissions to update parameter.
      */
     public static function update($param, $value)
     {
@@ -84,6 +85,10 @@ class Param extends Component
         
         if (!$config) {
             throw new InvalidValueException('Cannot find config for parameter: ' . $param);
+        }
+        
+        if (!static::isAccess($config)) {
+            throw new \yii\web\ForbiddenHttpException();
         }
         
         $config->value = $value;
@@ -185,5 +190,48 @@ class Param extends Component
             $name = $param;
         }
         return [$section, $name];
+    }
+    
+    /**
+     * Get section permissions.
+     * @param string $section
+     * @return array list of permission names
+     */
+    public static function getSectionPermissions($section = null)
+    {
+        $permissions = [];
+        if (empty($section)) {
+            $sections = static::getSections();
+        } else {
+            $sections = [$section];
+        }
+        
+        foreach ($sections as $section) {
+            $configs = static::getConfigsBySection($section);
+            foreach ($configs as $config) {
+                foreach ($config->perms as $perm) {
+                    if (!in_array($perm, $permissions)) {
+                        $permissions[] = $perm;
+                    }
+                }
+            }
+        }
+        
+        return $permissions;
+    }
+    
+    /**
+     * Check has user config access permissions.
+     * @param Config $config
+     * @return boolean
+     */
+    public static function isAccess(Config $config)
+    {
+        foreach ($config->perms as $permissionName) {
+            if (Yii::$app->user->can($permissionName)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

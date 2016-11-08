@@ -71,10 +71,16 @@ $config = [
                                 'label' => 'Settings',
                                 'icon' => 'fa fa-circle-o',
                                 'url' => ['/site/settings'],
-                                'roles' => ['updateSettings']
+                                'roles' => function () {
+                                    return \app\components\Param::getSectionPermissions();
+                                },
                             ],
                         ],
-                        'roles' => ['viewAnyUser', 'updateSettings'],
+                        'roles' => function () {
+                            $roles = \app\components\Param::getSectionPermissions();
+                            $roles[] = 'viewAnyUser';
+                            return $roles;
+                        },
                     ],
                     [
                         'label' => 'Development', 'icon' => 'fa fa-building-o',

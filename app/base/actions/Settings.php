@@ -15,11 +15,12 @@ use app\models\Config;
 use app\widgets\ActiveForm;
 use app\widgets\Check;
 use app\widgets\Pjax;
-use app\widgets\Tabs;
 use app\widgets\Select2;
+use app\widgets\Tabs;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
+use yii\web\ForbiddenHttpException;
 
 /**
  * Site settings action.
@@ -89,8 +90,8 @@ class Settings extends Action
      */
     public function run($tab = '')
     {
-        if (!Yii::$app->user->can('updateSettings')) {
-            throw new \yii\web\ForbiddenHttpException();
+        if (!$this->checkSectionAccess($tab)) {
+            throw new ForbiddenHttpException();
         }
         
         $this->controller->getView()->title = $this->title;
@@ -108,7 +109,8 @@ class Settings extends Action
                 /** @var $config Config */
                 foreach ($configs as $config) {
                     $isDirty = $config->getDirtyAttributes(['value']);
-                    if (!$config->getErrors() && $isDirty && $config->save(false, ['value'])) {
+                    if (!$config->getErrors() && $isDirty && Param::isAccess($config)
+                            && $config->save(false, ['value'])) {
                         $this->controller->addFlash(
                             Controller::FLASH_SUCCESS,
                             t('<b>{title}</b> updated.', [
@@ -135,6 +137,9 @@ class Settings extends Action
         $tabs = [];
         $sections = Param::getSections();
         foreach ($sections as $section) {
+            if (!$this->checkSectionAccess($section)) {
+                continue;
+            }
             $tabs[] = [
                 'label' => $section,
                 'content' => $this->renderSection($section),
@@ -169,6 +174,11 @@ class Settings extends Action
         echo Html::hiddenInput('section', $section);
         
         foreach ($configs as $config) {
+            
+            if (!Param::isAccess($config)) {
+                continue;
+            }
+            
             $title = t($config->title);
             $field = $form->field($config, "[{$config->id}]value")->hint(t($config->desc));
             
@@ -208,5 +218,16 @@ class Settings extends Action
         }
         
         return ob_get_clean();
+    }
+    
+    protected function checkSectionAccess($section = '')
+    {
+        $permissions = Param::getSectionPermissions($section);
+        foreach ($permissions as $permName) {
+            if (Yii::$app->user->can($permName)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
