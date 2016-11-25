@@ -121,7 +121,13 @@ class RbacController extends Controller
     public function actionAssign($nameOrEmail, $roleName)
     {
         $user = $this->getUser($nameOrEmail);
-        $role = $this->getRole($roleName);
+        $role = $this->getRole($roleName); // Ensure that role is exist.
+        foreach ($user->getRoles() as $userRole) {
+            if ($userRole->name == $role->name) {
+                $this->err('Already assinged to "{role}" role.', ['role' => $role->name]);
+                return;
+            }
+        }
         $this->_auth->assign($role, $user->id);
         $this->p('Role "{role}" assigned to user "{name}".', [
             'role' => $role->name,
