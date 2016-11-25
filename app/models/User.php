@@ -120,14 +120,14 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return [
             'id' => 'ID',
-            'name' => t('User name'),
-            'email' => t('Email'),
-            'password_hash' => t('Password'),
-            'reset_token' => t('Reset token'),
-            'activate_token' => t('Activate token'),
-            'status' => t('Status'),
-            'created_at' => t('Created'),
-            'logged_at' => t('Last login'),
+            'name' => Yii::t('app', 'User name'),
+            'email' => Yii::t('app', 'Email'),
+            'password_hash' => Yii::t('app', 'Password'),
+            'reset_token' => Yii::t('app', 'Reset token'),
+            'activate_token' => Yii::t('app', 'Activate token'),
+            'status' => Yii::t('app', 'Status'),
+            'created_at' => Yii::t('app', 'Created'),
+            'logged_at' => Yii::t('app', 'Last login'),
         ];
     }
 

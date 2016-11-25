@@ -97,12 +97,12 @@ class Register extends Model
     public function attributeLabels()
     {
         return [
-            'name' => t('User name'),
-            'email' => t('Email'),
-            'password' => t('Password'),
-            'password_repeat' => t('Confirm password'),
-            'status' => t('Status'),
-            'sendmail' => t('Send email to user'),
+            'name' => Yii::t('app', 'User name'),
+            'email' => Yii::t('app', 'Email'),
+            'password' => Yii::t('app', 'Password'),
+            'password_repeat' => Yii::t('app', 'Confirm password'),
+            'status' => Yii::t('app', 'Status'),
+            'sendmail' => Yii::t('app', 'Send email to user'),
         ];
     }
 
@@ -181,7 +181,7 @@ class Register extends Model
     {
         if ($this->sendmail) {
             return $this->mail('accountCreated', $user->email, [
-                'subject' => t('An account created for you at {site}', [
+                'subject' => Yii::t('app', 'An account created for you at {site}', [
                     'site' => Yii::$app->name,
                 ]),
                 'register' => $this,

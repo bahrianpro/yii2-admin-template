@@ -13,7 +13,7 @@ use yii\helpers\Html;
 /** @var $userProvider yii\data\ActiveDataProvider */
 /** @var $register app\forms\user\Register */
 
-$this->title = t('Users');
+$this->title = Yii::t('app', 'Users');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -26,9 +26,9 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="btn-group">
             <?php if (Yii::$app->user->can('createUser')): ?>
             <?php Modal::begin([
-                'header' => '<b>' . t('Create a new user') . '</b>',
+                'header' => '<b>' . Yii::t('app', 'Create a new user') . '</b>',
                 'toggleButton' => [
-                    'label' => t('Create'),
+                    'label' => Yii::t('app', 'Create'),
                     'class' => ['btn btn-flat btn-default'],
                 ],
             ]) ?>
@@ -49,7 +49,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
                 'email',
                 [
-                    'header' => t('Roles'),
+                    'header' => Yii::t('app', 'Roles'),
                     'format' => 'html',
                     'value' => function ($user) {
                         return Html::ul(ArrayHelper::getColumn($user->getRoles(), 'name'));

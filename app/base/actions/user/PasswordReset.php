@@ -44,11 +44,11 @@ class PasswordReset extends Action
         if (Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post()) && $model->validate()) {
                 if ($model->resetPassword()) {
-                    $this->controller->addFlash(Controller::FLASH_SUCCESS, t('Password has been changed. Now you may login.'));
+                    $this->controller->addFlash(Controller::FLASH_SUCCESS, Yii::t('app', 'Password has been changed. Now you may login.'));
                     return $this->controller->redirect(['user/login']);
                 }
                 else {
-                    $this->controller->addFlash(Controller::FLASH_ERROR, t('Unable to change password.'));
+                    $this->controller->addFlash(Controller::FLASH_ERROR, Yii::t('app', 'Unable to change password.'));
                 }
             }
         }

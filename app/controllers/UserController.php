@@ -14,6 +14,7 @@ use app\models\User as UserModel;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
+use yii\helpers\Html;
 use yii\web\Response;
 use yii\widgets\ActiveForm;
 
@@ -113,8 +114,8 @@ class UserController extends Controller
                 return ActiveForm::validate($register);
             }
             if ($user = $register->register()) {
-                $this->addFlash(self::FLASH_SUCCESS, t('User <b>{name}</b> created.', [
-                    'name' => e($user->name),
+                $this->addFlash(self::FLASH_SUCCESS, Yii::t('app', 'User <b>{name}</b> created.', [
+                    'name' => Html::encode($user->name),
                 ]));
             }
         }
@@ -135,8 +136,8 @@ class UserController extends Controller
         /** @var $user UserModel */
         $user = $this->findModel(UserModel::className(), $id);
         if ($user->delete()) {
-            $this->addFlash(self::FLASH_SUCCESS, t('User <b>{name}</b> deleted.', [
-                'name' => e($user->name),
+            $this->addFlash(self::FLASH_SUCCESS, Yii::t('app', 'User <b>{name}</b> deleted.', [
+                'name' => Html::encode($user->name),
             ]));
         }
         

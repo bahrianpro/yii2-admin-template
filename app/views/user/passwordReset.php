@@ -8,7 +8,7 @@ use yii\helpers\Url;
 /** @var $form yii\bootstrap\ActiveForm */
 /** @var $model app\forms\user\PasswordReset */
 
-$this->title = t('Reset password');
+$this->title = Yii::t('app', 'Reset password');
 $fieldOptions = function ($icon) {
     return [
         'options' => ['class' => 'form-group has-feedback'],
@@ -23,7 +23,7 @@ $fieldOptions = function ($icon) {
     <!-- /.login-logo -->
     <div class="login-box-body">
         <p class="text-center text-uppercase"><strong><?= Html::encode($model->getUser()->name) ?></strong></p>
-        <p class="login-box-msg"><?= t('Please, change your password.') ?></p>
+        <p class="login-box-msg"><?= Yii::t('app', 'Please, change your password.') ?></p>
 
         <?php $form = ActiveForm::begin(['id' => 'reset-password-form', 'enableClientValidation' => false]); ?>
 
@@ -39,7 +39,7 @@ $fieldOptions = function ($icon) {
 
         <div class="row">
             <div class="col-xs-4">
-                <?= Html::submitButton(t('Submit'), ['class' => 'btn btn-primary btn-block btn-flat', 'name' => 'submit-button']) ?>
+                <?= Html::submitButton(Yii::t('app', 'Submit'), ['class' => 'btn btn-primary btn-block btn-flat', 'name' => 'submit-button']) ?>
             </div>
             <!-- /.col -->
         </div>

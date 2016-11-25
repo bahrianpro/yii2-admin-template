@@ -39,10 +39,10 @@ class PasswordRequest extends Action
         if (Yii::$app->request->isPost) {
             if ($model->load(Yii::$app->request->post()) && $model->validate()) {
                 if ($model->sendEmail()) {
-                    $this->controller->addFlash(Controller::FLASH_INFO, t('Check your email for further instructions.'));
+                    $this->controller->addFlash(Controller::FLASH_INFO, Yii::t('app', 'Check your email for further instructions.'));
                     return $this->controller->redirect(['user/login']);
                 } else {
-                    $this->controller->addFlash(Controller::FLASH_ERROR, t('Sorry, we are unable to reset password for provided email.'));
+                    $this->controller->addFlash(Controller::FLASH_ERROR, Yii::t('app', 'Sorry, we are unable to reset password for provided email.'));
                 }
             }
         }

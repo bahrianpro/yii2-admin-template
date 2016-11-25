@@ -81,7 +81,7 @@ class Settings extends Action
     {
         parent::init();
         if (!$this->title) {
-            $this->title = t('Site settings');
+            $this->title = Yii::t('app', 'Site settings');
         }
     }
     
@@ -113,7 +113,7 @@ class Settings extends Action
                             && $config->save(false, ['value'])) {
                         $this->controller->addFlash(
                             Controller::FLASH_SUCCESS,
-                            t('<b>{title}</b> updated.', [
+                            Yii::t('app', '<b>{title}</b> updated.', [
                                 'title' => $config->title,
                             ])
                         );
@@ -179,8 +179,8 @@ class Settings extends Action
                 continue;
             }
             
-            $title = t($config->title);
-            $field = $form->field($config, "[{$config->id}]value")->hint(t($config->desc));
+            $title = Yii::t('app', $config->title);
+            $field = $form->field($config, "[{$config->id}]value")->hint(Yii::t('app', $config->desc));
             
             switch ($config->value_type) {
                 case Config::TYPE_TEXT:

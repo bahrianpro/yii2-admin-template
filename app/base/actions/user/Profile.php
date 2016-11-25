@@ -56,7 +56,7 @@ class Profile extends Action
                 $model->setScenario('admin');
             }
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                $this->controller->addFlash(Controller::FLASH_INFO, t('Changes saved.'));
+                $this->controller->addFlash(Controller::FLASH_INFO, Yii::t('app', 'Changes has saved.'));
                 $model->reset();
             }
         }

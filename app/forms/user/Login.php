@@ -42,9 +42,9 @@ class Login extends Model
     public function attributeLabels()
     {
         return [
-            'email' => t('Email'),
-            'password' => t('Password'),
-            'rememberMe' => t('Remember Me'),
+            'email' => Yii::t('app', 'Email'),
+            'password' => Yii::t('app', 'Password'),
+            'rememberMe' => Yii::t('app', 'Remember Me'),
         ];
     }
 

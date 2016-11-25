@@ -8,7 +8,7 @@ use yii\helpers\Url;
 /** @var $form yii\bootstrap\ActiveForm */
 /** @var $model app\forms\user\Register */
 
-$this->title = t('User register');
+$this->title = Yii::t('app', 'User register');
 $fieldOptions = function ($icon) {
     return [
         'options' => ['class' => 'form-group has-feedback'],
@@ -23,7 +23,7 @@ $fieldOptions = function ($icon) {
     </div> <!-- /.register-logo -->
     
     <div class="register-box-body">
-        <p class="register-box-msg"><?= t('Register a new account') ?></p>
+        <p class="register-box-msg"><?= Yii::t('app', 'Register a new account') ?></p>
 
         <?php $form = ActiveForm::begin(['id' => 'register-form', 'enableClientValidation' => false]); ?>
 
@@ -49,7 +49,7 @@ $fieldOptions = function ($icon) {
         
         <div class="row">
             <div class="col-xs-12">
-                <?= Html::submitButton(t('Register'), ['class' => 'btn btn-primary btn-block btn-flat', 'name' => 'register-button']) ?>
+                <?= Html::submitButton(Yii::t('app', 'Register'), ['class' => 'btn btn-primary btn-block btn-flat', 'name' => 'register-button']) ?>
             </div>
             <!-- /.col -->
         </div>
@@ -57,7 +57,7 @@ $fieldOptions = function ($icon) {
         <?php ActiveForm::end(); ?>
         
         <div class="account-links">
-            <a href="<?= Url::to(['user/login']) ?>"><?= t('I already have an account') ?></a><br>
+            <a href="<?= Url::to(['user/login']) ?>"><?= Yii::t('app', 'I already have an account') ?></a><br>
         </div>
 
     </div>

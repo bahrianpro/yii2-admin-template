@@ -47,7 +47,7 @@ class Login extends Action
             if ($model->load(Yii::$app->request->post()) && $model->login()) {
                 return $this->controller->goBack();
             } else {
-                $this->controller->addFlash(Controller::FLASH_ERROR, t('Login to your account failed.'));
+                $this->controller->addFlash(Controller::FLASH_ERROR, Yii::t('app', 'Login to your account failed.'));
                 $model->password = '';
             }
         }

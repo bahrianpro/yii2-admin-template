@@ -11,9 +11,9 @@ use yii\helpers\Html;
 /** @var $model app\forms\user\Profile */
 /** @var $tab string current active tab */
 
-$this->title = t('User Profile');
+$this->title = Yii::t('app', 'User Profile');
 if (Yii::$app->user->can('viewAnyUser')) {
-    $this->params['breadcrumbs'][] = ['label' => t('Users'), 'url' => ['index']];
+    $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Users'), 'url' => ['index']];
 }
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= Html::encode($model->name) ?>
             </h3>
             <p class="text-muted text-center">
-                <?= t('Member since {date}', ['date' => Yii::$app->formatter->asDate(Yii::$app->user->identity->created_at)]) ?>
+                <?= Yii::t('app', 'Member since {date}', ['date' => Yii::$app->formatter->asDate(Yii::$app->user->identity->created_at)]) ?>
             </p>
             <?= ItemList::widget([
                 'items' => [
@@ -39,11 +39,11 @@ $this->params['breadcrumbs'][] = $this->title;
                         'value' => $model->getUser()->id,
                     ],
                     [
-                        'title' => t('Status'),
+                        'title' => Yii::t('app', 'Status'),
                         'value' => UserHelper::status($model->getUser()),
                     ],
                     [
-                        'title' => t('Last login'),
+                        'title' => Yii::t('app', 'Last login'),
                         'value' => Yii::$app->formatter->asRelativeTime($model->getUser()->logged_at),
                     ],
                 ],
@@ -56,12 +56,12 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= Tabs::widget([
                 'items' => [
                     [
-                        'label' => t('Account'),
+                        'label' => Yii::t('app', 'Account'),
                         'content' => $this->render('_profile_account', ['model' => $model]),
                         'active' => $tab == 'account',
                     ],
                     [
-                        'label' => t('Administer'),
+                        'label' => Yii::t('app', 'Administer'),
                         'content' => $this->render('_profile_admin', ['model' => $model]),
                         'visible' => Yii::$app->user->can('updateAnyUser'),
                         'active' => $tab == 'admin',

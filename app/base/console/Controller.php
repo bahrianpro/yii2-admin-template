@@ -28,7 +28,7 @@ class Controller extends \yii\console\Controller
      */
     public function p($message, array $params = [])
     {
-        $this->stdout(t($message, $params) . PHP_EOL);
+        $this->stdout(Yii::t('app', $message, $params) . PHP_EOL);
     }
     
     /**
@@ -38,7 +38,7 @@ class Controller extends \yii\console\Controller
      */
     public function err($message, array $params = [])
     {
-        $this->stderr(t($message, $params) . PHP_EOL, Console::FG_RED);
+        $this->stderr(Yii::t('app', $message, $params) . PHP_EOL, Console::FG_RED);
     }
     
 }

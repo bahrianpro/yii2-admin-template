@@ -46,11 +46,11 @@ class ActiveForm extends \yii\bootstrap\ActiveForm
         $defaults = [
             'options' => ['class' => 'actions'],
             'save' => [
-                'label' => t('Save'),
+                'label' => Yii::t('app', 'Save'),
                 'options' => ['class' => 'btn btn-primary btn-flat'],
             ],
             'cancel' => [
-                'label' => t('Cancel'),
+                'label' => Yii::t('app', 'Cancel'),
                 'options' => ['class' => 'btn btn-warning btn-flat pull-right'],
             ],
         ];

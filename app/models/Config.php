@@ -112,7 +112,7 @@ class Config extends ActiveRecord
         if ($this->required) {
             $required = Yii::createObject([
                 'class' => \yii\validators\RequiredValidator::className(),
-                'message' => t('{label} is required.', [
+                'message' => Yii::t('app', '{label} is required.', [
                     'label' => $this->title,
                 ]),
             ]);
