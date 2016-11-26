@@ -48,6 +48,7 @@ class Config extends ActiveRecord
     const TYPE_TEXT = 'text';
     const TYPE_EDITOR = 'editor';
     const TYPE_SELECT = 'select';
+    const TYPE_PASSWORD = 'password';
     
     /**
      * @inheritdoc
@@ -166,6 +167,7 @@ class Config extends ActiveRecord
             
             case static::TYPE_TEXT:
             case static::TYPE_EDITOR:
+            case static::TYPE_PASSWORD:
                 $args = [
                     'class' => StringValidator::className(),
                 ];

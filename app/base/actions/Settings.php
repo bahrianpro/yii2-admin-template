@@ -206,6 +206,10 @@ class Settings extends Action
                         'items' => $config->options,
                     ])->label($title);
                     break;
+                
+                case Config::TYPE_PASSWORD:
+                    echo $field->passwordInput()->label($title);
+                    break;
             }
         }
         
