@@ -117,6 +117,7 @@ class UserController extends Controller
                 $this->addFlash(self::FLASH_SUCCESS, Yii::t('app', 'User <b>{name}</b> created.', [
                     'name' => Html::encode($user->name),
                 ]));
+                $register = new Register();
             }
         }
         
