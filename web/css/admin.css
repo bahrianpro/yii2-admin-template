@@ -26,3 +26,7 @@
 .checkbox-list-vert label {
     display: block;
 }
+
+ul.pagination {
+    margin: 0;
+}

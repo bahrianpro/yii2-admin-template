@@ -5,7 +5,7 @@ use app\helpers\UserHelper;
 use app\widgets\Box;
 use app\widgets\Modal;
 use app\widgets\Pjax;
-use yii\grid\GridView;
+use app\widgets\GridView;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 
@@ -38,6 +38,13 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
         <?= GridView::widget([
             'dataProvider' => $userProvider,
+            'bulk' => [
+                'items' => [
+                    'enable' => Yii::t('app', 'Enable'),
+                    'disable' => Yii::t('app', 'Disable'),
+                    'delete' => Yii::t('app', 'Delete'),
+                ],
+            ],
             'columns' => [
                 'id',
                 [
