@@ -45,7 +45,7 @@ class GridView extends \yii\grid\GridView
      * @var array bulk column class.
      */
     public $bulkColumn = [
-        'class' => '\yii\grid\CheckboxColumn',
+        'class' => '\app\base\grid\CheckboxColumn',
     ];
     
     /**
