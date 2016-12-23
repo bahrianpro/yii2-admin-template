@@ -22,7 +22,8 @@ class GridView extends \yii\grid\GridView
      * @var array grid bulk actions. Accepts following fields:
      * name - select input name
      * tag - html tag for bulk container
-     * selectOptions - array of options applicable for Select2 widget
+     * selectClass - select class widget (by default Select2)
+     * selectOptions - array of options applicable for select widget
      * empty - empty item
      * items - items dropdown in key => value
      * options - bulk container options
