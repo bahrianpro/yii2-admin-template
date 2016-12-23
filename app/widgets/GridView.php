@@ -76,11 +76,12 @@ class GridView extends \yii\grid\GridView
                 ArrayHelper::getValue($this->bulkForm, 'options', [])
             );
         }
+        
         parent::run();
+        
         if ($this->bulk) {
             echo Html::endForm();
         }
-        $this->registerScripts();
     }
     
     /**
@@ -136,10 +137,5 @@ class GridView extends \yii\grid\GridView
         }
         
         return Html::tag($bulk['tag'], $widget . $submit, $bulk['options']);
-    }
-    
-    protected function registerScripts()
-    {
-        $view = $this->getView();
     }
 }
