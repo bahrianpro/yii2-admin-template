@@ -7,8 +7,8 @@ use app\widgets\ProgressBar;
 use app\widgets\ProgressBarGroup;
 use app\widgets\Select2;
 use app\widgets\Tabs;
+use app\widgets\GridView;
 use yii\data\ArrayDataProvider;
-use yii\grid\GridView;
 use yii\helpers\Html;
 
 /** @var $this yii\web\View */
