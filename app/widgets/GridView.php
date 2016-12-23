@@ -7,9 +7,8 @@
 
 namespace app\widgets;
 
-use Yii;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
-use app\helpers\Icon;
 
 /**
  * GridView compatible with AdminLTE theme.
@@ -20,96 +19,68 @@ class GridView extends \yii\grid\GridView
 {
     
     /**
-     * @var array the HTML attributes for the container tag of the grid view.
-     * The "tag" element specifies the tag name of the container element and defaults to "div".
-     * @see \yii\helpers\Html::renderTagAttributes() for details on how attributes are being rendered.
+     * @var array grid bulk actions. Accepts following fields:
+     * name - select input name
+     * tag - html tag for bulk container
+     * selectOptions - array of options applicable for Select2 widget
+     * empty - empty item
+     * items - items dropdown in key => value
+     * options - bulk container options
+     * submit - rendered button
+     * submitLabel - label for bulk submit button
+     * submitOptions - submit button options
      */
-    public $options = ['class' => 'box'];
+    public $bulk = [];
     
     /**
-     * @var array|false enabled tool buttons.
+     * @var array bulk form options. Accepts following fields:
+     * action - controller action accepts bulk data (by default current action)
+     * method - request method (by default POST)
+     * options - form options
      */
-    public $tools = ['create'];
+    public $bulkForm = [];
     
     /**
-     * @var array
+     * @var array bulk column class.
      */
-    public $toolButtons = [];
+    public $bulkColumn = [
+        'class' => '\yii\grid\CheckboxColumn',
+    ];
     
     /**
-     * @var array tool buttons container options.
+     * @var string
+     * @inheritdoc
      */
-    public $toolOptions = [];
-    
-    /**
-     * @var array the HTML attributes for the caption element.
-     * @see \yii\helpers\Html::renderTagAttributes() for details on how attributes are being rendered.
-     * @see caption
-     */
-    public $captionOptions = ['class' => 'box-title'];
-    
-    /**
-     * @var array the HTML attributes for the grid table element.
-     * @see \yii\helpers\Html::renderTagAttributes() for details on how attributes are being rendered.
-     */
-    public $tableOptions = ['class' => 'table table-bordered table-hover dataTable'];
-    
-    /**
-     * @var array|boolean add action column.
-     * @see app\base\grid\ActionColumn
-     */
-    public $actions = true;
-    
-    /**
-     * @var string the layout that determines how different sections of the list view should be organized.
-     */
-    public $layout = "
-        {caption}
-        <div class='box-body'>
-            <div class='row'>
-                <div class='col-sm-12'>
-                    {items}
-                </div>
-            </div>
-            <div class='row'>
-                <div class='col-sm-5'>
-                    <div class='dataTables_info'> {summary} </div>
-                </div>
-                <div class='col-sm-7'>
-                    <div class='dataTables_paginate paging_simple_numbers'> {pager} </div>
-                </div>
-            </div>
-        </div>
-    ";
+    public $layout = "{summary}\n{items}\n{bulk}\n{pager}";
     
     /**
      * @inheritdoc
      */
     public function init()
     {
-        if ($this->actions) {
-            $column = [
-                'class' => 'app\base\grid\ActionColumn',
-                'header' => 'Actions',
-            ];
-            if (is_array($this->actions)) {
-                $column['buttons'] = $this->actions;
-            }
-            $this->columns[] = $column;
+        if ($this->bulk) {
+            array_unshift($this->columns, $this->bulkColumn);
         }
         parent::init();
-        $this->initDefaultToolButtons();
     }
     
     /**
-     * 
+     * @inheritdoc
      */
-    protected function initDefaultToolButtons()
+    public function run()
     {
-        $options = ['class' => 'btn btn-default btn-flat', 'data-pjax' => 0];
-        if (empty($this->toolButtons['create'])) {
-            $this->toolButtons['create'] = Html::a(Icon::PLUS . Yii::t('app', 'Create'), ['create'], $options);
+        if ($this->bulk) {
+            echo Html::beginForm(
+                ArrayHelper::getValue($this->bulkForm, 'action'),
+                ArrayHelper::getValue($this->bulkForm, 'method', 'POST'),
+                ArrayHelper::getValue($this->bulkForm, 'options', [])
+            );
         }
+        parent::run();
+        if ($this->bulk) {
+            echo Html::endForm();
+        }
+        $this->registerScripts();
     }
     
     /**
@@ -117,59 +88,58 @@ class GridView extends \yii\grid\GridView
      */
     public function renderSection($name)
     {
-        if ($name === '{caption}') {
-            return $this->renderCaption();
+        if ($name === '{bulk}') {
+            return $this->renderBulk();
         }
         return parent::renderSection($name);
     }
     
     /**
-     * @inheritdoc
-     */
-    public function renderItems()
-    {
-        $columnGroup = $this->renderColumnGroup();
-        $tableHeader = $this->showHeader ? $this->renderTableHeader() : false;
-        $tableBody = $this->renderTableBody();
-        $tableFooter = $this->showFooter ? $this->renderTableFooter() : false;
-        $content = array_filter([
-            $columnGroup,
-            $tableHeader,
-            $tableFooter,
-            $tableBody,
-        ]);
-        
-        return Html::tag('table', implode("\n", $content), $this->tableOptions);
-    }
-    
-    /**
-     * Render table caption.
-     */
-    public function renderCaption()
-    {
-        if (empty($this->caption)) {
-            return '';
-        }
-        $caption = Html::tag('h3', $this->caption, $this->captionOptions);
-        $caption .= $this->renderToolButtons();
-        return Html::tag('div', $caption, ['class' => 'box-header']);
-    }
-    
-    /**
-     * Render table tool buttons.
+     * Render bulk dropdown and submit.
      * @return string
      */
-    protected function renderToolButtons()
+    public function renderBulk()
     {
-        if ($this->tools) {
-            $tools = '';
-            foreach ($this->tools as $tool) {
-                $tools .= $this->toolButtons[$tool];
-            }
-            Html::addCssClass($this->toolOptions, 'box-tools btn-group');
-            return Html::tag('div', $tools, $this->toolOptions);
+        if (!$this->bulk) {
+            return;
         }
-        return '';
+        
+        $items = ArrayHelper::remove($this->bulk, 'items', []);
+        $defaults = [
+            'name' => 'bulk',
+            'tag' => 'div',
+            'selectOptions' => [
+                'fullWidth' => false,
+            ],
+            'empty' => 'Bulk action',
+            'selectClass' => Select2::className(),
+            'options' => ['class' => 'bulk pull-left'],
+            'submitLabel' => 'Apply',
+            'submitOptions' => ['class' => 'btn btn-flat btn-default'],
+        ];
+        $bulk = ArrayHelper::merge($defaults, $this->bulk);
+        $selectOptions = $bulk['selectOptions'];
+        $selectOptions['name'] = $bulk['name'];
+        $selectOptions['items'] = $items;
+        $selectOptions['empty'] = $bulk['empty'];
+        
+        $widget = $bulk['selectClass']::widget($selectOptions);
+        
+        if (isset($bulk['submit'])) {
+            $submit = $bulk['submit'];
+        } else {
+            $submit = Html::submitButton($bulk['submitLabel'], $bulk['submitOptions']);
+        }
+        
+        if (strpos($bulk['options']['class'], 'pull-left') !== false) {
+            Html::addCssClass($this->pager['options'], 'pagination pull-right');
+        }
+        
+        return Html::tag($bulk['tag'], $widget . $submit, $bulk['options']);
     }
     
+    protected function registerScripts()
+    {
+        $view = $this->getView();
+    }
 }
