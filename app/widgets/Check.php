@@ -116,9 +116,20 @@ class Check extends InputWidget
         $asset->style = $this->style;
         
         $class = $this->type === static::TYPE_CHECKBOX ? 'checkboxClass' : 'radioClass';
-        $this->clientOptions[$class] = 'i' . $this->type . '_' . 
-                $this->style . '-' . $this->color;
+        $this->clientOptions[$class] = static::createStyleName($this->type, $this->style, $this->color);
         
         parent::registerPlugin($name);
+    }
+    
+    /**
+     * Create compound checkbox style name.
+     * @param string $type
+     * @param string $style
+     * @param string $color
+     * @return string
+     */
+    public static function createStyleName($type, $style, $color)
+    {
+        return 'i' . $type . '_' . $style . '-' . $color;
     }
 }
