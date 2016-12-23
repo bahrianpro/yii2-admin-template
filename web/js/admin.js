@@ -76,6 +76,34 @@
         
     };
     
+    var Grid = {
+        
+        /**
+         * Selection column suitable for iCheck checkboxes.
+         */
+        initSelectionColumn: function (grid, options) {
+            var $grid = $(grid);
+            var id = $grid.attr('id');
+            $grid.find('input').iCheck({
+                handle: 'checkbox',
+                checkboxClass: options.checkboxClass || ''
+            });
+            if (!options.multiple || !options.checkAll) {
+                return;
+            }
+            var checkAll = "#" + id + " input[name='" + options.checkAll + "']";
+            var inputs = options.class ? "input." + options.class : "input[name='" + options.name + "']";
+            $(checkAll)
+                .on('ifChecked', function () {
+                    $grid.find(inputs + ":enabled").iCheck('check');
+                })
+                .on('ifUnchecked', function () {
+                    $grid.find(inputs + ":enabled").iCheck('uncheck');
+                });
+        }
+        
+    };
+    
     function init() {
         // Keep state of sidebar in cookie.
         if ($.AdminLTE.options.sidebarPushMenu) {
@@ -94,6 +122,7 @@
     window.Admin = {
         Cookie: Cookie,
         Modal: Modal,
+        Grid: Grid
     };
 
 }(jQuery));
