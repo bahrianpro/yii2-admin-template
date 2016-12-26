@@ -34,6 +34,7 @@ class GridView extends \yii\grid\GridView
      *                     in bottom left, pagination shifted to right side),
      *                     by default, options are [class => "pagination pull-right"].
      * visible - show or hide bulk actions
+     * pjax - expose 'data-pjax' option to bulk form.
      */
     public $bulk = [];
     
@@ -75,6 +76,9 @@ class GridView extends \yii\grid\GridView
     public function run()
     {
         if ($this->isBulkEnabled()) {
+            if (ArrayHelper::getValue($this->bulk, 'pjax', false)) {
+                $this->bulkForm['options']['data-pjax'] = 1;
+            }
             echo Html::beginForm(
                 ArrayHelper::getValue($this->bulkForm, 'action'),
                 ArrayHelper::getValue($this->bulkForm, 'method', 'POST'),
