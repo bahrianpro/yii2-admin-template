@@ -30,6 +30,9 @@ class GridView extends \yii\grid\GridView
      * submit - rendered button
      * submitLabel - label for bulk submit button
      * submitOptions - submit button options
+     * paginationOptions - additional pagination css classes (in case bulk actions
+     *                     in bottom left, pagination shifted to right side),
+     *                     by default, options are [class => "pagination pull-right"].
      */
     public $bulk = [];
     
@@ -118,6 +121,7 @@ class GridView extends \yii\grid\GridView
             'options' => ['class' => 'bulk pull-left'],
             'submitLabel' => 'Apply',
             'submitOptions' => ['class' => 'btn btn-flat btn-default'],
+            'paginationOptions' => ['class' => 'pagination pull-right'],
         ];
         $bulk = ArrayHelper::merge($defaults, $this->bulk);
         $selectOptions = $bulk['selectOptions'];
@@ -133,8 +137,8 @@ class GridView extends \yii\grid\GridView
             $submit = Html::submitButton($bulk['submitLabel'], $bulk['submitOptions']);
         }
         
-        if (strpos($bulk['options']['class'], 'pull-left') !== false) {
-            Html::addCssClass($this->pager['options'], 'pagination pull-right');
+        if ($paginationOptions = ArrayHelper::getValue($bulk, 'paginationOptions')) {
+            Html::addCssClass($this->pager['options'], $paginationOptions);
         }
         
         return Html::tag($bulk['tag'], $widget . $submit, $bulk['options']);
