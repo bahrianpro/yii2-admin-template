@@ -33,6 +33,7 @@ class GridView extends \yii\grid\GridView
      * paginationOptions - additional pagination css classes (in case bulk actions
      *                     in bottom left, pagination shifted to right side),
      *                     by default, options are [class => "pagination pull-right"].
+     * visible - show or hide bulk actions
      */
     public $bulk = [];
     
@@ -62,7 +63,7 @@ class GridView extends \yii\grid\GridView
      */
     public function init()
     {
-        if ($this->bulk) {
+        if ($this->isBulkEnabled()) {
             array_unshift($this->columns, $this->bulkColumn);
         }
         parent::init();
@@ -73,7 +74,7 @@ class GridView extends \yii\grid\GridView
      */
     public function run()
     {
-        if ($this->bulk) {
+        if ($this->isBulkEnabled()) {
             echo Html::beginForm(
                 ArrayHelper::getValue($this->bulkForm, 'action'),
                 ArrayHelper::getValue($this->bulkForm, 'method', 'POST'),
@@ -83,7 +84,7 @@ class GridView extends \yii\grid\GridView
         
         parent::run();
         
-        if ($this->bulk) {
+        if ($this->isBulkEnabled()) {
             echo Html::endForm();
         }
     }
@@ -105,7 +106,7 @@ class GridView extends \yii\grid\GridView
      */
     public function renderBulk()
     {
-        if (!$this->bulk) {
+        if (!$this->isBulkEnabled()) {
             return;
         }
         
@@ -142,5 +143,15 @@ class GridView extends \yii\grid\GridView
         }
         
         return Html::tag($bulk['tag'], $widget . $submit, $bulk['options']);
+    }
+    
+    /**
+     * Is bulk action enabled and visible ?
+     * @return boolean
+     */
+    protected function isBulkEnabled()
+    {
+        return ($this->bulk && (!isset($this->bulk['visible']) ||
+                (isset($this->bulk['visible']) && $this->bulk['visible'])));
     }
 }
