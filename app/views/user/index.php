@@ -44,6 +44,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     'disable' => Yii::t('app', 'Disable'),
                     'delete' => Yii::t('app', 'Delete'),
                 ],
+                'pjax' => true,
+                'visible' => Yii::$app->user->can('updateAnyUser') || Yii::$app->user->can('deleteAnyUser'),
             ],
             'columns' => [
                 'id',
