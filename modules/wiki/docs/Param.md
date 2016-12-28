@@ -36,6 +36,7 @@ $value = Param::value($key, 'default value');
 - `TYPE_TEXT` текстовое поле ввода
 - `TYPE_EDITOR` редактор
 - `TYPE_SELECT` выпадающий список, варианты выбора содержатся в поле `options`.
+- `TYPE_PASSWORD` поле ввода пароля
 
 Страница настроек Settings
 ==========================
