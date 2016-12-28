@@ -8,6 +8,7 @@
 namespace app\base;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
 
 /**
@@ -26,6 +27,14 @@ class Controller extends \yii\web\Controller
     const FLASH_DANGER = 'danger';
     const FLASH_INFO = 'info';
     const FLASH_WARNING = 'warning';
+    
+    /**
+     * Confirmation background css.
+     */
+    const CONFIRM_INFO = 'bg-aqua';
+    const CONFIRM_SUCCESS = 'bg-green';
+    const CONFIRM_WARNING = 'bg-yellow';
+    const CONFIRM_DANGER = 'bg-red';
     
     /**
      * @var string when application sidebar is collapsed this contains collapsed css class.
@@ -113,5 +122,77 @@ class Controller extends \yii\web\Controller
             }
         }
         return false;
+    }
+    
+    /**
+     * @inheritdoc
+     */
+    public function beforeAction($action)
+    {
+        if (!parent::beforeAction($action)) {
+            return false;
+        }
+        if ($this->isBulkAction()) {
+            $bulkAction = Yii::$app->request->post('bulk');
+            $method = 'bulk' . ucfirst($action->actionMethod);
+            if (method_exists($this, $method)) {
+                if ($this->{$method}($bulkAction) === false) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    
+    /**
+     * Is bulk request ?
+     * @return boolean
+     */
+    public function isBulkAction()
+    {
+        $request = Yii::$app->request;
+        return $request->isPost && $request->post('bulk') && $request->post('selection');
+    }
+    
+    /**
+     * Load bulk models.
+     * @param string $className model class name.
+     * @param array $ids Optional. Model IDs or if missed IDs get from bulk request.
+     * @return Model[]
+     */
+    public function getBulkModels($className, array $ids = [])
+    {
+        if (empty($ids) && $this->isBulkAction()) {
+            $ids = Yii::$app->request->post('selection');
+        }
+        return $className::find()->where(['id' => $ids])->all();
+    }
+    
+    /**
+     * Create a confirmation view.
+     * @param array $options accepts following options:
+     * title - confirmation page title
+     * message - confirmation text
+     * encodeMessage - whether to encode confirmation text
+     * actionUrl - confirmation post url (by default, current action)
+     * button - confirmation action button
+     * cancelUrl - cancel url (by default, controller's index)
+     * params - additional form params
+     * icon - css class(es) for icon
+     * background - confirmation background css class (see CONFIRM_ consts)
+     * @return string
+     */
+    public function createConfirmation(array $options)
+    {
+        $defaults = [
+            'actionUrl' => [$this->action->id],
+            'cancelUrl' => ['index'],
+            'encodeMessage' => true,
+            'params' => [],
+            'icon' => '',
+            'background' => static::CONFIRM_DANGER,
+        ];
+        
+        return $this->render('//templates/confirmation', ArrayHelper::merge($defaults, $options));
     }
 }

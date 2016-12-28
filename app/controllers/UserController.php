@@ -15,6 +15,7 @@ use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\helpers\Html;
+use yii\helpers\ArrayHelper;
 use yii\web\Response;
 use yii\widgets\ActiveForm;
 
@@ -73,7 +74,7 @@ class UserController extends Controller
                         'roles' => ['viewAnyUser'],
                     ],
                     [
-                        'actions' => ['delete'],
+                        'actions' => ['delete', 'bulk-delete'],
                         'allow' => true,
                         'roles' => ['deleteAnyUser'],
                     ],
@@ -91,6 +92,39 @@ class UserController extends Controller
                 ],
             ],
         ];
+    }
+    
+    /**
+     * Bulk actions for index grid.
+     * @param string $action Bulk action name (enable, disable, delete)
+     */
+    public function bulkActionIndex($action)
+    {
+        $users = $this->getBulkModels(UserModel::className());
+        
+        switch ($action) {
+            case 'enable':
+            case 'disable':
+                if (Yii::$app->user->can('updateAnyUser')) {
+                    foreach ($users as $user) {
+                        $user->status = $action === 'enable' ? UserModel::STATUS_ENABLED : UserModel::STATUS_DISABLED;
+                        $isChanged = $user->getDirtyAttributes(['status']);
+                        if ($isChanged && $user->save()) {
+                            $this->addFlash(self::FLASH_INFO, Yii::t('app', 'User <strong>{name}</strong> is {status}.', [
+                                'name' => $user->name,
+                                'status' => Yii::t('app', $action === 'enable' ? 'enabled' : 'disabled'),
+                            ]));
+                        }
+                    }
+                }
+                break;
+
+            case 'delete':
+                $ids = ArrayHelper::getColumn($users, 'id');
+                Yii::$app->session->set('bulk_users', $ids);
+                $this->redirect(['bulk-delete']);
+                return false;
+        }
     }
     
     /**
@@ -143,5 +177,46 @@ class UserController extends Controller
         }
         
         return $this->redirect(['index']);
+    }
+    
+    public function actionBulkDelete()
+    {
+        // Get user IDs from POST request or session.
+        if (Yii::$app->request->isPost) {
+            $ids = Yii::$app->request->post('id');
+            foreach ($ids as $id) {
+                $user = $this->findModel(UserModel::className(), $id);
+                if ($user && $user->delete()) {
+                    Yii::$app->session->addFlash(static::FLASH_INFO, Yii::t('app', 'User <strong>{name}</strong> deleted.', [
+                        'name' => $user->name,
+                    ]));
+                }
+            }
+            return $this->redirect(['index']);
+        } elseif (Yii::$app->session->has('bulk_users')) {
+            $ids = Yii::$app->session->remove('bulk_users');
+        } else {
+            throw new \yii\web\BadRequestHttpException('Bad bulk request.');
+        }
+        
+        $users = $this->getBulkModels(UserModel::className(), $ids);
+        
+        return $this->createConfirmation([
+            'title' => Yii::t('app', 'Are you sure to delete users ?'),
+            'message' => Yii::t('app', 'These users <strong>{users}</strong> will be deleted. This operation cannot be undo!', [
+                'users' => implode(', ', array_map(function ($name) {
+                    return Html::encode($name);
+                }, ArrayHelper::getColumn($users, 'name'))),
+            ]),
+            'encodeMessage' => false,
+            'button' => [
+                'label' => Yii::t('app', 'Delete'),
+                'options' => ['class' => 'btn btn-danger bnt-flat'],
+            ],
+            'params' => [
+                'id' => ArrayHelper::getColumn($users, 'id'),
+            ],
+            'icon' => 'fa fa-trash',
+        ]);
     }
 }
