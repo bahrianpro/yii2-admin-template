@@ -21,7 +21,7 @@ DiffAsset::register($this);
         return Yii::$app->formatter->asRelativeTime($model->created_at);
     },
     'itemHeaderView' => function ($model) {
-        return Yii::$app->formatter->asUserlink($model->user) . ' ' . Html::tag('span', e($model->summary), ['class' => 'text-muted summary-change']);
+        return Yii::$app->formatter->asUserlink($model->user) . ' ' . Html::tag('span', Html::encode($model->summary), ['class' => 'text-muted summary-change']);
     },
     'itemView' => function ($model) {
         return Html::tag('pre', DiffHelper::diff($model));

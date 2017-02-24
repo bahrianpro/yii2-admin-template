@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <ul class="list-unstyled pages">
     <?php foreach ($rootPages as $wiki): ?>
     <li class="wiki-page">
-        <?= Html::a(Icon::icon($wiki->getChildren()->count() ? 'fa fa-book' : 'fa fa-file-text') . e($wiki->title), ['page/view', 'id' => $wiki->id]) ?>
+        <?= Html::a(Icon::icon($wiki->getChildren()->count() ? 'fa fa-book' : 'fa fa-file-text') . Html::encode($wiki->title), ['page/view', 'id' => $wiki->id]) ?>
     </li>
     <?php endforeach ?>
 </ul>
