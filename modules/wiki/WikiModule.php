@@ -30,8 +30,8 @@ class WikiModule extends Module
     {
         parent::init();
         $this->addMenu('main-nav', [
-            ['label' => 'Wiki', 'icon' => 'fa fa-wikipedia-w', 'url' => '#', 'roles' => ['viewWiki'], 'items' => [
-                ['label' => 'Pages list', 'icon' => 'fa fa-file-text', 'roles' => ['viewWiki'], 'url' => ['/wiki/page/index']],
+            ['label' => 'Wiki', 'icon' => 'wikipedia-w', 'url' => '#', 'roles' => ['viewWiki'], 'items' => [
+                ['label' => 'Pages list', 'icon' => 'file-text', 'roles' => ['viewWiki'], 'url' => ['/wiki/page/index']],
             ]],
         ]);
     }
