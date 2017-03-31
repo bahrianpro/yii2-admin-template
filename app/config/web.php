@@ -58,18 +58,18 @@ $config = [
                 // Navigation menu.
                 'main-nav' => [
                     [
-                        'label' => 'Administer', 'icon' => 'fa fa-user-secret',
+                        'label' => 'Administer', 'icon' => 'user-secret',
                         'url' => '#',
                         'items' => [
                             [
                                 'label' => 'Users',
-                                'icon' => 'fa fa-circle-o',
+                                'icon' => 'circle-o',
                                 'url' => ['/user/index'],
                                 'roles' => ['viewAnyUser']
                             ],
                             [
                                 'label' => 'Settings',
-                                'icon' => 'fa fa-circle-o',
+                                'icon' => 'circle-o',
                                 'url' => ['/site/settings'],
                                 'roles' => function () {
                                     return \app\components\Param::getSectionPermissions();
@@ -83,15 +83,15 @@ $config = [
                         },
                     ],
                     [
-                        'label' => 'Development', 'icon' => 'fa fa-building-o',
+                        'label' => 'Development', 'icon' => 'building-o',
                         'url' => '#',
                         'items' => [
                             [
-                                'label' => 'Gii', 'icon' => 'fa fa-file-code-o',
+                                'label' => 'Gii', 'icon' => 'file-code-o',
                                 'url' => ['/gii/default/index']
                             ],
                             [
-                                'label' => 'Debug', 'icon' => 'fa fa-dashboard',
+                                'label' => 'Debug', 'icon' => 'dashboard',
                                 'url' => ['/debug/default/index']
                             ],
                         ],
@@ -99,12 +99,12 @@ $config = [
                         'visible' => YII_DEBUG,
                     ],
                     [
-                        'label' => 'Login', 'icon' => 'fa fa-sign-in',
+                        'label' => 'Login', 'icon' => 'sign-in',
                         'url' => ['/user/login'],
                         'guest' => true,
                     ],
                     [
-                        'label' => 'Register', 'icon' => 'fa fa-user-plus',
+                        'label' => 'Register', 'icon' => 'user-plus',
                         'url' => ['/user/register'],
                         'guest' => true,
                         'visible' => function () {
@@ -112,7 +112,7 @@ $config = [
                         },
                     ],
                     [
-                        'label' => 'Logout', 'icon' => 'fa fa-sign-out',
+                        'label' => 'Logout', 'icon' => 'sign-out',
                         'url' => ['/user/logout'],
                         'guest' => false,
                     ],
