@@ -2,7 +2,7 @@
 /**
  * @author Skorobogatko Oleksii <skorobogatko.oleksii@gmail.com>
  * @copyright 2016
- * @version $Id$
+ * @since 0.1
  */
 
 namespace app\forms\user;

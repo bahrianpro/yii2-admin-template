@@ -2,8 +2,6 @@
 namespace modules\wiki;
 
 use app\base\Module;
-use Exception;
-use Yii;
 
 /**
  * wiki module definition class

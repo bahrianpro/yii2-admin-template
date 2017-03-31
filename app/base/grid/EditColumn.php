@@ -2,7 +2,7 @@
 /**
  * @author Skorobogatko Alexei <skorobogatko.oleksii@soft-industry.com>
  * @copyright 2016
- * @version $Id$
+ * @since 0.1
  */
 
 namespace app\base\grid;

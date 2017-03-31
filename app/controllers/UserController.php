@@ -2,7 +2,7 @@
 /**
  * @author Skorobogatko Oleksii <skorobogatko.oleksii@gmail.com>
  * @copyright 2016
- * @version $Id$
+ * @since 0.1
  */
 
 namespace app\controllers;
@@ -20,7 +20,9 @@ use yii\web\Response;
 use yii\widgets\ActiveForm;
 
 /**
- * UserController
+ * User management.
+ *
+ * Allows to list, create or modify users.
  * 
  * @author skoro
  */
@@ -179,6 +181,14 @@ class UserController extends Controller
         return $this->redirect(['index']);
     }
     
+    /**
+     * User bulk delete.
+     * 
+     * User IDs passed in a POST request. Page refresh leads to exception.
+     * 
+     * @throws \yii\web\BadRequestHttpException When action invoked directly.
+     * @since 0.3
+     */
     public function actionBulkDelete()
     {
         // Get user IDs from POST request or session.
