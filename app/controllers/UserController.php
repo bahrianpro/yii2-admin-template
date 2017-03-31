@@ -211,7 +211,7 @@ class UserController extends Controller
             'encodeMessage' => false,
             'button' => [
                 'label' => Yii::t('app', 'Delete'),
-                'options' => ['class' => 'btn btn-danger bnt-flat'],
+                'options' => ['class' => 'btn btn-danger btn-flat'],
             ],
             'params' => [
                 'id' => ArrayHelper::getColumn($users, 'id'),
