@@ -32,7 +32,10 @@ use yii\helpers\Html;
         <!-- /.search form -->
 
         <?= dmstr\widgets\Menu::widget([
-            'options' => ['class' => 'sidebar-menu'],
+            'options' => [
+                'class' => 'sidebar-menu tree',
+                'data-widget' => 'tree',
+            ],
             'items' => Yii::$app->menu->getMenu('main-nav'),
         ]) ?>
 
