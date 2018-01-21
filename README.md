@@ -75,6 +75,16 @@ Clone project repository:
 git clone https://github.com/skoro/yii2-admin-template.git yii2-admin
 ```
 
+Install dependencies:
+~~~
+composer.phar install
+~~~
+
+Check project requirements:
+~~~
+./bin/requirements
+~~~
+
 Change to project directory and set permissions:
 ~~~
 chmod 777 ./runtime ./web/assets
