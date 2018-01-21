@@ -17,14 +17,14 @@ use yii\web\AssetBundle;
 class Select2Asset extends AssetBundle
 {
     
-    public $sourcePath = '@vendor/almasaeed2010/adminlte/plugins/select2';
+    public $sourcePath = '@vendor/almasaeed2010/adminlte/bower_components/select2/dist';
     
     public $css = [
-        'select2.css',
+        'css/select2.css',
     ];
     
     public $js = [
-        'select2.js',
+        'js/select2.js',
     ];
     
     public $depends = [
