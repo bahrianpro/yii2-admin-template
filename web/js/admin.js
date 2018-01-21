@@ -106,14 +106,12 @@
     
     function init() {
         // Keep state of sidebar in cookie.
-        if ($.AdminLTE.options.sidebarPushMenu) {
-            $(document).on('collapsed.pushMenu', function (e) {
-                Cookie.write('SidebarPushMenu', 'collapsed');
-            });
-            $(document).on('expanded.pushMenu', function (e) {
-                Cookie.delete('SidebarPushMenu');
-            });
-        }
+        $(document).on('expanded.pushMenu', function () {
+            Cookie.delete('SidebarPushMenu');
+        });
+        $(document).on('collapsed.pushMenu', function () {
+            Cookie.write('SidebarPushMenu', 'collapsed');
+        })
     }
     
     $(init);
