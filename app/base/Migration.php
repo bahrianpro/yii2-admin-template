@@ -7,6 +7,9 @@
 
 namespace app\base;
 
+use Yii;
+use yii\base\InvalidValueException;
+
 /**
  * Migration
  *
@@ -14,6 +17,12 @@ namespace app\base;
  */
 class Migration extends \yii\db\Migration
 {
+    /**
+     * Essention application tables.
+     */
+    const TABLE_CONFIG = '{{%config}}';
+    const TABLE_MODULE = '{{%module}}';
+    const TABLE_USER = '{{%user}}';
     
     /**
      * @var string default database table options.
@@ -66,5 +75,4 @@ class Migration extends \yii\db\Migration
     {
         parent::createTable($table, $columns, $options === null ? $this->getTableOptions() : $options);
     }
-    
 }
