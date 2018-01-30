@@ -82,7 +82,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ]) ?>
 <ul class="list-unstyled">
     <?php foreach ($wiki->children as $child): ?>
-    <li><?= Html::a(Icon::icon('fa fa-file-text', e($child->title)), ['page/view', 'id' => $child->id]) ?></li>
+    <li><?= Html::a(Icon::icon('fa fa-file-text', Html::encode($child->title)), ['page/view', 'id' => $child->id]) ?></li>
     <?php endforeach ?>
 </ul>
 <?php Box::end() ?>
