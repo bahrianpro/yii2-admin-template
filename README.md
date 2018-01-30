@@ -161,7 +161,7 @@ TESTING
 After application has been installed and configured it's time to test it.
 First of all, create user via command `yii` line utility:
 ```
-./bin/yii user/create mail@address.com "User name"
+./bin/yii user/create "User name" mail@address.com
 ```
 
 Assign the newly created user to the Administrators group:
