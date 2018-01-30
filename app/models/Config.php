@@ -101,6 +101,7 @@ class Config extends ActiveRecord
             [['name', 'section'], 'unique', 'targetAttribute' => ['name', 'section'], 'message' => 'The combination of Name and Section has already been taken.'],
             
             ['perms', 'safe'],
+            ['perms', 'default', 'value' => ['updateSettings']],
         ];
     }
 
