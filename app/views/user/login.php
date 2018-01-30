@@ -1,6 +1,7 @@
 <?php
 
 use app\widgets\Check;
+use app\components\Param;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -22,7 +23,7 @@ $fieldOptions = function ($icon) {
 
 <div class="login-box">
     <div class="login-logo">
-        <a href="<?= Url::home(true) ?>"><b><?= Yii::$app->name ?></b></a>
+        <a href="<?= Url::home(true) ?>"><b><?= Param::value('Site.siteName') ?></b></a>
     </div>
     <!-- /.login-logo -->
     <div class="login-box-body">

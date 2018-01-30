@@ -6,7 +6,6 @@
 
 $config = [
     'id' => 'admin',
-    'name' => 'Admin Template',
     'bootstrap' => ['log'],
     'components' => [
         'cache' => [
