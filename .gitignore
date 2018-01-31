@@ -35,4 +35,4 @@ config.php
 
 
 tests/_output/*
-
+tests/_support/_generated
