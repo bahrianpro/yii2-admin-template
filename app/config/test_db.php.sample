@@ -1,0 +1,12 @@
+<?php
+
+return [
+    // SQLite3 example:
+    // 'dsn' => 'sqlite:@runtime/db_tests.sq3',
+
+    'class' => 'yii\db\Connection',
+    'dsn' => 'mysql:host=localhost;dbname=my_app_tests',
+    'username' => 'root',
+    'password' => '',
+    'charset' => 'utf8',
+];

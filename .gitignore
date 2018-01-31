@@ -34,5 +34,7 @@ phpunit.phar
 config.php
 
 
+# unneeded test files
 tests/_output/*
 tests/_support/_generated
+app/config/test_db.php
