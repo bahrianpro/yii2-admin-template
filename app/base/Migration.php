@@ -7,9 +7,6 @@
 
 namespace app\base;
 
-use Yii;
-use yii\base\InvalidValueException;
-
 /**
  * Migration
  *
@@ -17,13 +14,6 @@ use yii\base\InvalidValueException;
  */
 class Migration extends \yii\db\Migration
 {
-    /**
-     * Essention application tables.
-     */
-    const TABLE_CONFIG = '{{%config}}';
-    const TABLE_MODULE = '{{%module}}';
-    const TABLE_USER = '{{%user}}';
-    
     /**
      * @var string default database table options.
      */
