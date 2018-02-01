@@ -69,7 +69,7 @@
                 return false;
             }
 
-            if ($modal.size()) {
+            if ($modal.length) {
                 $(document).on('pjax:beforeSend', onBeforeSend);
             }
         }
