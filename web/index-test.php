@@ -12,8 +12,7 @@ defined('YII_ENV') or define('YII_ENV', 'test');
 require(APPROOT_DIR . '/vendor/autoload.php');
 require(APPROOT_DIR . '/vendor/yiisoft/yii2/Yii.php');
 
-// TODO: where is the config ???
-$config = require(APPROOT_DIR . '/tests/config/acceptance.php');
+$config = require(APPROOT_DIR . '/app/config/test.php');
 
 $app = new app\base\WebApplication($config);
 $app->run();
